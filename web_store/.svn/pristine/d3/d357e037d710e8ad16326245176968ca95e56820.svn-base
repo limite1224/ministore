@@ -1,0 +1,82 @@
+package com.leshun.plc.web.interceptor;
+
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.pojo.sys.OperatorInfo;
+import com.leshun.plc.pojo.sys.OperatorVO;
+import com.leshun.plc.pojo.sys.UserInfoVO;
+import com.leshun.plc.web.freemarker.CustomFreemarkerManager;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.opensymphony.xwork2.interceptor.PreResultListener;
+import com.sls.core.common.KeyUtil;
+
+public class LoginInterceptor implements Interceptor {
+	private static final long serialVersionUID = 8109886567899928146L;
+	private static final Logger log = Logger.getLogger(LoginInterceptor.class);
+	// @Resource(name = "memcachedClient")
+	// private MemCachedClient memcachedClient;
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String intercept(ActionInvocation invocation) throws Exception {
+		// 登录cookie写入
+		invocation.addPreResultListener(new PreResultListener() {
+			@Override
+			public void beforeResult(ActionInvocation invocation,
+					String resultCode) {
+				OperatorVO op = null;
+				Object tmp = invocation.getInvocationContext()
+						.get(Constant.COOKIE_NAME_USERINFO);
+				if (tmp instanceof OperatorInfo)
+					op = (OperatorVO) tmp;
+				if (op != null) {
+					UserInfoVO us = new UserInfoVO();
+					us.setLoginTmpId(UUID.randomUUID().toString());
+					us.setServiceCode(op.getCodes());
+					us.setUserId(op.getId());
+					us.setMobile(op.getTel());
+					us.setOperator(op);
+					String uuid = Constant.COOKIE_NAME_USERINFO
+							+ us.getUserId();
+					us.setType(op.getType());
+					us.setUserName(op.getAccount());
+					// memcachedClient.set(uuid, us, new Date(30 * 60 * 1000));
+					String web_cookie_path = CustomFreemarkerManager
+							.getCookiePath();
+					Cookie cookie = new Cookie(
+							CustomFreemarkerManager.getCookieName(
+									Constant.COOKIE_NAME_USERINFO),
+							KeyUtil.cookieEncrypt(uuid));
+					cookie.setPath(web_cookie_path);
+					ServletActionContext.getResponse().addCookie(cookie);
+					Cookie cs = new Cookie(CustomFreemarkerManager
+							.getCookieName(Constant.SESSION_ID),
+							us.getLoginTmpId());
+					cs.setPath(web_cookie_path);
+					ServletActionContext.getResponse().addCookie(cs);
+					log.debug("登录信息写入cookie");
+				}
+			}
+		});
+		return invocation.invoke();
+	}
+
+}

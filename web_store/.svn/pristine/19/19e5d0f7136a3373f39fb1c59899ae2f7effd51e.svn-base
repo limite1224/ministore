@@ -1,0 +1,114 @@
+package com.leshun.plc.action.business;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.ProductInfoComp;
+import com.leshun.plc.comp.ProductMsgMapComp;
+import com.leshun.plc.constant.Constant;
+import com.sls.core.socket.ServerDisponseException;
+
+public class ProductMsgMapAction
+		extends SuperAction<ProductMsgMap, ProductMsgMapComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734115479601622724L;
+	@Autowired
+	private ProductInfoComp productInfoComp;
+	private List<ProductInfo> productList;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new ProductMsgMap();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = comp.queryPage(entity);
+			productList = productInfoComp.queryList(new ProductInfo());
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				entity = comp.selectByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return "update";
+	}
+
+	@Override
+	public String save() {
+		boolean result = false;
+		try {
+			if (entity != null && StringUtils.isNotBlank(entity.getId())) {
+				result = comp.updateByPrimaryKeySelective(entity);
+			} else {
+				result = comp.insertSelective(entity);
+			}
+		} catch (Exception e) {
+			log.info("保存异常", e);
+			result = false;
+		}
+		if (!result) {
+			flag = false;
+			addActionError("保存失败");
+		}
+		redirectionUrl = "product_msg_map!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		boolean result = false;
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				result = comp.deleteByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("删除异常", e);
+			result = false;
+		}
+		if (!result) {
+			flag = false;
+			message = ajaxResp(0, "删除失败");
+		} else {
+			message = ajaxResp(1, "操作成功");
+		}
+		return AJAX;
+	}
+
+	@Override
+	public String detail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ProductInfo> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<ProductInfo> productList) {
+		this.productList = productList;
+	}
+
+}

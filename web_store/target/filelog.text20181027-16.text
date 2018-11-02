@@ -1,0 +1,986 @@
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Sat Oct 27 16:00:08 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1e3c71d16bmd0|abc00, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1e3c71d16bmd0|abc00, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 1770 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@6e976]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goos_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+查询列表发生异常!
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goos_' at line 21
+### The error may exist in mybatis/OrderInfoMapper.xml
+### The error may involve mybatis.xml.OrderInfoMapper.queryList-Inline
+### The error occurred while setting parameters
+### SQL: select       id, order_id,   order_source,   order_type, province, city,   district,   address, recipients, mobile, open_id,   order_time,   delivery_time,   express_company, waybill_number, delivery_method,   order_status,   send_sms,   send_time, order_finish_time, order_kefu,   wx_pay_order_id,   create_time,   create_by, update_time,   update_by, remarks,   del_flag          group_concat(goods_name) as 'goods_names',   group_concat(goods_price) as 'goos_prices',   group_concat(goods_discount) as 'goods_discounts',   group_concat(goods_count) as 'goods_counts',   group_concat(goods_remark)   as 'goods_remarks'      from order_info        WHERE  del_flag = '0'               and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T')                 and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T')       group by order_id       order by order_id          limit 0,2147483647
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goos_' at line 21
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goos_' at line 21
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:233)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:71)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:365)
+	at $Proxy8.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:195)
+	at com.leshun.plc.dao.BaseDao.queryList(BaseDao.java:70)
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:22)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goos_' at line 21
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4074)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4006)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2468)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2629)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2719)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1379)
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.execute(NewProxyPreparedStatement.java:989)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at $Proxy14.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:56)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:267)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:141)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:124)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:101)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:355)
+	... 74 more
+订单列表查询异常：
+com.sls.core.socket.ServerDisponseException: 访问数据库失败!
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:25)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Sat Oct 27 16:00:43 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1e3cykssmcbc5|c10930, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1e3cykssmcbc5|c10930, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 1660 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@168a123]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+查询列表发生异常!
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goods' at line 21
+### The error may exist in mybatis/OrderInfoMapper.xml
+### The error may involve mybatis.xml.OrderInfoMapper.queryList-Inline
+### The error occurred while setting parameters
+### SQL: select       id, order_id,   order_source,   order_type, province, city,   district,   address, recipients, mobile, open_id,   order_time,   delivery_time,   express_company, waybill_number, delivery_method,   order_status,   send_sms,   send_time, order_finish_time, order_kefu,   wx_pay_order_id,   create_time,   create_by, update_time,   update_by, remarks,   del_flag          group_concat(goods_name) as 'goods_names',   group_concat(goods_price) as 'goods_prices',   group_concat(goods_discount) as 'goods_discounts',   group_concat(goods_count) as 'goods_counts',   group_concat(goods_remark)   as 'goods_remarks'      from order_info        WHERE  del_flag = '0'               and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T')                 and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T')       group by order_id       order by order_id          limit 0,2147483647
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goods' at line 21
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goods' at line 21
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:233)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:71)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:365)
+	at $Proxy8.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:195)
+	at com.leshun.plc.dao.BaseDao.queryList(BaseDao.java:70)
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:22)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goods' at line 21
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4074)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4006)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2468)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2629)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2719)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1379)
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.execute(NewProxyPreparedStatement.java:989)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at $Proxy14.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:56)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:267)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:141)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:124)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:101)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:355)
+	... 74 more
+订单列表查询异常：
+com.sls.core.socket.ServerDisponseException: 访问数据库失败!
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:25)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Sat Oct 27 16:03:20 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1e3gbc4nplaau|c10930, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1e3gbc4nplaau|c10930, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 1731 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@13469f6]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+查询列表发生异常!
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property 'goodsremarks' of 'class com.leshun.plc.bean.OrderInfo' with value '哈哈哈哈,哈哈哈哈,哈哈哈哈,哈哈哈哈,哈哈哈哈' Cause: org.apache.ibatis.reflection.ReflectionException: There is no setter for property named 'goodsremarks' in 'class com.leshun.plc.bean.OrderInfo'
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:365)
+	at $Proxy8.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:195)
+	at com.leshun.plc.dao.BaseDao.queryList(BaseDao.java:70)
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:22)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Caused by: org.apache.ibatis.reflection.ReflectionException: Could not set property 'goodsremarks' of 'class com.leshun.plc.bean.OrderInfo' with value '哈哈哈哈,哈哈哈哈,哈哈哈哈,哈哈哈哈,哈哈哈哈' Cause: org.apache.ibatis.reflection.ReflectionException: There is no setter for property named 'goodsremarks' in 'class com.leshun.plc.bean.OrderInfo'
+	at org.apache.ibatis.reflection.wrapper.BeanWrapper.setBeanProperty(BeanWrapper.java:174)
+	at org.apache.ibatis.reflection.wrapper.BeanWrapper.set(BeanWrapper.java:53)
+	at org.apache.ibatis.reflection.MetaObject.setValue(MetaObject.java:140)
+	at org.apache.ibatis.executor.resultset.FastResultSetHandler.applyPropertyMappings(FastResultSetHandler.java:299)
+	at org.apache.ibatis.executor.resultset.FastResultSetHandler.getRowValue(FastResultSetHandler.java:264)
+	at org.apache.ibatis.executor.resultset.FastResultSetHandler.handleRowValues(FastResultSetHandler.java:214)
+	at org.apache.ibatis.executor.resultset.FastResultSetHandler.handleResultSet(FastResultSetHandler.java:186)
+	at org.apache.ibatis.executor.resultset.FastResultSetHandler.handleResultSets(FastResultSetHandler.java:152)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:57)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:267)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:141)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:124)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:101)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:355)
+	... 74 more
+Caused by: org.apache.ibatis.reflection.ReflectionException: There is no setter for property named 'goodsremarks' in 'class com.leshun.plc.bean.OrderInfo'
+	at org.apache.ibatis.reflection.Reflector.getSetInvoker(Reflector.java:325)
+	at org.apache.ibatis.reflection.MetaClass.getSetInvoker(MetaClass.java:164)
+	at org.apache.ibatis.reflection.wrapper.BeanWrapper.setBeanProperty(BeanWrapper.java:166)
+	... 94 more
+订单列表查询异常：
+com.sls.core.socket.ServerDisponseException: 访问数据库失败!
+	at com.leshun.plc.service.BaseService.queryList(BaseService.java:25)
+	at com.leshun.plc.comp.BaseComp.queryList(BaseComp.java:54)
+	at com.leshun.plc.comp.business.OrderInfoComp.queryList(OrderInfoComp.java:37)
+	at com.leshun.plc.action.api.OrderAction.orderList(OrderAction.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:871)
+	at ognl.OgnlRuntime.callAppropriateMethod(OgnlRuntime.java:1294)
+	at ognl.ObjectMethodAccessor.callMethod(ObjectMethodAccessor.java:68)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethodWithDebugInfo(XWorkMethodAccessor.java:117)
+	at com.opensymphony.xwork2.ognl.accessor.XWorkMethodAccessor.callMethod(XWorkMethodAccessor.java:108)
+	at ognl.OgnlRuntime.callMethod(OgnlRuntime.java:1370)
+	at ognl.ASTMethod.getValueBody(ASTMethod.java:91)
+	at ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
+	at ognl.SimpleNode.getValue(SimpleNode.java:258)
+	at ognl.Ognl.getValue(Ognl.java:467)
+	at ognl.Ognl.getValue(Ognl.java:431)
+	at com.opensymphony.xwork2.ognl.OgnlUtil$3.execute(OgnlUtil.java:352)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.compileAndExecuteMethod(OgnlUtil.java:404)
+	at com.opensymphony.xwork2.ognl.OgnlUtil.callMethod(OgnlUtil.java:350)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:430)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:290)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:251)
+	at com.leshun.plc.interceptor.LoginInterceptor.intercept(LoginInterceptor.java:161)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DeprecationInterceptor.intercept(DeprecationInterceptor.java:41)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:138)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:229)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:73)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.DateTextFieldInterceptor.intercept(DateTextFieldInterceptor.java:125)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:91)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:171)
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:189)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:145)
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:245)
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:54)
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:575)
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:81)
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:99)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Sat Oct 27 16:03:48 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1e3gwuy1ujzuse|7307e2, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1e3gwuy1ujzuse|7307e2, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 1582 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@121dfca]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@4bedfb]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1e2aae]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1579290]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@11c3a22]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@15801a6]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@99c1d9]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1cdfe9e]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@153e1a5]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1a9cdb3]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@16dc52f]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@569e3b]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@8b6c76]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1813d38]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1969eaa]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@5d1f6]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@365a59]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@6a611d]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@10a4dab]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@e54e7d]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1246025]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@9374d8]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@5b7228]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1117b63]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@18288d2]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@17329a1]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@f1cc97]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@4e186d]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@139eefe]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1cdb751]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@f009bf]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@b8ab59]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@f46124]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@5ce1b]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@5bb5e3]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@8a3b38]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@16f2cf8]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@a2a73e]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@13e06df]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@67c249]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@72a769]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1adf840]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@eb8bfa]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1b893bd]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1091c6b]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1e2aabd]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@143c278]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1c71e86]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1d20f7e]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@17f5714]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@18bc4df]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1f2ba51]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@77f399]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@116a8ba]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@38e75b]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@13b23eb]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@1da29fb]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 
+ooo Using Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@e9cee]
+==>  Preparing: select id, order_id, order_source, order_type, province, city, district, address, recipients, mobile, open_id, order_time, delivery_time, express_company, waybill_number, delivery_method, order_status, send_sms, send_time, order_finish_time, order_kefu, wx_pay_order_id, create_time, create_by, update_time, update_by, remarks, del_flag , group_concat(goods_name) as 'goods_names', group_concat(goods_price) as 'goods_prices', group_concat(goods_discount) as 'goods_discounts', group_concat(goods_count) as 'goods_counts', group_concat(goods_remark) as 'goods_remarks' from order_info WHERE del_flag = '0' and create_time>=str_to_date('2018-10-20 00:00:00','%Y-%m-%d %T') and create_time<=str_to_date('2018-10-27 23:59:59','%Y-%m-%d %T') group by order_id order by order_id limit 0,2147483647 
+==> Parameters: 

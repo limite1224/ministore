@@ -1,0 +1,7 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.ProductInfo;
+
+public interface ProductInfoComp extends BaseComp<ProductInfo>{
+
+}

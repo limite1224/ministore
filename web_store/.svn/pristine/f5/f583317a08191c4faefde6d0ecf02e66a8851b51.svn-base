@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.DeviceInfoMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.DeviceInfo">
+		<id column="device_id" property="deviceId" jdbcType="VARCHAR" />
+		<result column="device_mac" property="deviceMac" jdbcType="VARCHAR" />
+		<result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+		<result column="device_secret" property="deviceSecret"
+			jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="product_key" property="productKey" jdbcType="VARCHAR" />
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+		<result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+		<result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+		<result column="app_area_id" property="appAreaId" jdbcType="VARCHAR" />
+		<result column="app_area_name" property="appAreaName" jdbcType="VARCHAR" />
+		<result column="trader_id" property="traderId" jdbcType="VARCHAR" />
+		<result column="trader_name" property="traderName" jdbcType="VARCHAR" />
+		<result column="group_id" property="groupId" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="exp_status" property="expStatus" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+		<result column="access_address" property="accessAddress"
+			jdbcType="VARCHAR" />
+		<result column="com_mode" property="comMode" jdbcType="VARCHAR" />
+		<result column="access_platform" property="accessPlatform"
+			jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="com_status" property="comStatus" jdbcType="VARCHAR" />
+		<result column="com_protocol" property="comProtocol" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="last_login_time" property="lastLoginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="imei" property="imei" jdbcType="VARCHAR" />
+		<result column="iccid" property="iccid" jdbcType="VARCHAR" />
+		<result column="imsi" property="imsi" jdbcType="VARCHAR" />
+		<result column="bts" property="bts" jdbcType="VARCHAR" />
+		<result column="device_h_v" property="deviceHV" jdbcType="VARCHAR" />
+		<result column="device_s_v" property="deviceSV" jdbcType="VARCHAR" />
+		<result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+		<result column="access_device_id" property="accessDeviceId"
+			jdbcType="VARCHAR" />
+		<result column="auth_code" property="authCode" jdbcType="VARCHAR" />
+		<result column="api_key" property="apiKey" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+		<result column="d_script_name" property="dScriptName" jdbcType="VARCHAR" />
+		<result column="lon" property="lon" jdbcType="VARCHAR" />
+		<result column="lat" property="lat" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		device_id, device_mac, device_name, device_secret,
+		product_name, product_key,
+		msg_type,
+		brand_id, brand_name, app_area_id,
+		app_area_name, trader_id, trader_name,
+		group_id,
+		group_name, exp_status,
+		location, access_address, com_mode, access_platform,
+		status,
+		com_status, com_protocol, version, ip, last_login_time, imei, iccid,
+		imsi, bts,
+		device_h_v,
+		device_s_v, device_type, access_device_id,
+		auth_code, api_key, create_time,
+		create_by,
+		modify_time, update_by,
+		remark, del_flag, d_script_name, lon, lat
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_info
+		where device_id = #{deviceId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		device_info
+		where device_id = #{deviceId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.DeviceInfo">
+		insert into device_info
+		(device_id, device_mac, device_name,
+		device_secret, product_name,
+		product_key,
+		msg_type, brand_id, brand_name,
+		app_area_id, app_area_name,
+		trader_id,
+		trader_name, group_id, group_name,
+		exp_status, location,
+		access_address,
+		com_mode, access_platform, status,
+		com_status,
+		com_protocol, version,
+		ip, last_login_time, imei,
+		iccid, imsi, bts,
+		device_h_v,
+		device_s_v, device_type, access_device_id,
+		auth_code,
+		api_key, create_time,
+		create_by, modify_time, update_by,
+		remark,
+		del_flag, d_script_name,
+		lon, lat)
+		values (#{deviceId,jdbcType=VARCHAR},
+		#{deviceMac,jdbcType=VARCHAR},
+		#{deviceName,jdbcType=VARCHAR},
+		#{deviceSecret,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+		#{productKey,jdbcType=VARCHAR},
+		#{msgType,jdbcType=VARCHAR},
+		#{brandId,jdbcType=VARCHAR},
+		#{brandName,jdbcType=VARCHAR},
+		#{appAreaId,jdbcType=VARCHAR}, #{appAreaName,jdbcType=VARCHAR},
+		#{traderId,jdbcType=VARCHAR},
+		#{traderName,jdbcType=VARCHAR},
+		#{groupId,jdbcType=VARCHAR},
+		#{groupName,jdbcType=VARCHAR},
+		#{expStatus,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
+		#{accessAddress,jdbcType=VARCHAR},
+		#{comMode,jdbcType=VARCHAR},
+		#{accessPlatform,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{comStatus,jdbcType=VARCHAR}, #{comProtocol,jdbcType=VARCHAR},
+		#{version,jdbcType=VARCHAR},
+		#{ip,jdbcType=VARCHAR},
+		#{lastLoginTime,jdbcType=TIMESTAMP},
+		#{imei,jdbcType=VARCHAR},
+		#{iccid,jdbcType=VARCHAR}, #{imsi,jdbcType=VARCHAR},
+		#{bts,jdbcType=VARCHAR},
+		#{deviceHV,jdbcType=VARCHAR},
+		#{deviceSV,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR},
+		#{accessDeviceId,jdbcType=VARCHAR},
+		#{authCode,jdbcType=VARCHAR},
+		#{apiKey,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{createBy,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{delFlag,jdbcType=VARCHAR},
+		#{dScriptName,jdbcType=VARCHAR},
+		#{lon,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.DeviceInfo">
+		insert into device_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null">
+				device_id,
+			</if>
+			<if test="deviceMac != null">
+				device_mac,
+			</if>
+			<if test="deviceName != null">
+				device_name,
+			</if>
+			<if test="deviceSecret != null">
+				device_secret,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="productKey != null">
+				product_key,
+			</if>
+			<if test="msgType != null">
+				msg_type,
+			</if>
+			<if test="brandId != null">
+				brand_id,
+			</if>
+			<if test="brandName != null">
+				brand_name,
+			</if>
+			<if test="appAreaId != null">
+				app_area_id,
+			</if>
+			<if test="appAreaName != null">
+				app_area_name,
+			</if>
+			<if test="traderId != null">
+				trader_id,
+			</if>
+			<if test="traderName != null">
+				trader_name,
+			</if>
+			<if test="groupId != null">
+				group_id,
+			</if>
+			<if test="groupName != null">
+				group_name,
+			</if>
+			<if test="expStatus != null">
+				exp_status,
+			</if>
+			<if test="location != null">
+				location,
+			</if>
+			<if test="accessAddress != null">
+				access_address,
+			</if>
+			<if test="comMode != null">
+				com_mode,
+			</if>
+			<if test="accessPlatform != null">
+				access_platform,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="comStatus != null">
+				com_status,
+			</if>
+			<if test="comProtocol != null">
+				com_protocol,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time,
+			</if>
+			<if test="imei != null">
+				imei,
+			</if>
+			<if test="iccid != null">
+				iccid,
+			</if>
+			<if test="imsi != null">
+				imsi,
+			</if>
+			<if test="bts != null">
+				bts,
+			</if>
+			<if test="deviceHV != null">
+				device_h_v,
+			</if>
+			<if test="deviceSV != null">
+				device_s_v,
+			</if>
+			<if test="deviceType != null">
+				device_type,
+			</if>
+			<if test="accessDeviceId != null">
+				access_device_id,
+			</if>
+			<if test="authCode != null">
+				auth_code,
+			</if>
+			<if test="apiKey != null">
+				api_key,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="dScriptName != null">
+				d_script_name,
+			</if>
+			<if test="lon != null">
+				lon,
+			</if>
+			<if test="lat != null">
+				lat,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null">
+				#{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceMac != null">
+				#{deviceMac,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceName != null">
+				#{deviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSecret != null">
+				#{deviceSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productKey != null">
+				#{productKey,jdbcType=VARCHAR},
+			</if>
+			<if test="msgType != null">
+				#{msgType,jdbcType=VARCHAR},
+			</if>
+			<if test="brandId != null">
+				#{brandId,jdbcType=VARCHAR},
+			</if>
+			<if test="brandName != null">
+				#{brandName,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaId != null">
+				#{appAreaId,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaName != null">
+				#{appAreaName,jdbcType=VARCHAR},
+			</if>
+			<if test="traderId != null">
+				#{traderId,jdbcType=VARCHAR},
+			</if>
+			<if test="traderName != null">
+				#{traderName,jdbcType=VARCHAR},
+			</if>
+			<if test="groupId != null">
+				#{groupId,jdbcType=VARCHAR},
+			</if>
+			<if test="groupName != null">
+				#{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="expStatus != null">
+				#{expStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				#{location,jdbcType=VARCHAR},
+			</if>
+			<if test="accessAddress != null">
+				#{accessAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="comMode != null">
+				#{comMode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessPlatform != null">
+				#{accessPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="comStatus != null">
+				#{comStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="comProtocol != null">
+				#{comProtocol,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="iccid != null">
+				#{iccid,jdbcType=VARCHAR},
+			</if>
+			<if test="imsi != null">
+				#{imsi,jdbcType=VARCHAR},
+			</if>
+			<if test="bts != null">
+				#{bts,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceHV != null">
+				#{deviceHV,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSV != null">
+				#{deviceSV,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				#{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="accessDeviceId != null">
+				#{accessDeviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="authCode != null">
+				#{authCode,jdbcType=VARCHAR},
+			</if>
+			<if test="apiKey != null">
+				#{apiKey,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="dScriptName != null">
+				#{dScriptName,jdbcType=VARCHAR},
+			</if>
+			<if test="lon != null">
+				#{lon,jdbcType=VARCHAR},
+			</if>
+			<if test="lat != null">
+				#{lat,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.DeviceInfo">
+		update device_info
+		<set>
+			<if test="deviceMac != null">
+				device_mac = #{deviceMac,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceName != null">
+				device_name = #{deviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSecret != null">
+				device_secret = #{deviceSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productKey != null">
+				product_key = #{productKey,jdbcType=VARCHAR},
+			</if>
+			<if test="msgType != null">
+				msg_type = #{msgType,jdbcType=VARCHAR},
+			</if>
+			<if test="brandId != null">
+				brand_id = #{brandId,jdbcType=VARCHAR},
+			</if>
+			<if test="brandName != null">
+				brand_name = #{brandName,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaId != null">
+				app_area_id = #{appAreaId,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaName != null">
+				app_area_name = #{appAreaName,jdbcType=VARCHAR},
+			</if>
+			<if test="traderId != null">
+				trader_id = #{traderId,jdbcType=VARCHAR},
+			</if>
+			<if test="traderName != null">
+				trader_name = #{traderName,jdbcType=VARCHAR},
+			</if>
+			<if test="groupId != null">
+				group_id = #{groupId,jdbcType=VARCHAR},
+			</if>
+			<if test="groupName != null">
+				group_name = #{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="expStatus != null">
+				exp_status = #{expStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="accessAddress != null">
+				access_address = #{accessAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="comMode != null">
+				com_mode = #{comMode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessPlatform != null">
+				access_platform = #{accessPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="comStatus != null">
+				com_status = #{comStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="comProtocol != null">
+				com_protocol = #{comProtocol,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="iccid != null">
+				iccid = #{iccid,jdbcType=VARCHAR},
+			</if>
+			<if test="imsi != null">
+				imsi = #{imsi,jdbcType=VARCHAR},
+			</if>
+			<if test="bts != null">
+				bts = #{bts,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceHV != null">
+				device_h_v = #{deviceHV,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSV != null">
+				device_s_v = #{deviceSV,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				device_type = #{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="accessDeviceId != null">
+				access_device_id = #{accessDeviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="authCode != null">
+				auth_code = #{authCode,jdbcType=VARCHAR},
+			</if>
+			<if test="apiKey != null">
+				api_key = #{apiKey,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="dScriptName != null">
+				d_script_name = #{dScriptName,jdbcType=VARCHAR},
+			</if>
+			<if test="lon != null">
+				lon = #{lon,jdbcType=VARCHAR},
+			</if>
+			<if test="lat != null">
+				lat = #{lat,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where device_id = #{deviceId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.DeviceInfo">
+		update device_info
+		set device_mac = #{deviceMac,jdbcType=VARCHAR},
+		device_name =
+		#{deviceName,jdbcType=VARCHAR},
+		device_secret =
+		#{deviceSecret,jdbcType=VARCHAR},
+		product_name =
+		#{productName,jdbcType=VARCHAR},
+		product_key =
+		#{productKey,jdbcType=VARCHAR},
+		msg_type = #{msgType,jdbcType=VARCHAR},
+		brand_id = #{brandId,jdbcType=VARCHAR},
+		brand_name =
+		#{brandName,jdbcType=VARCHAR},
+		app_area_id =
+		#{appAreaId,jdbcType=VARCHAR},
+		app_area_name =
+		#{appAreaName,jdbcType=VARCHAR},
+		trader_id =
+		#{traderId,jdbcType=VARCHAR},
+		trader_name =
+		#{traderName,jdbcType=VARCHAR},
+		group_id = #{groupId,jdbcType=VARCHAR},
+		group_name = #{groupName,jdbcType=VARCHAR},
+		exp_status =
+		#{expStatus,jdbcType=VARCHAR},
+		location = #{location,jdbcType=VARCHAR},
+		access_address = #{accessAddress,jdbcType=VARCHAR},
+		com_mode =
+		#{comMode,jdbcType=VARCHAR},
+		access_platform =
+		#{accessPlatform,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=VARCHAR},
+		com_status = #{comStatus,jdbcType=VARCHAR},
+		com_protocol = #{comProtocol,jdbcType=VARCHAR},
+		version =
+		#{version,jdbcType=VARCHAR},
+		ip = #{ip,jdbcType=VARCHAR},
+		last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		imei =
+		#{imei,jdbcType=VARCHAR},
+		iccid = #{iccid,jdbcType=VARCHAR},
+		imsi =
+		#{imsi,jdbcType=VARCHAR},
+		bts = #{bts,jdbcType=VARCHAR},
+		device_h_v =
+		#{deviceHV,jdbcType=VARCHAR},
+		device_s_v =
+		#{deviceSV,jdbcType=VARCHAR},
+		device_type =
+		#{deviceType,jdbcType=VARCHAR},
+		access_device_id =
+		#{accessDeviceId,jdbcType=VARCHAR},
+		auth_code =
+		#{authCode,jdbcType=VARCHAR},
+		api_key = #{apiKey,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		del_flag = #{delFlag,jdbcType=VARCHAR},
+		d_script_name =
+		#{dScriptName,jdbcType=VARCHAR},
+		lon = #{lon,jdbcType=VARCHAR},
+		lat =
+		#{lat,jdbcType=VARCHAR}
+		where device_id = #{deviceId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="queryList" resultMap="BaseResultMap"
+		parameterType="com.leshun.plc.bean.DeviceInfo">
+		select
+		<include refid="Base_Column_List" />
+		from device_info
+		<include refid="pageCondition" />
+		<include refid="orderBy" />
+		<include refid="limit" />
+	</select>
+	<!--查询记录总数 -->
+	<select id="queryRowCount" parameterType="com.leshun.plc.bean.DeviceInfo"
+		resultType="java.lang.Integer">
+		<![CDATA[select count(device_id) from device_info]]>
+		<include refid="pageCondition" />
+	</select>
+	<sql id="pageCondition">
+		<where>
+			<choose>
+				<when test="deviceMac!=null and deviceMac!=''">
+					device_mac = #{deviceMac,jdbcType=VARCHAR}
+				</when>
+				<when test="deviceId!=null and deviceId!=''">
+					device_id = #{deviceId,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					<if test="deviceName != null and deviceName!=''">
+						and device_name like "%${deviceName}%"
+					</if>
+					<if test="deviceSecret != null and deviceSecret!=''">
+						and device_secret = #{deviceSecret,jdbcType=VARCHAR}
+					</if>
+					<if test="productName != null and productName!=''">
+						and product_name like "%${productName}%"
+					</if>
+					<if test="productKey != null and productKey!=''">
+						and product_key = #{productKey,jdbcType=VARCHAR}
+					</if>
+					<if test="msgType != null and msgType!=''">
+						and msg_type = #{msgType,jdbcType=VARCHAR}
+					</if>
+					<if test="expStatus != null and expStatus!=''">
+						and exp_status = #{expStatus,jdbcType=VARCHAR}
+					</if>
+					<if test="status != null and status!=''">
+						and status = #{status,jdbcType=VARCHAR}
+					</if>
+					<if test="comStatus != null and comStatus!=''">
+						and com_status = #{comStatus,jdbcType=VARCHAR}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	<sql id="orderBy">
+		order by modify_time desc
+	</sql>
+	<sql id="limit">
+		limit ${offset},${limit}
+	</sql>
+</mapper>

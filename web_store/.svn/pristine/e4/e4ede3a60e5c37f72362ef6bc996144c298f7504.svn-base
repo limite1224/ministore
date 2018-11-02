@@ -1,0 +1,47 @@
+package com.leshun.plc.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.dao.ProductMsgMapDao;
+import com.leshun.plc.service.ProductMsgMapService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Service("productMsgMapService")
+public class ProductMsgMapServiceImpl
+		extends BaseServiceImpl<ProductMsgMap, ProductMsgMapDao>
+		implements ProductMsgMapService {
+
+	@Override
+	public boolean insertSelective(ProductMsgMap entity) {
+		// productKey和productMsgKey唯一性
+		ProductMsgMap pmm = new ProductMsgMap();
+		pmm.setProductKey(entity.getProductKey());
+		pmm.setProductMsgKey(entity.getProductMsgKey());
+		List<ProductMsgMap> list = dao.queryList(pmm);
+		if (list != null && list.size() > 0) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.DATA_IS_EXISTS.getCode(),
+					ExceptionCodeDes.DATA_IS_EXISTS.getDescription());
+		}
+		return super.insertSelective(entity);
+	}
+
+	@Override
+	public boolean updateByPrimaryKeySelective(ProductMsgMap entity) {
+		// productKey和productMsgKey唯一性
+		ProductMsgMap pmm = new ProductMsgMap();
+		pmm.setProductKey(entity.getProductKey());
+		pmm.setProductMsgKey(entity.getProductMsgKey());
+		List<ProductMsgMap> list = dao.queryList(pmm);
+		if (list != null && list.size() > 0) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.DATA_IS_EXISTS.getCode(),
+					ExceptionCodeDes.DATA_IS_EXISTS.getDescription());
+		}
+		return super.updateByPrimaryKeySelective(entity);
+	}
+}

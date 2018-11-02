@@ -1,0 +1,110 @@
+package com.leshun.plc.action.business;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.comp.DeviceShadowComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceShadowAction
+		extends SuperAction<DeviceShadow, DeviceShadowComp> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 695910366906040369L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceShadow();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = comp.queryPage(entity);
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				entity = comp.selectByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return FORM;
+	}
+
+	@Override
+	public String save() {
+		boolean result = false;
+		try {
+			if (StringUtils.isBlank(id)) {
+				result = comp.insertSelective(entity);
+			} else {
+				result = comp.updateByPrimaryKeySelective(entity);
+			}
+		} catch (Exception e) {
+			log.info("保存异常", e);
+			result = false;
+		}
+
+		if (!result) {
+			flag = false;
+			addActionError("保存失败");
+		}
+		redirectionUrl = "device_shadow!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		boolean result = false;
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				result = comp.deleteByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("删除异常", e);
+			result = false;
+		}
+
+		if (!result) {
+			flag = false;
+			message = ajaxResp(0, "删除失败");
+		} else {
+			message = ajaxResp(1, "操作成功");
+		}
+		return AJAX;
+	}
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			addActionError(ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		try {
+			entity = comp.selectDetailByPrimaryKey(id);
+		} catch (Exception e) {
+			log.info("查询异常", e);
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return DETAIL;
+	}
+
+}

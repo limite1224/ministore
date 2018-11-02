@@ -1,0 +1,275 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="订单详情">
+<body class="input">
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>订单详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        订单编号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.orderid" class="formText {required: true}"
+               value="${(queryOrder.orderid)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.goodsid" class="formText {required: true}"
+               value="${(queryOrder.goodsid)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.goodsname" class="formText {required: true}"
+               value="${(queryOrder.goodsname)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       业务类型:
+    </th>
+    <td>
+     <#if queryOrder.businessType?? && queryOrder.businessType == "01">
+            游戏业务
+      <#elseif queryOrder.businessType?? && queryOrder.businessType == "02">
+            话费业务
+        </#if>
+     </td>
+</tr>
+
+<tr>
+    <th>
+        API接口时间:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.orderApiStartTime" class="formText {required: true}"
+               value="${(queryOrder.orderApiStartTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单生成时间:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.createordertime" class="formText {required: true}"
+               value="${(queryOrder.createordertime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        上游成功时间:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.supordersuccesstime" class="formText {required: true}"
+               value="${(queryOrder.supordersuccesstime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单完结时间:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.orderFinishTime" class="formText {required: true}"
+               value="${(queryOrder.orderFinishTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商户IP:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.merchantip" class="formText {required: true}"
+               value="${(queryOrder.merchantip)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+       充值账号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.gameaccount" class="formText {required: true}"
+               value="${(queryOrder.gameaccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游订单号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.merchantorderid" class="formText {required: true}"
+               value="${(queryOrder.merchantorderid)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        充值订单号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.rechargeOrderId" class="formText {required: true}"
+               value="${(queryOrder.rechargeOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        下游商户号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.contractid" class="formText {required: true}"
+               value="${(queryOrder.contractid)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        用户IP:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.clientIp" class="formText {required: true}"
+               value="${(queryOrder.clientIp)!}" readonly="readonly"/>
+    </td>
+</tr>
+<#--<tr>
+    <th>
+        商品面值(元):
+    </th>
+    <td>
+        <input type="text" name="queryOrder.goodsvalue" class="formText {required: true}"
+               value="${(queryOrder.goodsvalue*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品进价(元):
+    </th>
+    <td>
+        <input type="text" name="queryOrder.goodscostprice" class="formText {required: true}"
+               value="${(queryOrder.goodscostprice*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品售价(元):
+    </th>
+    <td>
+        <input type="text" name="queryOrder.goodssaleprice" class="formText {required: true}"
+               value="${(queryOrder.goodssaleprice*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>-->
+<tr>
+    <th>
+        购买数量:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.buynum" class="formText {required: true}"
+               value="${(queryOrder.buynum)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        总金额(元):
+    </th>
+    <td>
+        <input type="text" name="queryOrder.totalprice" class="formText {required: true}"
+               value="${(queryOrder.totalprice*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        区服:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.areaserver" class="formText {required: true}"
+               value="${(queryOrder.areaserver)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单状态:
+    </th>
+    <td>
+        <#if queryOrder.status?? && queryOrder.status == "0">
+            失败
+        <#elseif queryOrder.status?? && queryOrder.status == "1">
+            成功
+        <#elseif queryOrder.status?? && queryOrder.status == "2">
+            处理中
+        <#elseif queryOrder.status?? && queryOrder.status == "3">
+            存疑
+        </#if>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单状态备注:
+    </th>
+    <td>
+        <textarea name="queryOrder.statusremark" class="formTextarea"
+                  readonly="readonly">${(queryOrder.statusremark)!}</textarea>
+    </td>
+</tr>
+
+<tr>
+    <th>
+      供应商注册账号:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.registeraccount" class="formText {required: true}"
+               value="${(queryOrder.registeraccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        操作员:
+    </th>
+    <td>
+        <input type="text" name="queryOrder.operator" class="formText {required: true}"
+               value="${(queryOrder.operator)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        备注:
+    </th>
+    <td>
+        <textarea name="queryOrder.remark" class="formTextarea" readonly="readonly">${(queryOrder.remark)!}</textarea>
+    </td>
+</tr>
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>

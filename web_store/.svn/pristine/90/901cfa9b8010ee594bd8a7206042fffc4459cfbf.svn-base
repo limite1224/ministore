@@ -1,0 +1,221 @@
+<#include "../template/template_listPage.ftl"/>
+<@header title="设备信息">
+<script>
+	function deleteDevice(id,name){
+			var msg = "你确定删除设备"+name+"吗？";
+			var data = {
+				id:id
+			}
+			bootbox.confirm({
+				message: msg,
+				buttons: {
+					cancel: {
+						label: '取消',
+					},
+					confirm: {
+						label: '确定',
+						className: 'btn btn-info'
+					}
+				},
+				callback: function(result) {
+					if(result) {
+						$.ajax({
+							type: "post",
+							url: "${web_base}/business/device_info!delete.htm",
+							data: data,
+							async: true,
+							dataType:'json',
+							success: function(res) {
+								var code = res.code;
+								var msg = res.msg;
+								if('0'==code){
+									alert_leshun("danger", "操作失败："+msg, true);
+								}else if('1'==code){
+									alert_leshun("success", "删除操作成功", true);
+								}
+							},
+							error: function(message) {
+								alert_leshun("danger", "操作异常："+message, true);
+							}
+						});
+					}
+				}
+			});
+		}
+		</script>
+</@header>
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备信息
+					<small>
+						设备信息管理
+					</small>
+				</h1>
+			</div>
+			<div class="row" style="padding-left:20px;padding-right:20px">
+			<@pageList page=(page!) id="listForm" action="${web_base}/business/device_info!list.htm" query="entity" isEmpty=true>
+					<!--条件查询-->
+				<div class="row" style="padding-left:20px;">
+					<div class="row">
+						<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="deviceId">设备编号</label>
+									<input type="text" id="deviceId" placeholder="设备编号" class="form-control required"
+									 		name="entity.deviceId" value="${entity.deviceId!}" />
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="deviceName">设备名称</label>
+									<input type="text" id="deviceName" placeholder="设备名称" class="form-control required"
+									 		name="entity.deviceName" value="${(entity.deviceName)!}" />
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="deviceMac">设备MAC地址</label>
+									<input type="text" id="deviceMac" placeholder="MAC地址" class="form-control required"
+									 		name="entity.deviceMac" value="${(entity.deviceMac)!}" />
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="deviceSecret">设备位置</label>
+									<select class="width-90 link-height-1">
+										<option value="浙江省 杭州市">浙江省 杭州市</option>
+									</select>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="form-field-select-2">设备状态</label>
+								<select class="width-90 link-height-1"  id="form-field-select-2" name="entity.status" value="${(entity.status)!}" >
+									<option value="">
+				                   	 全部
+				                	</option>
+				                	<option value="0" <#if entity?? && entity.status?? && entity.status="0">selected</#if>>
+				                		禁用
+				                	</option>
+				                	<option value="1" <#if entity?? && entity.status?? && entity.status="1">selected</#if>>
+				                		启用
+				                	</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				
+					<div class="row" style="margin-left:0px;">
+						<button  type="submit" class="btn btn-sm btn-primary no-border"><i class="icon-search icon-1x icon-only"></i>查询</button>&nbsp;
+						<a href="${web_base}/business/device_info!form.htm" class="btn btn-sm btn-success no-border">
+							<i class="icon-plus icon-1x icon-only"></i>新增</button>&nbsp;
+		                </a>
+					</div>
+                 </div>
+                 <hr>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="table-header">
+							设备列表
+						</div>
+							<div class="table-responsive">
+								<table id="userTable" class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<!--<th class="center">
+												<label>
+													<input type="checkbox" class="ace"/>
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>设备编号</th>-->
+											<th>序号</th>
+											<th>设备名称</th>
+											<th>MAC地址</th>
+											<th>产品名称</th>
+											<th>产品标识</th>
+											<th>设备状态</th>
+											<!--<th>解析类型</th>-->
+											<th>创建时间</th>
+											<th>修改时间</th>
+											<th class="operation-leshun"></th>
+										</tr>
+									</thead>
+								<tbody class="center">
+								<#if page?? && page.list??>
+									<#list  page.list as obj>
+										<tr>
+											<!--<td class="center">
+												<label>
+													<input type="checkbox" class="ace"   name="ids" value="${(obj.deviceId)!}" />
+													<span class="lbl"></span>
+												</label>
+											</td>
+											<td>
+												<span>${(obj.deviceId)!}</span>
+											</td>-->
+											<td>${obj_index!}</td>
+											<td>
+												<span>${(obj.deviceName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.deviceMac)!}</span>
+											</td>
+											<td>
+												<span>${(obj.productName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.productKey)!}</span>
+											</td>
+											<td>
+												<#if obj?? && obj.status?? && obj.status=="0" > 
+													禁用
+						           	    		<#elseif obj?? && obj.status?? && obj.status=="1" >
+						           	    	 		启用
+												</#if>
+											</td>
+											<!--<td>
+												<#if obj?? && obj.msgType?? && obj.msgType=="1" > 
+													根据产品规则
+						           	    		<#elseif obj?? && obj.msgType?? && obj.msgType=="2" >
+						           	    	 		根据设备规则
+												</#if>
+											</td>-->
+											<td>
+												<span> ${(obj.createTime?string("yyyy-MM-dd HH:mm:ss"))!}</span>
+											</td>
+											<td>
+												<span> ${(obj.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}</span>
+											</td>																					
+											<td>
+												<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="${web_base}/business/device_info!detail.htm?id=${(obj.deviceId)!}"  title="详情" >
+														<i class="icon-zoom-in bigger-120"></i>
+													</a>
+			
+													<a class="green" href="${web_base}/business/device_info!form.htm?id=${(obj.deviceId)!}"  title="编辑" >
+														<i class="icon-pencil bigger-120"></i>
+													</a>
+			
+													<a class="red" href="javascript:void(0);" onclick="deleteDevice('${obj.deviceId!}','${obj.deviceName!}');" title="删除">
+														<i class="icon-trash bigger-120"></i>
+													</a>
+												</div>
+			
+											</td>
+										</tr>
+									</#list>
+								</#if>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</@pageList>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

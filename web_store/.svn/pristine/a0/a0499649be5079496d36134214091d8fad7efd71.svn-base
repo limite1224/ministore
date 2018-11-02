@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.GoodsOrderMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.GoodsOrder">
+		<id column="orderId" property="orderid" jdbcType="VARCHAR" />
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+		<result column="createOrderTime" property="createordertime"
+			jdbcType="VARCHAR" />
+		<result column="gameAccount" property="gameaccount" jdbcType="VARCHAR" />
+		<result column="merchantOrderId" property="merchantorderid"
+			jdbcType="VARCHAR" />
+		<result column="contractId" property="contractid" jdbcType="VARCHAR" />
+		<result column="notifyUrl" property="notifyurl" jdbcType="VARCHAR" />
+		<result column="merchantIP" property="merchantip" jdbcType="VARCHAR" />
+		<result column="goodsValue" property="goodsvalue" jdbcType="INTEGER" />
+		<result column="goodsSalePrice" property="goodssaleprice"
+			jdbcType="INTEGER" />
+		<result column="goodsCostPrice" property="goodscostprice"
+			jdbcType="INTEGER" />
+		<result column="totalPrice" property="totalprice" jdbcType="INTEGER" />
+		<result column="buyNum" property="buynum" jdbcType="INTEGER" />
+		<result column="areaServer" property="areaserver" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="statusRemark" property="statusremark" jdbcType="VARCHAR" />
+		<result column="result" property="result" jdbcType="VARCHAR" />
+		<result column="userType" property="usertype" jdbcType="VARCHAR" />
+		<result column="registerAccount" property="registeraccount"
+			jdbcType="VARCHAR" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="supOrderSuccessTime" property="supordersuccesstime"
+			jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="notify_result" property="notifyResult"
+			jdbcType="VARCHAR" />
+		<result column="synOrAsy" property="synorasy" jdbcType="VARCHAR" />
+		<result column="originalGoodsId" property="originalgoodsid"
+			jdbcType="VARCHAR" />
+		<result column="business_type" property="businessType"
+			jdbcType="VARCHAR" />
+		<result column="ips_info" property="ipsInfo" jdbcType="VARCHAR" />
+		<result column="order_modify_time" property="orderModifyTime"
+			jdbcType="VARCHAR" />
+		<result column="order_finish_time" property="orderFinishTime"
+			jdbcType="VARCHAR" />
+		<result column="order_limit_time" property="orderLimitTime"
+			jdbcType="VARCHAR" />
+		<result column="order_api_start_time" property="orderApiStartTime"
+			jdbcType="VARCHAR" />
+		<result column="province_code" property="provinceCode"
+			jdbcType="VARCHAR" />
+		<result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+		<result column="ekhui_order_id" property="ekhuiOrderId"
+			jdbcType="VARCHAR" />
+		<result column="recharge_order_id" property="rechargeOrderId"
+			jdbcType="VARCHAR" />
+		<result column="recharge_flag" property="rechargeFlag"
+			jdbcType="VARCHAR" />
+		<result column="contract_name" property="contractName"
+			jdbcType="VARCHAR" />
+		<result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+		<result column="total_time" property="totalTime" jdbcType="VARCHAR" />
+		<result column="status_real" property="statusReal" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		orderId, goodsId, goodsName, createOrderTime, gameAccount,
+		merchantOrderId,
+		contractId,
+		notifyUrl, merchantIP, goodsValue,
+		goodsSalePrice, goodsCostPrice, totalPrice,
+		buyNum,
+		areaServer, status,
+		statusRemark, result, userType, registerAccount, operator,
+		supOrderSuccessTime,
+		remark, notify_result, synOrAsy, originalGoodsId,
+		business_type, ips_info,
+		order_modify_time,
+		order_finish_time,
+		order_limit_time, order_api_start_time, province_code, city_code,
+		ekhui_order_id, recharge_order_id, recharge_flag, contract_name,
+		client_ip,total_time,status_real
+	</sql>
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by createOrderTime desc
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and createOrderTime >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and createOrderTime <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="orderid != null and orderid !=''">
+				and orderId =#{orderid,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsid != null and goodsid !=''">
+				and goodsId = #{goodsid,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsname != null and goodsname !=''">
+				and goodsName like "%${goodsname}%"
+			</if>
+			<if test="gameaccount != null and gameaccount !=''">
+				and gameAccount = #{gameaccount,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantorderid != null and merchantorderid !=''">
+				and merchantOrderId = #{merchantorderid,jdbcType=VARCHAR}
+			</if>
+			<if test="contractid != null and contractid !=''">
+				and contractId = #{contractid,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status !=''">
+				and status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="result != null and result !=''">
+				and result = #{result,jdbcType=VARCHAR}
+			</if>
+			<if test="usertype != null and usertype !=''">
+				and userType = #{usertype,jdbcType=VARCHAR}
+			</if>
+			<if test="registeraccount != null and registeraccount !=''">
+				and registerAccount = #{registeraccount,jdbcType=VARCHAR}
+			</if>
+			<if test="notifyResult != null and notifyResult !=''">
+				and notify_result = #{notifyResult,jdbcType=VARCHAR}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and business_type = #{businessType,jdbcType=VARCHAR}
+			</if>
+			<if test="ipsInfo != null and ipsInfo !=''">
+				and ips_info = #{ipsInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="ekhuiOrderId != null and ekhuiOrderId !=''">
+				and ekhui_order_id =#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="rechargeOrderId != null and rechargeOrderId !=''">
+				and recharge_order_id =#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="contractName != null and contractName !=''">
+				and contract_name like '%${contractName}%'
+			</if>
+			<if test="statusReal != null and statusReal !=''">
+				and status_real =#{statusReal,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 查询记录数 -->
+	<select id="selectAccount" parameterType="com.ekhui.pojo.GoodsOrder"
+		resultType="java.lang.Integer">
+		select count(orderId) from goods_order
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.GoodsOrder"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+
+	</select>
+
+	<!-- 主键查询 -->
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order
+		where orderId = #{orderid,jdbcType=VARCHAR}
+	</select>
+	<!-- 主键删除 -->
+	<delete id="deleteByOrderId" parameterType="java.lang.String">
+		delete from
+		goods_order
+		where orderId = #{orderid,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.GoodsOrder">
+		insert into goods_order
+		(orderId, goodsId, goodsName,
+		createOrderTime, gameAccount,
+		merchantOrderId,
+		contractId, notifyUrl, merchantIP,
+		goodsValue,
+		goodsSalePrice, goodsCostPrice,
+		totalPrice, buyNum, areaServer,
+		status,
+		statusRemark, result,
+		userType, registerAccount, operator,
+		supOrderSuccessTime, remark, notify_result,
+		synOrAsy, originalGoodsId,
+		business_type,
+		ips_info, order_modify_time, order_finish_time,
+		order_limit_time, order_api_start_time, province_code,
+		city_code,
+		ekhui_order_id, recharge_order_id,
+		recharge_flag,
+		contract_name,client_ip,total_time,satus_real)
+		values
+		(#{orderid,jdbcType=VARCHAR},
+		#{goodsid,jdbcType=VARCHAR},
+		#{goodsname,jdbcType=VARCHAR},
+		#{createordertime,jdbcType=VARCHAR},
+		#{gameaccount,jdbcType=VARCHAR},
+		#{merchantorderid,jdbcType=VARCHAR},
+		#{contractid,jdbcType=VARCHAR},
+		#{notifyurl,jdbcType=VARCHAR},
+		#{merchantip,jdbcType=VARCHAR},
+		#{goodsvalue,jdbcType=INTEGER},
+		#{goodssaleprice,jdbcType=INTEGER},
+		#{goodscostprice,jdbcType=INTEGER},
+		#{totalprice,jdbcType=INTEGER},
+		#{buynum,jdbcType=INTEGER}, #{areaserver,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{statusremark,jdbcType=VARCHAR},
+		#{result,jdbcType=VARCHAR},
+		#{usertype,jdbcType=VARCHAR},
+		#{registeraccount,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR},
+		#{supordersuccesstime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		#{notifyResult,jdbcType=VARCHAR},
+		#{synorasy,jdbcType=VARCHAR},
+		#{originalgoodsid,jdbcType=VARCHAR},
+		#{businessType,jdbcType=VARCHAR},
+		#{ipsInfo,jdbcType=VARCHAR}, #{orderModifyTime,jdbcType=VARCHAR},
+		#{orderFinishTime,jdbcType=VARCHAR},
+		#{orderLimitTime,jdbcType=VARCHAR},
+		#{orderApiStartTime,jdbcType=VARCHAR},
+		#{provinceCode,jdbcType=VARCHAR},
+		#{cityCode,jdbcType=VARCHAR},
+		#{ekhuiOrderId,jdbcType=VARCHAR},
+		#{rechargeOrderId,jdbcType=VARCHAR},
+		#{rechargeFlag,jdbcType=VARCHAR},
+		#{contractName,jdbcType=VARCHAR},#{clientIp,jdbcType=VARCHAR},
+		#{totalTime,jdbcType=VARCHAR},#{statusReal,jdbcType=VARCHAR})
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.GoodsOrder">
+		insert into goods_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderid != null">
+				orderId,
+			</if>
+			<if test="goodsid != null">
+				goodsId,
+			</if>
+			<if test="goodsname != null">
+				goodsName,
+			</if>
+			<if test="createordertime != null">
+				createOrderTime,
+			</if>
+			<if test="gameaccount != null">
+				gameAccount,
+			</if>
+			<if test="merchantorderid != null">
+				merchantOrderId,
+			</if>
+			<if test="contractid != null">
+				contractId,
+			</if>
+			<if test="notifyurl != null">
+				notifyUrl,
+			</if>
+			<if test="merchantip != null">
+				merchantIP,
+			</if>
+			<if test="goodsvalue != null">
+				goodsValue,
+			</if>
+			<if test="goodssaleprice != null">
+				goodsSalePrice,
+			</if>
+			<if test="goodscostprice != null">
+				goodsCostPrice,
+			</if>
+			<if test="totalprice != null">
+				totalPrice,
+			</if>
+			<if test="buynum != null">
+				buyNum,
+			</if>
+			<if test="areaserver != null">
+				areaServer,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="statusremark != null">
+				statusRemark,
+			</if>
+			<if test="result != null">
+				result,
+			</if>
+			<if test="usertype != null">
+				userType,
+			</if>
+			<if test="registeraccount != null">
+				registerAccount,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="supordersuccesstime != null">
+				supOrderSuccessTime,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="notifyResult != null">
+				notify_result,
+			</if>
+			<if test="synorasy != null">
+				synOrAsy,
+			</if>
+			<if test="originalgoodsid != null">
+				originalGoodsId,
+			</if>
+			<if test="businessType != null">
+				business_type,
+			</if>
+			<if test="ipsInfo != null">
+				ips_info,
+			</if>
+			<if test="orderModifyTime != null">
+				order_modify_time,
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time,
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time,
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time,
+			</if>
+			<if test="provinceCode != null">
+				province_code,
+			</if>
+			<if test="cityCode != null">
+				city_code,
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id,
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id,
+			</if>
+			<if test="rechargeFlag != null">
+				recharge_flag,
+			</if>
+			<if test="contractName != null">
+				contract_name,
+			</if>
+			<if test="clientIp != null">
+				client_ip,
+			</if>
+			<if test="totalTime!=null">
+				total_time,
+			</if>
+			<if test="statusReal!=null">
+				status_real,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderid != null">
+				#{orderid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				#{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsname != null">
+				#{goodsname,jdbcType=VARCHAR},
+			</if>
+			<if test="createordertime != null">
+				#{createordertime,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				#{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantorderid != null">
+				#{merchantorderid,jdbcType=VARCHAR},
+			</if>
+			<if test="contractid != null">
+				#{contractid,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyurl != null">
+				#{notifyurl,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantip != null">
+				#{merchantip,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsvalue != null">
+				#{goodsvalue,jdbcType=INTEGER},
+			</if>
+			<if test="goodssaleprice != null">
+				#{goodssaleprice,jdbcType=INTEGER},
+			</if>
+			<if test="goodscostprice != null">
+				#{goodscostprice,jdbcType=INTEGER},
+			</if>
+			<if test="totalprice != null">
+				#{totalprice,jdbcType=INTEGER},
+			</if>
+			<if test="buynum != null">
+				#{buynum,jdbcType=INTEGER},
+			</if>
+			<if test="areaserver != null">
+				#{areaserver,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="statusremark != null">
+				#{statusremark,jdbcType=VARCHAR},
+			</if>
+			<if test="result != null">
+				#{result,jdbcType=VARCHAR},
+			</if>
+			<if test="usertype != null">
+				#{usertype,jdbcType=VARCHAR},
+			</if>
+			<if test="registeraccount != null">
+				#{registeraccount,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="supordersuccesstime != null">
+				#{supordersuccesstime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyResult != null">
+				#{notifyResult,jdbcType=VARCHAR},
+			</if>
+			<if test="synorasy != null">
+				#{synorasy,jdbcType=VARCHAR},
+			</if>
+			<if test="originalgoodsid != null">
+				#{originalgoodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="ipsInfo != null">
+				#{ipsInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderModifyTime != null">
+				#{orderModifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFinishTime != null">
+				#{orderFinishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				#{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				#{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				#{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				#{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				#{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeFlag != null">
+				#{rechargeFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="contractName != null">
+				#{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="clientIp != null">
+				#{clientIp,jdbcType=VARCHAR},
+			</if>
+
+			<if test="totalTime != null">
+				#{totalTime,jdbcType=VARCHAR},
+			</if>
+
+			<if test="statusReal != null">
+				#{statusReal,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<!-- 选择性更新 -->
+	<update id="updateByOrderId" parameterType="com.ekhui.pojo.GoodsOrder">
+		update goods_order
+		<set>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsname != null">
+				goodsName = #{goodsname,jdbcType=VARCHAR},
+			</if>
+			<if test="createordertime != null">
+				createOrderTime = #{createordertime,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				gameAccount = #{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantorderid != null">
+				merchantOrderId = #{merchantorderid,jdbcType=VARCHAR},
+			</if>
+			<if test="contractid != null">
+				contractId = #{contractid,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyurl != null">
+				notifyUrl = #{notifyurl,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantip != null">
+				merchantIP = #{merchantip,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsvalue != null">
+				goodsValue = #{goodsvalue,jdbcType=INTEGER},
+			</if>
+			<if test="goodssaleprice != null">
+				goodsSalePrice = #{goodssaleprice,jdbcType=INTEGER},
+			</if>
+			<if test="goodscostprice != null">
+				goodsCostPrice = #{goodscostprice,jdbcType=INTEGER},
+			</if>
+			<if test="totalprice != null">
+				totalPrice = #{totalprice,jdbcType=INTEGER},
+			</if>
+			<if test="buynum != null">
+				buyNum = #{buynum,jdbcType=INTEGER},
+			</if>
+			<if test="areaserver != null">
+				areaServer = #{areaserver,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="statusremark != null">
+				statusRemark = #{statusremark,jdbcType=VARCHAR},
+			</if>
+			<if test="result != null">
+				result = #{result,jdbcType=VARCHAR},
+			</if>
+			<if test="usertype != null">
+				userType = #{usertype,jdbcType=VARCHAR},
+			</if>
+			<if test="registeraccount != null">
+				registerAccount = #{registeraccount,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="supordersuccesstime != null">
+				supOrderSuccessTime =
+				#{supordersuccesstime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyResult != null">
+				notify_result = #{notifyResult,jdbcType=VARCHAR},
+			</if>
+			<if test="synorasy != null">
+				synOrAsy = #{synorasy,jdbcType=VARCHAR},
+			</if>
+			<if test="originalgoodsid != null">
+				originalGoodsId = #{originalgoodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				business_type = #{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="ipsInfo != null">
+				ips_info = #{ipsInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderModifyTime != null">
+				order_modify_time = #{orderModifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time = #{orderFinishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				province_code = #{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				city_code = #{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeFlag != null">
+				recharge_flag = #{rechargeFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="contractName != null">
+				contract_name = #{contractName,jdbcType=VARCHAR},
+			</if>
+
+			<if test="clientIp != null">
+				client_ip = #{clientIp,jdbcType=VARCHAR},
+			</if>
+
+			<if test="statusReal != null">
+				status_real = #{statusReal,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where orderId = #{orderid,jdbcType=VARCHAR}
+	</update>
+	<!-- 更新处理中订单 -->
+	<update id="updateByOrderIdStatus" parameterType="com.ekhui.pojo.GoodsOrder">
+		update goods_order
+		<set>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsname != null">
+				goodsName = #{goodsname,jdbcType=VARCHAR},
+			</if>
+			<if test="createordertime != null">
+				createOrderTime = #{createordertime,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				gameAccount = #{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantorderid != null">
+				merchantOrderId = #{merchantorderid,jdbcType=VARCHAR},
+			</if>
+			<if test="contractid != null">
+				contractId = #{contractid,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyurl != null">
+				notifyUrl = #{notifyurl,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantip != null">
+				merchantIP = #{merchantip,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsvalue != null">
+				goodsValue = #{goodsvalue,jdbcType=INTEGER},
+			</if>
+			<if test="goodssaleprice != null">
+				goodsSalePrice = #{goodssaleprice,jdbcType=INTEGER},
+			</if>
+			<if test="goodscostprice != null">
+				goodsCostPrice = #{goodscostprice,jdbcType=INTEGER},
+			</if>
+			<if test="totalprice != null">
+				totalPrice = #{totalprice,jdbcType=INTEGER},
+			</if>
+			<if test="buynum != null">
+				buyNum = #{buynum,jdbcType=INTEGER},
+			</if>
+			<if test="areaserver != null">
+				areaServer = #{areaserver,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="statusremark != null">
+				statusRemark = #{statusremark,jdbcType=VARCHAR},
+			</if>
+			<if test="result != null">
+				result = #{result,jdbcType=VARCHAR},
+			</if>
+			<if test="usertype != null">
+				userType = #{usertype,jdbcType=VARCHAR},
+			</if>
+			<if test="registeraccount != null">
+				registerAccount = #{registeraccount,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="supordersuccesstime != null">
+				supOrderSuccessTime =
+				#{supordersuccesstime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyResult != null">
+				notify_result = #{notifyResult,jdbcType=VARCHAR},
+			</if>
+			<if test="synorasy != null">
+				synOrAsy = #{synorasy,jdbcType=VARCHAR},
+			</if>
+			<if test="originalgoodsid != null">
+				originalGoodsId = #{originalgoodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				business_type = #{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="ipsInfo != null">
+				ips_info = #{ipsInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderModifyTime != null">
+				order_modify_time = #{orderModifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time = #{orderFinishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				province_code = #{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				city_code = #{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeFlag != null">
+				recharge_flag = #{rechargeFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="contractName != null">
+				contract_name = #{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="clientIp != null">
+				client_ip = #{clientIp,jdbcType=VARCHAR},
+			</if>
+			<if test="statusReal != null">
+				status_real = #{statusReal,jdbcType=VARCHAR},
+			</if>
+			<if test="totalTime != null">
+				total_time = #{totalTime,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where orderId = #{orderid,jdbcType=VARCHAR}
+		and (status ='2' or status
+		= #{status,jdbcType=VARCHAR})
+	</update>
+
+	<!-- 查询集合 -->
+	<select id="groupBuProvinceAndIsp" parameterType="com.ekhui.pojo.GoodsOrder"
+		resultMap="BaseResultMap">
+		select
+		LEFT(goodsName,6) as goodsName ,
+		count(orderId) as
+		buyNum ,
+		province_code,
+		ips_info
+		from goods_order
+		where
+		createOrderTime >=
+		#{startTime,jdbcType=VARCHAR}
+		<if test="endTime != null and endTime !=''">
+				<![CDATA[and createOrderTime <= #{endTime,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="status != null and status !=''">
+			and status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="businessType != null and businessType !=''">
+			and business_type = #{businessType,jdbcType=VARCHAR}
+		</if>
+		<if test="contractid != null and contractid !=''">
+			and contractId = #{contractid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsname != null and goodsname !=''">
+			and goodsName like "%{goodsName}%"
+		</if>
+		group by
+		province_code , ips_info
+		order
+		by province_code , ips_info
+	</select>
+
+</mapper>

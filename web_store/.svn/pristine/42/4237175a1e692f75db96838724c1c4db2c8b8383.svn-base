@@ -1,0 +1,10 @@
+package com.leshun.plc.service;
+
+import com.leshun.plc.bean.DeviceMessage;
+
+public interface DeviceMessageService extends BaseService<DeviceMessage> {
+
+	/** 同时插入消息记录表和设备影子表 */
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity,
+			String deviceStatus);
+}

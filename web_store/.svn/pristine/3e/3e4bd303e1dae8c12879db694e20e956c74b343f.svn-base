@@ -1,0 +1,14 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.dao.DeviceMessageDao;
+import com.leshun.plc.service.DeviceMessageService;
+
+@Service("deviceMessageService")
+public class DeviceMessageServiceImpl
+		extends BaseServiceImpl<DeviceMessage, DeviceMessageDao>
+		implements DeviceMessageService {
+
+}

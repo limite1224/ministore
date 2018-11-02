@@ -1,0 +1,30 @@
+package com.leshun.plc.comp;
+
+import java.util.List;
+
+import com.leshun.plc.bean.BaseQuery;
+import com.leshun.plc.bean.Pagination;
+import com.sls.core.socket.ServerDisponseException;
+
+public interface BaseComp<T extends BaseQuery> {
+
+	public boolean deleteByPrimaryKey(String id) throws ServerDisponseException;
+
+	public boolean insert(T entity) throws ServerDisponseException;
+
+	public boolean insertSelective(T entity) throws ServerDisponseException;
+
+	public T selectByPrimaryKey(String id) throws ServerDisponseException;
+
+	public Pagination<T> queryPage(T entity) throws ServerDisponseException;
+
+	public int queryRowCount(T entity) throws ServerDisponseException;
+
+	public List<T> queryList(T entity) throws ServerDisponseException;
+
+	public boolean updateByPrimaryKeySelective(T entity)
+			throws ServerDisponseException;
+
+	public boolean updateByPrimaryKey(T entity) throws ServerDisponseException;
+
+}

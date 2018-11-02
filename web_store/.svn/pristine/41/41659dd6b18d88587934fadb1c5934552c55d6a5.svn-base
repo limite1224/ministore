@@ -1,0 +1,75 @@
+<#include "template/template_main.ftl">
+<@main>
+<style type="text/css">
+    * {margin:0;padding:0;}
+    body{font:12px/1.4 SimSun,Arial,Helvetica,sans-serif;color:#333;}
+    strong{font-weight:700;}
+</style>
+<script type="text/javascript" src="${web_static}/common/js/marquee.js"></script>
+<script type="text/javascript">
+	function clickMenu(url,code){
+		var mainFrameset=top.window.document.getElementById("menuFrame");
+		if(url.indexOf("?")>0)
+			mainFrameset.src=url+"&serviceCode="+code;
+		else
+			mainFrameset.src=url+"?serviceCode="+code;
+	}
+	
+	function marqueeFun(){
+	    $('#marquee_slide').marquee({
+		    auto: true,
+		    interval: 2000,
+		    showNum: 10,
+		    stepLen: 1,
+		    type: 'vertical'
+        }); 
+	}
+	//默认跳转
+	$().ready( function() {
+		$("#menu0").click(function(){// $("#menu0").attr("href",$("#menu0").attr("name")+"?serviceCode="+$("#menu0").attr("tip"));
+		   	//alert($("#menu0").attr("href"));
+		});
+		$("#menu0").click();
+		marqueeFun();
+        setInterval("startRequest()",20000);
+	});
+	
+    function startRequest(){
+	    $.post("${web_base}/login!loop.htm",{},function(result){
+	        $("#marquee_slide").html(result); 
+	        marqueeFun();	      
+	    });
+    }	
+	</script>
+<body class="header">
+	<div class="body">
+		<div class="headerLogo"></div>
+		<div class="headerTop">
+			<div class="headerLink">			
+				<span class="welcome">
+					<strong></strong>&nbsp;您好!&nbsp;
+				</span>
+				<a href="${web_base}/login!main.htm" target="mainFrame">后台首页</a>
+			</div>
+		</div>
+		<div class="headerBottom">
+			<div class="headerMenu">
+				<div class="menuLeft">
+				<ul>
+				<#if permissionList??>
+				<#list permissionList as row>
+	            	<li><#if row??&&row.openNewWindow??&&row.openNewWindow==true><a href="${urlCompletion(row.url)}" target="_blank"><#else><a id="menu${row_index}" onclick="clickMenu('${urlCompletion(row.url)}','${(row.code)!}')" href="#" hidefocus="true"></#if>${(row.name)!}</a></li>
+	            </#list>
+	            </#if>
+	            </ul></div>
+	            <div class="menuRight"></div>
+			</div>
+			<div class="userInfo">
+				<a href="${web_base}/logout.htm" target="_top">
+					<span class="logoutIcon">&nbsp;</span>退出&nbsp;
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+</@main>

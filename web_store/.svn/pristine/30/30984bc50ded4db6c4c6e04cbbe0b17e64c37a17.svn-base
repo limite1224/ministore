@@ -1,0 +1,17 @@
+package com.leshun.plc.web.action;
+
+import org.apache.struts2.convention.annotation.InterceptorRef;
+
+@InterceptorRef(value = "randomcodeinterceptor")
+public class RandomCodeAction extends SuperAction {
+
+	/**
+	 * 验证码
+	 */
+	private static final long serialVersionUID = -4282835285438452915L;
+
+	public String execute() throws Exception {
+		return NONE;
+	}
+
+}

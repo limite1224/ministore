@@ -1,0 +1,123 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="价格信息新增">
+
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>商品价格新增</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<form id="myForm" action="${web_base}/phone/goods_price_info!insert.htm" method="post">
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        商户号:
+    </th>
+    <td>
+        <input type="text" name="insertInfo.userNo" class="formText {required: true}"
+               value=""/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商户名:
+    </th>
+    <td>
+        <input type="text" name="insertInfo.userName" class="formText {required: true}"
+               value=""/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="insertInfo.goodsId" class="formText {required: true}"
+               value="" />
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="insertInfo.goodsName" class="formText {required: true}"
+               value=""/>
+    </td>
+</tr>
+<tr>
+    <th>
+        充值面值:
+    </th>
+    <td>
+        <input type="text" name="rechargeValue" class="formText {required: true}"
+               value=""/>*元/M*
+    </td>
+</tr>
+
+<tr>
+    <th>
+        商品面值:
+    </th>
+    <td>
+        <input type="text" name="goodsValue" class="formText {required: true}"
+               value=""/>*元*
+    </td>
+</tr>
+<tr>
+    <th>
+     价格比率:
+    </th>
+    <td>
+        <input type="text" name="insertInfo.priceRate" class="formText {required: true}"
+               value=""/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        业务类型:
+    </th>
+    <td>
+       <select name="insertInfo.businessType" id="status">
+        <option value="">-请选择-</option>
+        <option value="01">流量</option>
+        <option value="02">话费</option>
+    </select>
+    </td>
+</tr>
+
+<#--<tr>
+    <th>
+        操作员:
+    </th>
+    <td>   <input type="text" name="queryInfo.operator" class="formText {required: true}"
+               value="${(queryInfo.operator)!}" readonly="readonly"/>
+    </td>
+</tr>-->
+</table>
+<div class="buttonArea">
+    <input type="submit" class="formButton"  value="新增"
+           hidefocus="true"/>
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</form>
+</div>
+</body>
+</@edit>

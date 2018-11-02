@@ -1,0 +1,65 @@
+package com.leshun.plc.pojo.sys;
+import java.util.List;
+
+public class OperatorVO extends OperatorInfo {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4713119302712916234L;
+	/**
+	 * 新密码
+	 */
+	private String newPwd;
+	/**
+	 * 角色名
+	 */
+	private String roleName;
+	/**
+	 * 角色备注
+	 */
+	private String roleRemark;
+	
+	/**
+	 * 角色信息
+	 */
+	private List<Role> role;
+	/**
+//	 * 权限id
+//	 */
+//	private String permissionId;
+	/**
+	 * 有权限的交易代码
+	 */
+	private String codes;
+	public String getNewPwd() {
+		return newPwd;
+	}
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	public String getRoleRemark() {
+		return roleRemark;
+	}
+	public void setRoleRemark(String roleRemark) {
+		this.roleRemark = roleRemark;
+	}
+	public String getCodes() {
+		return codes;
+	}
+	public void setCodes(String codes) {
+		this.codes = codes;
+	}
+	public List<Role> getRole() {
+		return role;
+	}
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
+}

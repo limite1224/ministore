@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.TianMaoGoodsInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.TianMaoGoodsInfo">
+		<id column="goods_id_tm" property="goodsIdTm" jdbcType="VARCHAR" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_id_local" property="goodsIdLocal"
+			jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="recharge_rate" property="rechargeRate"
+			jdbcType="INTEGER" />
+		<result column="goods_value_tm" property="goodsValueTm"
+			jdbcType="INTEGER" />
+		<result column="goods_value_local" property="goodsValueLocal"
+			jdbcType="INTEGER" />
+		<result column="num_limit" property="numLimit" jdbcType="VARCHAR" />
+		<result column="goods_snap" property="goodsSnap" jdbcType="VARCHAR" />
+		<result column="goods_name_local" property="goodsNameLocal"
+			jdbcType="VARCHAR" />
+		<result column="goods_charge_type" property="goodsChargeType"
+			jdbcType="VARCHAR" />
+		<result column="goods_account_type" property="goodsAccountType"
+			jdbcType="VARCHAR" />
+		<result column="time_create" property="timeCreate" jdbcType="VARCHAR" />
+		<result column="time_modify" property="timeModify" jdbcType="VARCHAR" />
+		<result column="oper" property="oper" jdbcType="VARCHAR" />
+		<result column="goods_charge_type_name" property="goodsChargeTypeName"
+			jdbcType="VARCHAR" />
+		<result column="goods_account_type_name" property="goodsAccountTypeName"
+			jdbcType="VARCHAR" />
+		<result column="tianmao_id" property="tianmaoId" jdbcType="VARCHAR" />
+		<result column="isp_info" property="ispInfo" jdbcType="VARCHAR" />
+		<result column="tm_goods_show_id" property="tmGoodsShowId"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 查询所有字段 -->
+	<sql id="Base_Column_List">
+		goods_id_tm, goods_name, goods_id_local, status,
+		recharge_rate, goods_value_tm,
+		goods_value_local,
+		num_limit, goods_snap,
+		goods_name_local, goods_charge_type, goods_account_type,
+		time_create,
+		time_modify, oper, goods_charge_type_name, goods_account_type_name,
+		tianmao_id,
+		isp_info,tm_goods_show_id
+	</sql>
+
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by time_create desc
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and time_create >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and time_create <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="goodsIdTm != null and goodsIdTm !=''">
+				and goods_id_tm =#{goodsIdTm,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+			<if test="goodsIdLocal != null and goodsIdLocal !=''">
+				and goods_id_local = #{goodsIdLocal,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status !=''">
+				and status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsNameLocal != null and goodsNameLocal !=''">
+				and goods_name_local = '%${goodsNameLocal}%'
+			</if>
+			<if test="goodsChargeType != null and goodsChargeType !=''">
+				and goods_charge_type =
+				#{goodsChargeType,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsAccountType != null and goodsAccountType !=''">
+				and goods_account_type =
+				#{goodsAccountType,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsChargeTypeName != null and goodsChargeTypeName !=''">
+				and goods_charge_type_name like
+				"%${goodsChargeTypeName}%"
+			</if>
+			<if test="goodsAccountTypeName != null and goodsAccountTypeName !=''">
+				and goods_account_type_name like
+				"%${goodsAccountTypeName}%"
+			</if>
+			<if test="tianmaoId != null and tianmaoId !=''">
+				and tianmao_id = #{tianmaoId,jdbcType=VARCHAR}
+			</if>
+			<if test="ispInfo != null and ispInfo !=''">
+				and isp_info = #{ispInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="tmGoodsShowId != null and tmGoodsShowId !=''">
+				and tm_goods_show_id = #{tmGoodsShowId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="com.ekhui.pojo.TianMaoGoodsInfo"
+		resultType="java.lang.Integer">
+		select count(goods_id_tm) from tianmao_goods_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.TianMaoGoodsInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tianmao_goods_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+	<!-- 主键查询 -->
+	<select id="selectByTmGoodsId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tianmao_goods_info
+		where goods_id_tm =
+		#{goodsIdTm,jdbcType=VARCHAR}
+	</select>
+	<!-- 主键删除 -->
+	<delete id="deleteByTmGoodsId" parameterType="java.lang.String">
+		delete from
+		tianmao_goods_info
+		where goods_id_tm = #{goodsIdTm,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.TianMaoGoodsInfo">
+		insert into tianmao_goods_info
+		(goods_id_tm, goods_name,
+		goods_id_local,
+		status, recharge_rate,
+		goods_value_tm,
+		goods_value_local, num_limit, goods_snap,
+		goods_name_local, goods_charge_type, goods_account_type,
+		time_create,
+		time_modify, oper,
+		goods_charge_type_name, goods_account_type_name,
+		tianmao_id, isp_info,tm_goods_show_id)
+		values
+		(#{goodsIdTm,jdbcType=VARCHAR},
+		#{goodsName,jdbcType=VARCHAR},
+		#{goodsIdLocal,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{rechargeRate,jdbcType=INTEGER},
+		#{goodsValueTm,jdbcType=INTEGER},
+		#{goodsValueLocal,jdbcType=INTEGER},
+		#{numLimit,jdbcType=VARCHAR},
+		#{goodsSnap,jdbcType=VARCHAR},
+		#{goodsNameLocal,jdbcType=VARCHAR},
+		#{goodsChargeType,jdbcType=VARCHAR},
+		#{goodsAccountType,jdbcType=VARCHAR},
+		#{timeCreate,jdbcType=VARCHAR},
+		#{timeModify,jdbcType=VARCHAR}, #{oper,jdbcType=VARCHAR},
+		#{goodsChargeTypeName,jdbcType=VARCHAR},
+		#{goodsAccountTypeName,jdbcType=VARCHAR},
+		#{tianmaoId,jdbcType=VARCHAR},
+		#{ispInfo,jdbcType=VARCHAR},#{tmGoodsShowId,jdbcType=VARCHAR})
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.TianMaoGoodsInfo">
+		insert into tianmao_goods_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsIdTm != null">
+				goods_id_tm,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsIdLocal != null">
+				goods_id_local,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="rechargeRate != null">
+				recharge_rate,
+			</if>
+			<if test="goodsValueTm != null">
+				goods_value_tm,
+			</if>
+			<if test="goodsValueLocal != null">
+				goods_value_local,
+			</if>
+			<if test="numLimit != null">
+				num_limit,
+			</if>
+			<if test="goodsSnap != null">
+				goods_snap,
+			</if>
+			<if test="goodsNameLocal != null">
+				goods_name_local,
+			</if>
+			<if test="goodsChargeType != null">
+				goods_charge_type,
+			</if>
+			<if test="goodsAccountType != null">
+				goods_account_type,
+			</if>
+			<if test="timeCreate != null">
+				time_create,
+			</if>
+			<if test="timeModify != null">
+				time_modify,
+			</if>
+			<if test="oper != null">
+				oper,
+			</if>
+			<if test="goodsChargeTypeName != null">
+				goods_charge_type_name,
+			</if>
+			<if test="goodsAccountTypeName != null">
+				goods_account_type_name,
+			</if>
+			<if test="tianmaoId != null">
+				tianmao_id,
+			</if>
+			<if test="ispInfo != null">
+				isp_info,
+			</if>
+			<if test="tmGoodsShowId != null">
+				tm_goods_show_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsIdTm != null">
+				#{goodsIdTm,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsIdLocal != null">
+				#{goodsIdLocal,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeRate != null">
+				#{rechargeRate,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValueTm != null">
+				#{goodsValueTm,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValueLocal != null">
+				#{goodsValueLocal,jdbcType=INTEGER},
+			</if>
+			<if test="numLimit != null">
+				#{numLimit,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsSnap != null">
+				#{goodsSnap,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsNameLocal != null">
+				#{goodsNameLocal,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsChargeType != null">
+				#{goodsChargeType,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsAccountType != null">
+				#{goodsAccountType,jdbcType=VARCHAR},
+			</if>
+			<if test="timeCreate != null">
+				#{timeCreate,jdbcType=VARCHAR},
+			</if>
+			<if test="timeModify != null">
+				#{timeModify,jdbcType=VARCHAR},
+			</if>
+			<if test="oper != null">
+				#{oper,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsChargeTypeName != null">
+				#{goodsChargeTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsAccountTypeName != null">
+				#{goodsAccountTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="tianmaoId != null">
+				#{tianmaoId,jdbcType=VARCHAR},
+			</if>
+			<if test="ispInfo != null">
+				#{ispInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="tmGoodsShowId != null">
+				#{tmGoodsShowId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByTmGoodsId" parameterType="com.ekhui.pojo.TianMaoGoodsInfo">
+		update tianmao_goods_info
+		<set>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsIdLocal != null">
+				goods_id_local = #{goodsIdLocal,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeRate != null">
+				recharge_rate = #{rechargeRate,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValueTm != null">
+				goods_value_tm = #{goodsValueTm,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValueLocal != null">
+				goods_value_local = #{goodsValueLocal,jdbcType=INTEGER},
+			</if>
+			<if test="numLimit != null">
+				num_limit = #{numLimit,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsSnap != null">
+				goods_snap = #{goodsSnap,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsNameLocal != null">
+				goods_name_local = #{goodsNameLocal,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsChargeType != null">
+				goods_charge_type = #{goodsChargeType,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsAccountType != null">
+				goods_account_type =
+				#{goodsAccountType,jdbcType=VARCHAR},
+			</if>
+			<if test="timeCreate != null">
+				time_create = #{timeCreate,jdbcType=VARCHAR},
+			</if>
+			<if test="timeModify != null">
+				time_modify = #{timeModify,jdbcType=VARCHAR},
+			</if>
+			<if test="oper != null">
+				oper = #{oper,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsChargeTypeName != null">
+				goods_charge_type_name =
+				#{goodsChargeTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsAccountTypeName != null">
+				goods_account_type_name =
+				#{goodsAccountTypeName,jdbcType=VARCHAR},
+			</if>
+			<if test="tianmaoId != null">
+				tianmao_id = #{tianmaoId,jdbcType=VARCHAR},
+			</if>
+			<if test="ispInfo != null">
+				isp_info = #{ispInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="tmGoodsShowId != null">
+				tm_goods_show_id = #{tmGoodsShowId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where goods_id_tm = #{goodsIdTm,jdbcType=VARCHAR}
+	</update>
+</mapper>

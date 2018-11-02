@@ -1,0 +1,105 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@detail title="产品详情">
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					产品信息
+					<small>
+						产品详情
+					</small>
+				</h1>
+			</div>
+    <form class="form-horizontal" action="" method="post">
+      <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id"> 产品编号 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="id" value="${(entity!).id!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+       <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productName"> 产品名称 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productName" value="${(entity!).productName!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productKey">产品标识</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productKey" value="${(entity!).productKey!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="comMode">通讯 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" id="comMode" value="${(entity.comMode)!}">
+					<option value="">请选择通讯方式</option>
+					<option value="1" <#if entity?? && entity.comMode?? && entity.comMode="1">selected</#if>>
+                		wifi
+                	</option>
+                	<option value="2" <#if entity?? && entity.comMode?? && entity.comMode="2">selected</#if>>
+                		rfid
+                	</option>
+                	<option value="3" <#if entity?? && entity.comMode?? && entity.comMode="3">selected</#if>>
+                		gprs
+                	</option>
+                	<option value="4" <#if entity?? && entity.comMode?? && entity.comMode="4">selected</#if>>
+                		buletooth
+                	</option>
+                	<option value="5" <#if entity?? && entity.comMode?? && entity.comMode="4">selected</#if>>
+                		其他
+                	</option>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注</label>
+			<div class="col-sm-9">
+				<textarea class="col-xs-10 col-sm-5" name="entity.remark" id="remark"></textarea>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createTime">创建时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createTime" value="${(entity!).createTime?string('yyyy-MM-dd HH:mm:dd')!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createBy">创建人</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createBy" value="${(entity!).createBy!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="modifyTime">最新修改时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="modifyTime" value="${(entity!).modifyTime?string('yyyy-MM-dd HH:mm:dd')!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="updateBy">修改人</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="updateBy" value="${(entity!).updateBy!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+        <div class="center">
+	        <button type="button" class="btn btn-sm" style="margin-left:100px;" onclick="window.history.back(); return false;"><i class="icon-arrow-left align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</@detail>

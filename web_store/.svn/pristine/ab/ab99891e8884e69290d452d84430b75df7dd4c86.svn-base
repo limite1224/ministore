@@ -1,0 +1,7 @@
+package com.leshun.plc.dao;
+
+import com.leshun.plc.bean.ProductInfo;
+
+public interface ProductInfoDao extends BaseDao<ProductInfo> {
+
+}

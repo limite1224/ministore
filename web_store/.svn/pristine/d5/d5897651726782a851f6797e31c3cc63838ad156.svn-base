@@ -1,0 +1,68 @@
+package com.leshun.plc.action.business;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.comp.DeviceInfoComp;
+
+public class DeviceInfoAction extends SuperAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1447130409772565410L;
+
+	private DeviceInfo deviceInfo;
+	private String deviceId;
+
+	@Autowired
+	private DeviceInfoComp deviceInfoComp;
+
+	@Override
+	public String list() {
+		deviceInfo = new DeviceInfo();
+		try {
+			deviceInfoComp.deleteByPrimaryKey("123");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return FORM;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DeviceInfo getDeviceInfo() {
+		return deviceInfo;
+	}
+
+	public void setDeviceInfo(DeviceInfo deviceInfo) {
+		this.deviceInfo = deviceInfo;
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+}

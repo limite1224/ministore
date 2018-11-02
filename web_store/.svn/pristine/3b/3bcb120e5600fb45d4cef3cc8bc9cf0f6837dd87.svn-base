@@ -1,0 +1,9 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceMessage;
+
+public interface DeviceMessageComp extends BaseComp<DeviceMessage> {
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity,
+			String deviceStatus) throws Exception;
+
+}

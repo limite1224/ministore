@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.AdvanceNotifyInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.AdvanceNotifyInfo">
+		<id column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+		<result column="contract_name" property="contractName"
+			jdbcType="VARCHAR" />
+		<result column="goods_value" property="goodsValue" jdbcType="INTEGER" />
+		<result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="time_create_order" property="timeCreateOrder"
+			jdbcType="VARCHAR" />
+		<result column="time_modify_order" property="timeModifyOrder"
+			jdbcType="VARCHAR" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="game_account" property="gameAccount" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="merchant_order_id" property="merchantOrderId"
+			jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 查询所有字段 -->
+	<sql id="Base_Column_List">
+		order_id, contract_id, contract_name, goods_value, buy_num,
+		status,time_create_order,
+		time_modify_order, operator, goods_name,
+		game_account, remark, merchant_order_id,goods_id
+	</sql>
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by time_create_order desc
+	</sql>
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and time_create_order >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and time_create_order <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="orderId != null and orderId !=''">
+				and order_id =#{orderId,jdbcType=VARCHAR}
+			</if>
+			<if test="contractId != null and contractId !=''">
+				and contract_id = #{contractId,jdbcType=VARCHAR}
+			</if>
+			<if test="contractName != null and contractName !=''">
+				and contract_name like "%${contractName}%"
+			</if>
+			<if test="goodsValue != null and goodsValue !=''">
+				and goods_value = #{goodsValue,jdbcType=INTEGER}
+			</if>
+			<if test="buyNum != null and buyNum !=''">
+				and buy_num = #{buyNum,jdbcType=INTEGER}
+			</if>
+			<if test="status != null and status !=''">
+				and status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+			<if test="gameAccount != null and gameAccount !=''">
+				and game_account = #{gameAccount,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantOrderId != null and merchantOrderId !=''">
+				and merchant_order_id =
+				#{merchantOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsId != null and goodsId !=''">
+				and goods_id = #{goodsId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 查询所有记录 -->
+	<select id="queryCount" resultType="java.lang.Integer"
+		parameterType="com.ekhui.pojo.AdvanceNotifyInfo">
+		select count(order_id) from advance_notify_info
+		<include refid="pageCondition" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.AdvanceNotifyInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from advance_notify_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+
+	<!-- 根据主键查询 -->
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from advance_notify_info
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</select>
+	<!-- 根据主键删除 -->
+	<delete id="deleteByOrderId" parameterType="java.lang.String">
+		delete from
+		advance_notify_info
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.AdvanceNotifyInfo">
+		insert into advance_notify_info
+		(order_id, contract_id, contract_name,
+		goods_value, buy_num, status,
+		time_create_order, time_modify_order, operator,
+		goods_name,
+		game_account, remark,
+		merchant_order_id, goods_id)
+		values
+		(#{orderId,jdbcType=VARCHAR}, #{contractId,jdbcType=VARCHAR},
+		#{contractName,jdbcType=VARCHAR},
+		#{goodsValue,jdbcType=INTEGER},
+		#{buyNum,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
+		#{timeCreateOrder,jdbcType=VARCHAR},
+		#{timeModifyOrder,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR},
+		#{goodsName,jdbcType=VARCHAR}, #{gameAccount,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{merchantOrderId,jdbcType=VARCHAR},
+		#{goodsId,jdbcType=VARCHAR})
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.AdvanceNotifyInfo">
+		insert into advance_notify_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="contractId != null">
+				contract_id,
+			</if>
+			<if test="contractName != null">
+				contract_name,
+			</if>
+			<if test="goodsValue != null">
+				goods_value,
+			</if>
+			<if test="buyNum != null">
+				buy_num,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="timeCreateOrder != null">
+				time_create_order,
+			</if>
+			<if test="timeModifyOrder != null">
+				time_modify_order,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="gameAccount != null">
+				game_account,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				#{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractName != null">
+				#{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsValue != null">
+				#{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="buyNum != null">
+				#{buyNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="timeCreateOrder != null">
+				#{timeCreateOrder,jdbcType=VARCHAR},
+			</if>
+			<if test="timeModifyOrder != null">
+				#{timeModifyOrder,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="gameAccount != null">
+				#{gameAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				#{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 根据主键更新 -->
+	<update id="updateByOrderId" parameterType="com.ekhui.pojo.AdvanceNotifyInfo">
+		update advance_notify_info
+		<set>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractName != null">
+				contract_name = #{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsValue != null">
+				goods_value = #{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="buyNum != null">
+				buy_num = #{buyNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="timeCreateOrder != null">
+				time_create_order = #{timeCreateOrder,jdbcType=VARCHAR},
+			</if>
+			<if test="timeModifyOrder != null">
+				time_modify_order = #{timeModifyOrder,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="gameAccount != null">
+				game_account = #{gameAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				goods_id = #{goodsId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</update>
+</mapper>

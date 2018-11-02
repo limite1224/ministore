@@ -1,0 +1,110 @@
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Thu Nov 01 10:29:23 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1kwq5p9j18ucu|e31468, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1kwq5p9j18ucu|e31468, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 5426 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully
+Root WebApplicationContext: initialization started
+Refreshing Root WebApplicationContext: startup date [Thu Nov 01 10:33:08 CST 2018]; root of context hierarchy
+Loading XML bean definitions from class path resource [applicationContext.xml]
+Loading properties file from class path resource [com.properties]
+MLog clients using log4j logging.
+Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+Logging initialized using 'org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge0xu9y1kwuy3qzdg1it|15b55cf, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge0xu9y1kwuy3qzdg1it|15b55cf, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/web_store?useUnicode=true&characterEncoding=utf8, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+Root WebApplicationContext: initialization completed in 1592 ms
+Parsing configuration file [struts-default.xml]
+Parsing configuration file [struts-plugin.xml]
+Parsing configuration file [struts.xml]
+Choosing bean (spring) for (com.opensymphony.xwork2.ObjectFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ActionFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ResultFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ConverterFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.InterceptorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.ValidatorFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.factory.UnknownHandlerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.FileManagerFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.XWorkConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.CollectionConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.ArrayConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.DateConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.NumberConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.impl.StringConverter)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionPropertiesProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionFileProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ConversionAnnotationProcessor)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterCreator)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.TypeConverterHolder)
+Choosing bean (struts) for (com.opensymphony.xwork2.TextProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.LocaleProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.ActionProxyFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.conversion.ObjectTypeDeterminer)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.mapper.ActionMapper)
+Choosing bean (jakarta) for (org.apache.struts2.dispatcher.multipart.MultiPartRequest)
+Choosing bean (struts) for (org.apache.struts2.components.UrlRenderer)
+Choosing bean (struts) for (com.opensymphony.xwork2.validator.ActionValidatorManager)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.ValueStackFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionProvider)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.reflection.ReflectionContextFactory)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.PatternMatcher)
+Choosing bean (struts) for (org.apache.struts2.util.ContentTypeMatcher)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.StaticContentLoader)
+Choosing bean (struts) for (com.opensymphony.xwork2.UnknownHandlerManager)
+Choosing bean (struts) for (org.apache.struts2.views.util.UrlHelper)
+Choosing bean (struts) for (com.opensymphony.xwork2.util.TextParser)
+Choosing bean (struts) for (org.apache.struts2.dispatcher.DispatcherErrorHandler)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.ExcludedPatternsChecker)
+Choosing bean (struts) for (com.opensymphony.xwork2.security.AcceptedPatternsChecker)
+Loading global messages from [i18n]
+Initializing Struts-Spring integration...
+Setting autowire strategy to name
+... initialized Struts-Spring integration successfully

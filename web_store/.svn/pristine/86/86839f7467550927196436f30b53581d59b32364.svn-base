@@ -1,0 +1,90 @@
+package com.leshun.plc.action.user;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.ProductInfoComp;
+import com.leshun.plc.comp.ProductMsgMapComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.sls.core.socket.ServerDisponseException;
+
+public class ProductInfoAction
+		extends SuperAction<ProductInfo, ProductInfoComp> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8286910764491096426L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new ProductInfo();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = comp.queryPage(entity);
+		} catch (Exception e) {
+			log.info("4101：查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		return NONE;
+	}
+
+	@Override
+	public String save() {
+		return NONE;
+	}
+
+	@Override
+	public String delete() {
+
+		return NONE;
+	}
+
+	private List<ProductMsgMap> pmml;
+	@Autowired
+	private ProductMsgMapComp pmmComp;
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			addActionError(ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		try {
+			entity = comp.selectByPrimaryKey(id);
+			ProductMsgMap pmm = new ProductMsgMap();
+			pmm.setProductKey(entity.getProductKey());
+			pmm.setProductName(entity.getProductName());
+			pmml = pmmComp.queryList(pmm);
+		} catch (Exception e) {
+			log.info("查询异常", e);
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return DETAIL;
+	}
+
+	public List<ProductMsgMap> getPmml() {
+		return pmml;
+	}
+
+	public void setPmml(List<ProductMsgMap> pmml) {
+		this.pmml = pmml;
+	}
+
+}

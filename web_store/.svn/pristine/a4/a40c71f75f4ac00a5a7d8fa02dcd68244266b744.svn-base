@@ -1,0 +1,16 @@
+package com.leshun.plc.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.leshun.plc.bean.DeviceMsgMap;
+import com.leshun.plc.dao.DeviceMsgMapDao;
+@Repository("deviceMsgMapDao")
+public class DeviceMsgMapDaoImpl extends BaseDaoImpl<DeviceMsgMap>
+		implements DeviceMsgMapDao {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2200615380024736058L;
+
+}

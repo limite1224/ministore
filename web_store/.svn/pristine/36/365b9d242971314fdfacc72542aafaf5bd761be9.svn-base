@@ -1,0 +1,74 @@
+package com.leshun.plc.action.business;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.comp.DeviceInfoComp;
+import com.leshun.plc.constant.Constant;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceInfoAction extends SuperAction<DeviceInfo> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1447130409772565410L;
+
+	@Autowired
+	private DeviceInfoComp deviceInfoComp;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceInfo();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = deviceInfoComp.queryPage(entity);
+		} catch (Exception e) {
+			throw new ServerDisponseException("999", "查询异常");
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		if (StringUtils.isNotBlank(id)) {
+			entity = deviceInfoComp.selectByPrimaryKey(id);
+		}
+		return FORM;
+	}
+
+	@Override
+	public String save() {
+		if (StringUtils.isBlank(id)) {
+			deviceInfoComp.insertSelective(entity);
+		} else {
+			deviceInfoComp.updateByPrimaryKeySelective(entity);
+		}
+		redirectionUrl = "device_info!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		if (StringUtils.isBlank(id)) {
+			deviceInfoComp.deleteByPrimaryKey(id);
+		}
+		redirectionUrl = "device_info!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			throw new ServerDisponseException("9999", "查询失败,ID为空。");
+		}
+		deviceInfoComp.selectByPrimaryKey(id);
+		return DETAIL;
+	}
+
+}

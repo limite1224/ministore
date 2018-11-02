@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户支付</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width" />
+<meta name="description" content="用户支付">
+<meta name="keywords" content="用户支付">
+<link rel="stylesheet" href="payStaticFiles/m.common.css">
+<script type="text/javascript"
+	src="payStaticFiles/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="payStaticFiles/js/restrict_input.js"></script>
+
+
+
+</head>
+<!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+手机网站适应性广告代码 -->
+<ins class="adsbygoogle" style="display: block"
+	data-ad-client="ca-pub-1449491313257558" data-ad-slot="1246518959"
+	data-ad-format="auto"></ins>
+<script>
+	
+</script>
+<body class="mWrap">
+	<header class="topHd">
+		<!--<a href="javascript:history.back();" class="back">返回</a>-->
+		<span>自助服务</span>
+	</header>
+	<form id="payForm" method="post" action="">
+		<section class="mContent">
+			<ul class="form">
+				<li>请输入支付金额： 
+					<input type="hidden" class="input" id="merchantAppId" name="merchantAppId" /> 
+					<input type="hidden" class="input" id="leMerchantId" name="leMerchantId" /> 
+					<input type="hidden" class="input" id="subMerchantId" name="subMerchantId" />
+					<input type="hidden" class="input" id="subject" name="subject" />
+					<input type="hidden" class="input" id="body" name="body" /> 
+					<input type="hidden" class="input" id="sign" name="sign" />
+					<input type="hidden" class="input" id="sellerId" name="sellerId" />
+				</li>
+				<li>
+				 <input type="text" class="input" placeholder="支付金额" id="payMoney" name="payMoney" />
+				</li>
+
+
+				<li class="btnArea">
+					<input type="button" class="btn" id="hlkOK" onclick="javascript:{this.disabled=true;pay_submit();}" value="立&nbsp;&nbsp;即&nbsp;&nbsp;支&nbsp;&nbsp;付" />
+				</li>
+
+
+			</ul>
+		</section>
+	</form>
+</body>
+<script type="text/javascript">
+	
+	function pay_submit() {
+		if ($('#payMoney').val() == '') {
+			alert('支付金额不能为空');
+			return false;
+		}
+		var vr = validateMoney();
+
+		if (!vr) {
+			return false;
+		}
+		var merchantAppId = $("#merchantAppId").val();
+		var leMerchantId = $("#leMerchantId").val();
+		var subMerchantId = $("#subMerchantId").val();
+		var subject = $("#subject").val();
+		var body = $("#body").val();
+		var sign = $("#sign").val();
+		var sellerId = $("#sellerId").val();
+		var payMoney= $("#payMoney").val();
+		$('#hlkOK').disabled=true;
+		
+		$.ajax({
+			type : "POST",
+			async : false,
+			url : "http://pay.leyaozhineng.com/scan/unifiedPay.cgi",
+			data : {
+				merchantAppId : merchantAppId,
+				leMerchantId : leMerchantId,
+				subMerchantId : subMerchantId,
+				subject : subject,
+				body : body,
+				sign : sign,
+				payMoney : payMoney,
+				sellerId:sellerId
+			},
+			success : function(msg) {
+				if (msg != undefined && msg != '') {
+					var result = eval( msg );
+					var qrCode = result.qrCode;
+					if (qrCode != undefined && qrCode != null && qrCode != '') {
+						window.location.href = qrCode;
+					} else {
+						alert('未知错误');
+					}
+				}else{
+					alert('未知错误');
+				}
+			}
+		});
+	}
+
+	function validateMoney() {
+		var m = $('#payMoney').val();
+
+		var partten = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+
+		if (!m.match(partten)) {
+			alert('请正确输入支付金额');
+			return false;
+		}
+		return true;
+
+	}
+
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");//构造一个含有目标参数的正则表达式对象        
+		var r = window.location.search.substr(1).match(reg);//匹配目标参数
+		if (r != null) {
+			return decodeURI(r[2]);
+		}
+		return null;//返回参数值
+
+	}
+
+	$(document).ready(function() {
+
+		var merchantAppId = getUrlParam("merchantAppId");
+		var leMerchantId = getUrlParam("leMerchantId");
+		var subMerchantId = getUrlParam("subMerchantId");
+		var subject = getUrlParam("subject");
+		var body = getUrlParam("body");
+		var sign = getUrlParam("sign");
+		var sellerId = getUrlParam("sellerId");
+
+		$('#merchantAppId').val(merchantAppId);
+		$('#leMerchantId').val(leMerchantId);
+		$('#subMerchantId').val(subMerchantId);
+		$('#subject').val(subject);
+		$('#body').val(body);
+		$('#sign').val(sign);
+		$('#sellerId').val(sellerId);
+	});
+
+	function onBridgeReady() {
+		WeixinJSBridge.invoke('getBrandWCPayRequest', {
+			"appId" : "wx249b345786e25d06", //公众号名称，由商户传入     
+			"timeStamp" : "1502761850", //时间戳，自1970年以来的秒数     
+			"nonceStr" : "e61463f8efa94090b1f366cccfbbb555", //随机串     
+			"package" : "prepay_id=wx20170815094409824440b2a60907201222",
+			"signType" : "MD5", //微信签名方式：     
+			"paySign" : "8A0F07432F2A56CDACB8475209BCBD2D" //微信签名 
+		}, function(res) {
+			if (res.err_msg == "get_brand_wcpay_request:ok") {
+			} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+		});
+	}
+</script>
+</html>

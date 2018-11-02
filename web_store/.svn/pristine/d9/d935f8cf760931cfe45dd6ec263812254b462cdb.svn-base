@@ -1,0 +1,17 @@
+package com.leshun.plc.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.dao.DeviceInfoDao;
+
+@Repository("deviceInfoDao")
+public class DeviceInfoDaoImpl extends BaseDaoImpl<DeviceInfo>
+		implements DeviceInfoDao {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2490250136393470788L;
+
+}

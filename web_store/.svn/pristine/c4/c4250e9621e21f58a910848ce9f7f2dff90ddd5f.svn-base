@@ -1,0 +1,149 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="订单详情">
+
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>订单详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        订单编号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.orderId" class="formText {required: true}"
+               value="${(recOrder.orderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        子订单编号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.rechargeOrderId" class="formText {required: true}"
+               value="${(recOrder.rechargeOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="recOrder.goodsName" class="formText {required: true}"
+               value="${(recOrder.goodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.goodsid" class="formText {required: true}"
+               value="${(recOrder.goodsid)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+       下游商户号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.contractId" class="formText {required: true}"
+               value="${(recOrder.contractId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+<tr>
+    <th>
+       易卡汇平台订单号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.ekhuiOrderId" class="formText {required: true}"
+               value="${(recOrder.ekhuiOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单生成时间:
+    </th>
+    <td>
+        <input type="text" name="recOrder.createOrderTime" class="formText {required: true}"
+               value="${(recOrder.createOrderTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+<tr>
+    <th>
+        充值账号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.gameaccount" class="formText {required: true}"
+               value="${(recOrder.gameaccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        状态:
+    </th>
+    <td>
+       
+                        <#if recOrder.status?? && recOrder.status == "0">
+                            失败
+                        <#elseif recOrder.status?? && recOrder.status == "1">
+                            成功
+                        <#elseif recOrder.status?? && recOrder.status =="2">
+                            处理中
+                        </#if>
+</tr>
+<tr>
+    <th>
+        上游订单成功时间:
+    </th>
+    <td>
+        <input type="text" name="recOrder.supOrderSuccessTime" class="formText {required: true}"
+               value="${(recOrder.supOrderSuccessTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游订单号:
+    </th>
+    <td>
+        <input type="text" name="recOrder.merchantOrderId" class="formText {required: true}"
+               value="${(recOrder.merchantOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        备注:
+    </th>
+    <td>
+        <textarea name="recOrder.remark" class="formTextarea" readonly="readonly">${(recOrder.remark)!}</textarea>
+    </td>
+</tr>
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>

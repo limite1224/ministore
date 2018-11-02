@@ -1,0 +1,12 @@
+package com.leshun.plc.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.dao.ProductMsgMapDao;
+
+@Repository("productMsgMapDao")
+public class ProductMsgMapDaoImpl extends BaseDaoImpl<ProductMsgMap>
+		implements ProductMsgMapDao {
+
+}

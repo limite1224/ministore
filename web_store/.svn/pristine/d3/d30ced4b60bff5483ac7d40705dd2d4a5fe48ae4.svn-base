@@ -1,0 +1,110 @@
+
+package com.leshun.plc.comp.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.google.gson.reflect.TypeToken;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceMsgMap;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.bean.Pagination;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.DeviceShadowComp;
+import com.leshun.plc.service.DeviceInfoService;
+import com.leshun.plc.service.DeviceMsgMapService;
+import com.leshun.plc.service.DeviceShadowService;
+import com.leshun.plc.service.ProductMsgMapService;
+import com.leshun.plc.util.CommonUtil;
+
+@Component
+public class DeviceShadowCompImpl
+		extends BaseCompImpl<DeviceShadow, DeviceShadowService>
+		implements DeviceShadowComp {
+
+	@Autowired
+	private DeviceMsgMapService deviceMsgMapService;
+	@Autowired
+	private ProductMsgMapService productMsgMapService;
+	@Autowired
+	private DeviceInfoService deviceInfoService;
+
+	@Override
+	public Pagination<DeviceShadow> queryPage(DeviceShadow entity)
+			throws Exception {
+		Pagination<DeviceShadow> page = super.queryPage(entity);
+		List<DeviceShadow> list = page.getList();
+		for (DeviceShadow deviceShadow : list) {
+			Map<String, String> customPropertyMap = this
+					.parseMsgInfo(deviceShadow);
+			if (customPropertyMap == null) {
+				continue;
+			}
+			deviceShadow.setCustomPropertyMap(customPropertyMap);
+		}
+		page.setList(list);
+		return page;
+	}
+
+	private Map<String, String> parseMsgInfo(DeviceShadow deviceShadow) {
+		DeviceInfo deviceInfo = deviceInfoService
+				.selectByPrimaryKey(deviceShadow.getDeviceId());
+		String msgInfo = deviceShadow.getMsgInfo();
+		if (StringUtils.isBlank(msgInfo)) {
+			return null;
+		}
+		List<Map<String, String>> msgList = null;
+		try {
+			msgList = CommonUtil.gson().fromJson(msgInfo,
+					new TypeToken<ArrayList<HashMap<String, String>>>() {
+					}.getType());
+		} catch (Exception e) {
+			log.info("Gson解析数据：" + msgInfo + "出现异常！", e);
+			return null;
+		}
+		Map<String, String> customPropertyMap = new HashMap<String, String>();
+		for (Map<String, String> m : msgList) {
+			// 属性值
+			String key = m.get("i");
+			String value = m.get("v");
+
+			if ("1".equals(deviceInfo.getMsgType())) {
+				// 根据产品规则
+				ProductMsgMap pmm = new ProductMsgMap();
+				pmm.setProductKey(deviceInfo.getProductKey());
+				pmm.setProductMsgKey(key);
+				List<ProductMsgMap> pmml = productMsgMapService.queryList(pmm);
+				if (pmml != null && pmml.size() > 0) {
+					customPropertyMap.put(
+							pmml.get(0).getProductMsgName() + "(" + key + ")",
+							value);
+				}
+			} else {
+				// 其他均根据设备
+				DeviceMsgMap dmm = new DeviceMsgMap();
+				dmm.setDiviceId(deviceInfo.getDeviceId());
+				dmm.setDiviceMsgKey(key);
+				List<DeviceMsgMap> dmml = deviceMsgMapService.queryList(dmm);
+				if (dmml != null && dmml.size() > 0) {
+					customPropertyMap.put(
+							dmml.get(0).getDiviceMsgName() + "(" + key + ")",
+							value);
+				}
+			}
+		}
+		return customPropertyMap;
+	}
+
+	@Override
+	public DeviceShadow selectDetailByPrimaryKey(String id) {
+		DeviceShadow deviceShadow = service.selectByPrimaryKey(id);
+		deviceShadow.setCustomPropertyMap(this.parseMsgInfo(deviceShadow));
+		return deviceShadow;
+	}
+}

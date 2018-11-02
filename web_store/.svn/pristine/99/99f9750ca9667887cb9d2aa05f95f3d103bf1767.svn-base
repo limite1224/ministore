@@ -1,0 +1,24 @@
+package com.leshun.plc.comp.impl;
+
+import java.util.UUID;
+
+import org.springframework.stereotype.Component;
+
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.comp.DeviceMessageComp;
+import com.leshun.plc.service.DeviceMessageService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Component
+public class DeviceMessageCompImpl
+		extends BaseCompImpl<DeviceMessage, DeviceMessageService>
+		implements DeviceMessageComp {
+
+	@Override
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity)
+			throws ServerDisponseException {
+		validate(entity);
+		entity.setId(UUID.randomUUID().toString());
+		return service.insertMessageAndUpdateShow(entity);
+	}
+}

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.SupplementOrderInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.SupplementOrderInfo">
+		<id column="supplement_order_id" property="supplementOrderId"
+			jdbcType="VARCHAR" />
+		<result column="ekhui_order_id" property="ekhuiOrderId"
+			jdbcType="VARCHAR" />
+		<result column="root_order_id" property="rootOrderId" jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+		<result column="goods_value" property="goodsValue" jdbcType="INTEGER" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="supplement_limit_time" property="supplementLimitTime"
+			jdbcType="VARCHAR" />
+		<result column="limit_times" property="limitTimes" jdbcType="INTEGER" />
+		<result column="insert_time" property="insertTime" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+		<result column="api_start_time" property="apiStartTime"
+			jdbcType="VARCHAR" />
+		<result column="business_type" property="businessType"
+			jdbcType="VARCHAR" />
+		<result column="recharge_value" property="rechargeValue"
+			jdbcType="INTEGER" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="game_account" property="gameAccount" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		supplement_order_id, ekhui_order_id, root_order_id,
+		goods_id, goods_value, goods_name,
+		contract_id, status,
+		supplement_limit_time, limit_times, insert_time,
+		modify_time,
+		api_start_time, business_type, recharge_value, operator,game_account
+	</sql>
+
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by insert_time desc
+	</sql>
+
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and insert_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and insert_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+
+			<if test="supplementOrderId != null and supplementOrderId !=''">
+				and supplement_order_id
+				=#{supplementOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="ekhuiOrderId != null and ekhuiOrderId !=''">
+				and ekhui_order_id
+				=#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="rootOrderId != null and rootOrderId !=''">
+				and root_order_id = #{rootOrderId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="goodsId != null and goodsId !=''">
+				and goods_id = #{goodsId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+			<if test="contractId != null and contractId !=''">
+				and contract_id = #{contractId,jdbcType=INTEGER}
+			</if>
+
+			<if test="status != null and status !=''">
+				and status = #{status,jdbcType=INTEGER}
+			</if>
+
+			<if test="rechargeValue != null and rechargeValue !=''">
+				and recharge_value = #{rechargeValue,jdbcType=INTEGER}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and business_type =
+				#{businessType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="gameAccount != null and gameAccount !=''">
+				and game_account =
+				#{gameAccount,jdbcType=VARCHAR}
+			</if>
+
+		</trim>
+	</sql>
+
+
+
+
+
+
+	<sql id="pageConditionTwo">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and api_start_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and api_start_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="supplementOrderId != null and supplementOrderId !=''">
+				and supplement_order_id
+				=#{supplementOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="ekhuiOrderId != null and ekhuiOrderId !=''">
+				and ekhui_order_id
+				=#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="rootOrderId != null and rootOrderId !=''">
+				and root_order_id = #{rootOrderId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="goodsId != null and goodsId !=''">
+				and goods_id = #{goodsId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+			<if test="contractId != null and contractId !=''">
+				and contract_id = #{contractId,jdbcType=INTEGER}
+			</if>
+
+			<if test="status != null and status !=''">
+				and status = #{status,jdbcType=INTEGER}
+			</if>
+
+			<if test="rechargeValue != null and rechargeValue !=''">
+				and recharge_value = #{rechargeValue,jdbcType=INTEGER}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and business_type =
+				#{businessType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="gameAccount != null and gameAccount !=''">
+				and game_account =
+				#{gameAccount,jdbcType=VARCHAR}
+			</if>
+
+		</trim>
+	</sql>
+
+
+
+
+
+	<!-- 查询总数 -->
+	<select id="selectAccount" resultType="java.lang.Integer"
+		parameterType="com.ekhui.pojo.SupplementOrderInfo">
+		select count(supplement_order_id) from supplement_order_info
+		<include refid="pageCondition" />
+		<include refid="limit" />
+	</select>
+
+	
+	
+	<select id="selectListTwo" parameterType="com.ekhui.pojo.SupplementOrderInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from supplement_order_info
+		<include refid="pageConditionTwo" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+	
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.SupplementOrderInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from supplement_order_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+	<select id="queryBykey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from supplement_order_info
+		where supplement_order_id =
+		#{supplementOrderId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		supplement_order_info
+		where supplement_order_id =
+		#{supplementOrderId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.SupplementOrderInfo">
+		insert into supplement_order_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="supplementOrderId != null">
+				supplement_order_id,
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id,
+			</if>
+			<if test="rootOrderId != null">
+				root_order_id,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="goodsValue != null">
+				goods_value,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="contractId != null">
+				contract_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="supplementLimitTime != null">
+				supplement_limit_time,
+			</if>
+			<if test="limitTimes != null">
+				limit_times,
+			</if>
+			<if test="insertTime != null">
+				insert_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="apiStartTime != null">
+				api_start_time,
+			</if>
+			<if test="businessType != null">
+				business_type,
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="gameAccount != null">
+				game_account,
+			</if>
+
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="supplementOrderId != null">
+				#{supplementOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				#{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rootOrderId != null">
+				#{rootOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsValue != null">
+				#{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				#{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="supplementLimitTime != null">
+				#{supplementLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="limitTimes != null">
+				#{limitTimes,jdbcType=INTEGER},
+			</if>
+			<if test="insertTime != null">
+				#{insertTime,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="apiStartTime != null">
+				#{apiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				#{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+
+			<if test="gameAccount != null">
+				#{gameAccount,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ekhui.pojo.SupplementOrderInfo">
+		update supplement_order_info
+		<set>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rootOrderId != null">
+				root_order_id = #{rootOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				goods_id = #{goodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsValue != null">
+				goods_value = #{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="supplementLimitTime != null">
+				supplement_limit_time =
+				#{supplementLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="limitTimes != null">
+				limit_times = #{limitTimes,jdbcType=INTEGER},
+			</if>
+			<if test="insertTime != null">
+				insert_time = #{insertTime,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="apiStartTime != null">
+				api_start_time = #{apiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				business_type = #{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value = #{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="gameAccount != null">
+				game_account = #{gameAccount,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where supplement_order_id = #{supplementOrderId,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

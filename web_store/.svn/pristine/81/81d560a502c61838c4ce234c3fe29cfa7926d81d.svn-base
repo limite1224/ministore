@@ -1,0 +1,219 @@
+<#include "../template/template_listPage.ftl"/>
+<@header title="paas平台设备影子信息">
+
+</@header>
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备影子信息
+					<small>
+						设备影子信息管理
+					</small>
+				</h1>
+			</div>
+			<div class="row" style="padding-left:20px;padding-right:20px">
+			<@pageList page=(page!) id="listFrom" action="${web_base}/business/p_device_shadow!list.htm" query="deviceShadow" isEmpty=true>
+					<!--条件查询-->
+				<div class="row">
+				
+				<div class="row">
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-1">设备编号</label>
+								<input type="text" id="id-1" placeholder="设备编号" class="form-control required"
+								 		name="deviceShadow.deviceId" value="${(deviceShadow.deviceId)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-2">设备名称</label>
+								<input type="text" id="id-2" placeholder="设备名称" class="form-control required"
+								 		name="deviceShadow.deviceName" value="${(deviceShadow.deviceName)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="form-field-select-2">设备状态</label>
+							<br>
+							<select class="width-90 link-height-1 chosen-select"  id="form-field-select-2" data-placeholder="Choose status..." style="display: none;"
+								 		name="deviceShadow.status" value="${(deviceShadow.status)!}" >
+								<option value="">
+			                    -请选择设备状态-
+			                	</option>
+			                	<option value="0" <#if deviceShadow?? && deviceShadow.status?? && deviceShadow.status="0">selected</#if>>
+			                		禁用
+			                	</option>
+			                	<option value="1" <#if deviceShadow?? && deviceShadow.status?? && deviceShadow.status="1">selected</#if>>
+			                		启用
+			                	</option>
+							</select>
+						</div>
+					</div>
+					<#--
+					<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="id-date-range-picker-1">日期范围</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="icon-calendar bigger-110"></i>
+									</span>
+									<input class="form-control date-range-picker-leshun" type="text" name="accessLog.createTime" id="id-date-range-picker-1" />
+									
+								</div>
+							</div>
+					</div>
+				-->
+				</div>
+				
+				<div class="row" style="padding-left:20px;">
+					<button  type="submit" class="btn btn-sm btn-primary no-border"><i class="icon-search icon-1x icon-only"></i>查询</button>&nbsp;
+					<#----
+					<a href="${web_base}/business/p_device_shadow!toAdd.htm" >
+						<button  type="button" class="btn btn-sm btn-success no-border"><i class="icon-plus icon-1x icon-only"></i>新增</button>&nbsp;
+	                </a>
+		             
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-danger  no-border"><i class="icon-trash icon-1x icon-only"></i>删除</button>&nbsp;
+		            </a>
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-warning no-border"><i class="icon-download-alt icon-1x icon-only"></i>导出</button>&nbsp;
+		            </a>
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-info no-border"><i class="icon-edit icon-1x icon-only"></i>修改</button>&nbsp;
+		            </a>
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-warning  no-border"><i class="icon-arrow-right icon-1x icon-on-right "></i>注销</button>
+                  	</a>
+                  	--->
+				</div>
+
+                 </div>
+                 <hr>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="table-header">
+							paas平台设备影子
+						</div>
+							<div class="table-responsive">
+								<table id="userTable" class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="center">
+												<label>
+													<input type="checkbox" class="ace"/>
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>设备编号</th>
+											<th>设备名称</th>
+											<th>mac地址，模块地址</th>
+											<th>定位地址</th>
+											<th>接入地址</th>
+											<th>设备状态</th>
+											<th>通讯状态</th>
+											<th>创建者</th>
+											<th>修改时间</th>
+											<th>最新操作员</th>
+											<th>备注</th>
+											<th>删除标记</th>
+										</tr>
+									</thead>
+								<tbody>
+								<#if page?? && page.list??>
+									<#list  page.list as obj>
+										<tr>
+											<td class="center">
+												<label>
+													<input type="checkbox" class="ace"   name="ids" value="${(obj.deviceId)!}" />
+													<span class="lbl"></span>
+												</label>
+											</td>
+											<td>
+												<span>${(obj.deviceId)!}</span>
+											</td>
+											<td>
+												<span>${(obj.deviceName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.deviceMac)!}</span>
+											</td>
+											<td>
+												<span>${(obj.location)!}</span>
+											</td>
+											<td>
+												<span>${(obj.accessAddress)!}</span>
+											</td>
+											<td>
+												<#if obj?? && obj.status?? && obj.status="0" > 
+													禁用
+						           	    		<#elseif obj?? && obj.status?? && obj.status="1" >
+						           	    	 		启用
+												</#if>
+											</td>
+											<td>
+												<#if obj?? && obj.comStatus?? && obj.comStatus="0" > 
+													离线
+						           	    		<#elseif obj?? && obj.comStatus?? && obj.comStatus="1" >
+						           	    	 		在线
+												</#if>
+											</td>
+											<td>
+												<span>${(obj.createBy)!}</span>
+											</td>	
+											<td>
+												<span>${(obj.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}</span>
+											</td>	
+											<td>
+												<span>${(obj.updateBy)!}</span>
+											</td>
+											<td>
+												<span>${(obj.remark)!}</span>
+											</td>	
+											<td>
+												<#if obj?? && obj.delFlag?? && obj.delFlag="0" >  
+													正常
+												<#elseif obj?? && obj.delFlag?? && obj.delFlag="1" >
+													删除
+												<#elseif obj?? && obj.delFlag?? && obj.delFlag="2" >
+													审核
+       											</#if>		
+											</td>																							
+											<td>
+												<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="${web_base}/business/p_device_shadow!details.htm?deviceId=${(obj.deviceId)!}" title="详情">
+														<i class="icon-zoom-in bigger-130"></i>
+													</a>
+			
+													<#---
+													<a class="green" href="${web_base}/business/p_device_shadow!toEdit.htm?deviceId=${(obj.deviceId)!}" >
+														<i class="icon-pencil bigger-130"></i>
+													</a>
+			
+													<a class="red" href="${web_base}/business/p_device_shadow!delete.htm?deviceId=${(obj.deviceId)!}" >
+														<i class="icon-trash bigger-130"></i>
+													</a>
+													-->
+												</div>
+			
+											</td>
+										</tr>
+									</#list>
+								</#if>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</@pageList>
+			</div>
+		</div>
+	</div>
+	<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+		<i class="icon-double-angle-up icon-only bigger-110"></i>
+	</a>
+	</div>
+		
+</body>
+</html>

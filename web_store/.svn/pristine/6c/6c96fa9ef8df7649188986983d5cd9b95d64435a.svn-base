@@ -1,0 +1,61 @@
+
+package com.leshun.plc.action.business;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.comp.DeviceMessageComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceMessageAction
+		extends SuperAction<DeviceMessage, DeviceMessageComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7359878984826956592L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceMessage();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		page = comp.queryPage(entity);
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		comp.selectByPrimaryKey(id);
+		return DETAIL;
+	}
+
+}

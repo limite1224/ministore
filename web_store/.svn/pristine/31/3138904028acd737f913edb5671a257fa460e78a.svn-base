@@ -1,0 +1,110 @@
+package com.leshun.plc.pojo.sys;
+
+import java.io.Serializable;
+
+public class UserInfoVO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3818038107624632299L;
+	/**
+	 * 操作员账号
+	 */
+	private String userName;
+	/**
+	 * 当前用户临时分配的编号
+	 */
+	private String loginTmpId;
+	/**
+	 * 操作者的详细信息
+	 */
+	private OperatorInfo operator;
+	/**
+	 * 用户id
+	 */
+	private String userId;
+	/**
+	 * 类型：0-员工1-运营商2-代理商3-商户4- 银行5-企业6-其他
+	 */
+	private String type;
+	/**
+	 * 最后登陆ip
+	 */
+	private String currentIp;
+	/**
+	 * 有权限的交易代码
+	 */
+	private String serviceCode;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	private String mobile;
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getLoginTmpId() {
+		return loginTmpId;
+	}
+
+	public void setLoginTmpId(String loginTmpId) {
+		this.loginTmpId = loginTmpId;
+	}
+
+	public OperatorInfo getOperator() {
+		return operator;
+	}
+
+	public void setOperator(OperatorInfo operator) {
+		this.operator = operator;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCurrentIp() {
+		return currentIp;
+	}
+
+	public void setCurrentIp(String currentIp) {
+		this.currentIp = currentIp;
+	}
+
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
+	}
+
+}

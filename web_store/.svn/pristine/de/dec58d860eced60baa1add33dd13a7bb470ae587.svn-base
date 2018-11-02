@@ -1,0 +1,8 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceShadow;
+
+public interface DeviceShadowComp extends BaseComp<DeviceShadow> {
+
+	public DeviceShadow selectDetailByPrimaryKey(String id) throws Exception;
+}

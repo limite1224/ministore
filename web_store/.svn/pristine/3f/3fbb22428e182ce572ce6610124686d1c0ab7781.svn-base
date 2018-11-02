@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上海祥钻信息科技有限公司</title>
+<style type="text/css">
+body {
+	margin: 0px auto;
+	text-align: center;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+div {
+	margin: 0px auto;
+	text-align: center;
+	padding: 0px;
+}
+.error {
+	width: 400px;
+	height: 150px;
+	text-align: center;
+	background: #fff;
+	position: absolute;
+	left: 35%;
+	top: 35%;
+	background: url(error.png) no-repeat 0 0 transparent;
+}
+.error_c {
+	height: 150px;
+	line-height: 148px;
+	font-size: 18px;
+	color: #F80;
+	text-align: left;
+	font-weight: bold;
+	padding-left: 110px;
+}
+</style>
+</head>
+
+<body>
+<div class="error">
+  <div class="error_c">欢迎上海祥钻信息科技有限公司！</div>
+  <a href="recharge/recharge_index!getPage.htm" >交易地址</a><br/>
+  <a href="recharge/recharge_index!getPagePhone.htm" >简易交易地址</a>
+</div>
+</body>
+</html>

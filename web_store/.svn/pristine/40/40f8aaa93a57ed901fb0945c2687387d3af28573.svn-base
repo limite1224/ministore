@@ -1,0 +1,184 @@
+package com.leshun.plc.web.interceptor;
+
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.pojo.sys.UserInfoVO;
+import com.leshun.plc.util.UserInfoVOThreadLocal;
+import com.leshun.plc.web.freemarker.CustomFreemarkerManager;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.opensymphony.xwork2.interceptor.PreResultListener;
+import com.sls.core.common.KeyUtil;
+import com.sls.core.socket.ServerDisponseException;
+
+public class LoginInterceptor implements Interceptor {
+	private static final long serialVersionUID = 8109886567899928146L;
+	private static final Logger log = Logger.getLogger(LoginInterceptor.class);
+	// @Resource(name = "memcachedClient")
+	// private MemCachedClient memcachedClient;
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String intercept(ActionInvocation invocation) throws Exception {
+		// 判断是否需要拦截
+		// LoginAction -> index login不拦截
+		if (!(invocation.getProxy().getActionName().equals("login")
+				&& invocation.getProxy().getMethod().equals("index")
+				|| invocation.getProxy().getMethod().equals("login"))
+				// DeviceMessageAction-> deviceMessageAccept不拦截
+				&& !(invocation.getProxy().getActionName()
+						.equals("device_message")
+						&& invocation.getProxy().getMethod()
+								.equals("deviceMessageAccept"))) {
+
+			// 验证登录
+			Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+			UserInfoVO op = null;
+			UserInfoVO vo = new UserInfoVO();
+			String sessionId = null;
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (CustomFreemarkerManager
+							.getCookieName(Constant.COOKIE_NAME_USERINFO)
+							.equals(cookie.getName())) {
+						Object cookieInfo = cookie.getValue();
+						String key = null;
+						if (cookieInfo instanceof String) {
+							key = KeyUtil.cookieDencrypt(cookieInfo.toString());
+						}
+						HttpSession session = ServletActionContext.getRequest()
+								.getSession();
+						Object obj = session.getAttribute(key);
+						if (obj instanceof UserInfoVO) {
+							op = (UserInfoVO) obj;
+						}
+					} else if (CustomFreemarkerManager
+							.getCookieName(Constant.SESSION_ID)
+							.equals(cookie.getName())) {
+						sessionId = cookie.getValue();
+					}
+				}
+			}
+			vo.setCurrentIp(getIpAddr(ServletActionContext.getRequest()));
+			if (op != null && StringUtils.isNotBlank(sessionId)
+					&& StringUtils.isNotBlank(op.getLoginTmpId())
+					&& !sessionId.equals(op.getLoginTmpId())) {
+				if (!(invocation.getProxy().getActionName().equals("login")
+						&& (invocation.getProxy().getMethod().equals("login")
+								|| (invocation.getProxy().getMethod()
+										.equals("ssoCheck"))
+								|| (invocation.getProxy().getMethod()
+										.equals("index"))))) {
+					log.info("用户在别的地方登录被迫退出");
+					invocation.getInvocationContext().put("login_error",
+							"用户在别的地方登录被迫退出");
+					return "kickedOut";
+				}
+			}
+			// 没有登录先登录
+			if (op == null) {
+				log.info("请先登录");
+				invocation.getInvocationContext().put("login_error", "请先登录");
+				return "kickedOut";
+			}
+			if (!"admin".equals(op.getAccount()) && "/business"
+					.equals(invocation.getProxy().getNamespace())) {
+				throw new ServerDisponseException("9999", "此用户未获得此页面权限");
+			}
+			if (op != null) {
+				vo.setId(op.getId());
+				vo.setType(op.getType());
+				vo.setTel(op.getTel());
+				vo.setAccount(op.getAccount());
+			}
+			UserInfoVOThreadLocal.set(vo);
+			invocation.addPreResultListener(new PreResultListener() {
+				@Override
+				public void beforeResult(ActionInvocation invocation,
+						String resultCode) {
+					ActionContext.getContext().put("account",
+							UserInfoVOThreadLocal.get().getAccount());
+				}
+			});
+		} else if (invocation.getProxy().getActionName().equals("login")
+				&& invocation.getProxy().getMethod().equals("login")) {
+			// 如果是登录，则登录cookie写入
+			invocation.addPreResultListener(new PreResultListener() {
+				@Override
+				public void beforeResult(ActionInvocation invocation,
+						String resultCode) {
+					String userInfo = null;
+					Object tmp = invocation.getInvocationContext()
+							.get(Constant.COOKIE_NAME_USERINFO);
+					if (tmp instanceof String)
+						userInfo = (String) tmp;
+					String web_cookie_path = CustomFreemarkerManager
+							.getCookiePath();
+					Cookie cookie = new Cookie(
+							CustomFreemarkerManager.getCookieName(
+									Constant.COOKIE_NAME_USERINFO),
+							KeyUtil.cookieEncrypt(userInfo));
+					// 半小时
+					cookie.setMaxAge(30 * 60 * 1000);
+					cookie.setPath(web_cookie_path);
+					ServletActionContext.getResponse().addCookie(cookie);
+					Cookie cs = new Cookie(
+							CustomFreemarkerManager
+									.getCookieName(Constant.SESSION_ID),
+							UUID.randomUUID().toString());
+					// 半小时
+					cs.setMaxAge(30 * 60 * 1000);
+					cs.setPath(web_cookie_path);
+					ServletActionContext.getResponse().addCookie(cs);
+					log.debug("登录信息写入cookie");
+				}
+			});
+		}
+
+		String result = null;
+		try {
+			result = invocation.invoke();
+		} catch (Exception e) {
+			log.error(invocation.getAction() + "执行出错", e);
+			throw e;
+		} finally {
+			UserInfoVOThreadLocal.clean();
+		}
+		return result;
+	}
+
+	public String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("X-Forwarded-For");
+		if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+}

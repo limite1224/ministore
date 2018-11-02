@@ -1,0 +1,100 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@detail title="设备影子详情">
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备影子信息
+					<small>
+					最新状态详情
+					</small>
+				</h1>
+			</div>
+			
+     <form class="form-horizontal" method="post">	 
+    	<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">设备编号</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceId" name="entity.deviceId" 
+					value="${(entity!).deviceId!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceName">设备名称</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceName" name="entity.deviceName" 
+					value="${(entity!).deviceName!}" 	readonly="readonly" />
+			</div>
+		</div>
+		<#if entity?? && entity.customPropertyMap??>
+			<#list entity.customPropertyMap?keys as key>
+				<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="${key!}">${key!}</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="${key!}"
+					value="${entity.customPropertyMap['${key!}']!}" readonly="readonly" />
+			</div>
+		</div>
+			</#list>
+		</#if>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceMac">mac地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceMac" name="entity.deviceMac" readonly="readonly"
+				value="${(entity!).deviceMac!}"  />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createTime">创建时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createTime" name="entity.createTime" 
+				value="${(entity.createTime?string("yyyy-MM-dd HH:mm:ss"))!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createBy">创建者</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createBy" name="entity.createBy" 
+				value="${(entity.createBy)!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="modifyTime">修改时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="modifyTime" name="entity.modifyTime" 
+				value="${(entity.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="updateBy">修改者</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="updateBy" name="entity.updateBy" 
+				value="${(entity.updateBy)!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注 </label>
+			<div class="col-sm-9">
+				 <textarea class="col-xs-10 col-sm-5" name="entity.remark" readonly="readonly" reayonly="true">${(entity!).remark!}</textarea>
+			</div>
+		</div>
+		
+		<div class="space-4"></div>
+        <div class="center">
+	      
+	        <button type="button" class="btn btn-sm" style="margin-left:100px;" onclick="window.history.back(); return false;"><i class="icon-arrow-left align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</@detail>

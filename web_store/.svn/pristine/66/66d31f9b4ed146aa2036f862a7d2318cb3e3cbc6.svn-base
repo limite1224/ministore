@@ -1,0 +1,44 @@
+
+package com.leshun.plc.action.business;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceMessage;
+
+public class DeviceMessageAction extends SuperAction<DeviceMessage> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7359878984826956592L;
+
+	@Override
+	public String list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String detail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

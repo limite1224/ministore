@@ -1,0 +1,28 @@
+package com.leshun.plc.comp.impl;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.comp.DeviceInfoComp;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.service.DeviceInfoService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Component("deviceInfoComp")
+public class DeviceInfoCompImpl extends
+		BaseCompImpl<DeviceInfo, DeviceInfoService> implements DeviceInfoComp {
+
+	@Override
+	public boolean updateByPrimaryKeySelective(DeviceInfo entity)
+			throws ServerDisponseException {
+		super.validate(entity);
+		if (StringUtils.isBlank(entity.getDeviceId())) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		return false;
+	}
+
+}

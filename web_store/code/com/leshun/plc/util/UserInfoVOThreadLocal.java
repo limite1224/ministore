@@ -1,0 +1,25 @@
+package com.leshun.plc.util;
+
+import com.leshun.plc.bean.sys.UserInfoVO;
+
+/**
+ * 用户信息
+ * 
+ * @author root
+ * 
+ */
+public class UserInfoVOThreadLocal {
+	private static final ThreadLocal<UserInfoVO> USERINFO_THREADLOCAL = new ThreadLocal<UserInfoVO>();
+
+	public static void clean() {
+		USERINFO_THREADLOCAL.remove();
+	}
+
+	public static UserInfoVO get() {
+		return USERINFO_THREADLOCAL.get();
+	}
+
+	public static void set(UserInfoVO vo) {
+		USERINFO_THREADLOCAL.set(vo);
+	}
+}

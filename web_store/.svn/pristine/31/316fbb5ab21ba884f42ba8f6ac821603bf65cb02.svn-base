@@ -1,0 +1,83 @@
+package com.leshun.plc.action.business;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.comp.DeviceInfoComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceInfoAction extends SuperAction<DeviceInfo, DeviceInfoComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1447130409772565410L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceInfo();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = comp.queryPage(entity);
+		} catch (Exception e) {
+			throw new ServerDisponseException("4101", "查询异常");
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		if (StringUtils.isNotBlank(id)) {
+			entity = comp.selectByPrimaryKey(id);
+		}
+		return FORM;
+	}
+
+	@Override
+	public String save() {
+		boolean result = false;
+		if (StringUtils.isBlank(id)) {
+			result = comp.insertSelective(entity);
+		} else {
+			result = comp.updateByPrimaryKeySelective(entity);
+		}
+		if (!result) {
+			flag = false;
+			addActionError("保存失败");
+		}
+		redirectionUrl = "device_info!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		boolean result = false;
+		if (StringUtils.isNotBlank(id)) {
+			result = comp.deleteByPrimaryKey(id);
+		}
+		if (!result) {
+			flag = false;
+			addActionError("删除失败");
+		}
+		redirectionUrl = "device_info!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		comp.selectByPrimaryKey(id);
+		return DETAIL;
+	}
+
+}

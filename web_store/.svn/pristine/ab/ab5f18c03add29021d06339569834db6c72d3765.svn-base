@@ -1,0 +1,82 @@
+html, body {
+	background-color: #ffffff !important;
+	width: 100%;
+	height: 100%;
+}
+
+.midmain {
+	height: 580px;
+}
+
+.midmain .leftArrow {
+	background: url(../images/sys/middle_bg.gif) #d9d9d9 -6px center
+		no-repeat;
+	display: block;
+}
+
+.midmain .rightArrow {
+	background: url(../images/sys/middle_bg.gif) #d9d9d9 -18px center
+		no-repeat;
+	display: block;
+	position: absolute;
+}
+
+.midmain #arrow {
+	width: 100%;
+	height: 100%;
+}
+
+.midmain #arrow:hover {
+	background-color: #e2e2e2;
+}
+
+body #paginationForm .spanLink {
+	color: #03c2fd;
+}
+
+.form-group label {
+	padding-left: 0px;
+	margin-bottom: 0;
+	font-family: Helvetica, Georgia, Arial, sans-serif, 宋体;
+	font-size: 13px;
+	max-width: 100%;
+	font-weight: 700;
+}
+
+#paginationForm .pagination .controls select, #paginationForm .pagination .controls input
+	{
+	height: 23px;
+	border: 0;
+	width: 40px;
+	padding: 0;
+	margin: -3px 0 -2px 0;
+	text-align: center;
+}
+
+#paginationForm .pagination .controls input {
+	width: 60px;
+}
+
+.pagination ul>.disabled>span, .pagination ul>.disabled>a, .pagination ul>.disabled>a:hover,
+	.pagination ul>.disabled>a:focus {
+	color: #999;
+	background-color: transparent;
+	cursor: default;
+}
+
+.pagination ul>li>a {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+.btn-scroll-up {
+	bottom:auto !important;
+}
+.table-bordered>thead>tr>.operation-leshun{
+	width:85px !important;
+}
+.table-bordered>thead>tr>th{
+	text-align: center !important;
+}

@@ -1,0 +1,10 @@
+#http的域名端口
+web_domain=
+#contextPath
+web_contextPath=
+#cookiePath
+web_cookie_path=${web_contextPath}
+#http的url
+web_static=${web_domain}${web_contextPath}/staticFiles
+#http的url
+web_base=${web_domain}${web_contextPath}

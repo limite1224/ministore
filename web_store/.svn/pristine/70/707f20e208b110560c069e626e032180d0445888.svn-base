@@ -1,0 +1,318 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="天猫商品新增">
+    <#if (areaServerRelationResult)?? && (areaServerRelationResult.id??)>
+        <#assign isEdit = true />
+    <#else>
+        <#assign isAdd = true />
+    </#if>
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        var $validateErrorContainer = $("#validateErrorContainer");
+        var $validateErrorLabelContainer = $("#validateErrorContainer ul");
+        var $validateForm = $("#inputForm");
+        var $tab = $("#tab");
+
+        // Tab效果
+        $tab.tabs(".tabContent", {
+            tabs:"input"
+        });
+        
+         // 表单验证
+        $validateForm.validate({
+            errorContainer:$validateErrorContainer,
+            errorLabelContainer:$validateErrorLabelContainer,
+            wrapper:"li",
+            errorClass:"validateError",
+            ignoreTitle:true,
+            rules:{
+                "tianMaoGoodsInfo.goodsId":{
+                    required:true
+                },
+                tianMaoGoodsInfo.goodsIdLocal":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsName":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsNameLocal":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsValueTm":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsNameLocal":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.rechargeRate":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.numlimit":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsSnap":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsChargeType":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsAccountType":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsChargeTypeName":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.goodsAccountTypeName":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.tianmaoId":{
+                    required:true
+                },
+                "tianMaoGoodsInfo.ispInfo":{
+                    required:true
+                }
+            },
+            messages:{
+                "tianMaoGoodsInfo.goodsId":{
+                    required:"请填写天猫商品编号！"
+                } ,
+                "tianMaoGoodsInfo.goodsIdLocal":{
+                    required:"请填写本地商品编号！"
+                }  ,
+                "tianMaoGoodsInfo.goodsName":{
+                    required:"请填写天猫商品名称！"
+                },
+                "tianMaoGoodsInfo.goodsNameLocal":{
+                    required:"请填写本地商品名称！"
+                },
+                "tianMaoGoodsInfo.goodsValueTm":{
+                    required:"请填写天猫面值！"
+                },
+                "tianMaoGoodsInfo.goodsValueLocal":{
+                    required:"请填写本地面值！"
+                },
+                "rate":{
+                    required:"请填写价格比例！"
+                },
+                 "tianMaoGoodsInfo.numLimit":{
+                    required:"请填写商品数量！"
+                },
+                "tianMaoGoodsInfo.goodsSnap":{
+                    required:"请填写商品快照！"
+                },
+                "tianMaoGoodsInfo.goodsChargeType":{
+                    required:"请填写充值类型！"
+                },
+                "tianMaoGoodsInfo.goodsAccountType":{
+                    required:"请填写账号类型！"
+                },
+                "tianMaoGoodsInfo.goodsChargeTypeName":{
+                    required:"请填写充值类型名称！"
+                },
+                "tianMaoGoodsInfo.goodsAccountTypeName":{
+                    required:"请填写账号类型名称！"
+                },
+                "tianMaoGoodsInfo.tianmaoId":{
+                    required:"请填写下游编号！"
+                },
+                "tianMaoGoodsInfo.ispInfo":{
+                    required:"请填写运营商！"
+                }
+                
+            },
+            submitHandler:function (form) {
+                $(form).find(":submit").attr("disabled", true);
+                form.submit();
+            }
+        });
+    <#if actionErrors??&&(actionErrors?size > 0)>
+        $.dialog({type: "warn", content: "<#list errorMessages as list>${list!}<br></#list>",
+            modal: true, autoCloseTime: 3000});
+    </#if>
+    });
+   
+</script>
+<div class="body">
+    <div class="inputBar">
+        <h1><span class="icon">&nbsp;</span>添加天猫商品关联</h1>
+    </div>
+    <form id="inputForm" class="validate" action="${web_base}/tmapp/tm_goods!insert.htm" method="post">
+        <ul class="tab">
+            <li>
+                <input type="button" value="基本信息" hidefocus="true"/>
+            </li>
+        </ul>
+        <table class="inputTable tabContent">
+            <tr>
+                    <th>
+                      天猫商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdTm" name="tianMaoGoodsInfo.goodsIdTm" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                    </td>
+                     
+                </tr>
+                <tr>
+                    <th>
+                      本地商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdLocal" name="tianMaoGoodsInfo.goodsIdLocal" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                                   
+                    </td>
+                     
+                </tr>
+          
+            <tr>
+                <th>
+               天猫商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsName" name="tianMaoGoodsInfo.goodsName" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             <tr>
+                <th>
+                     本地商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsNameLocal" name="tianMaoGoodsInfo.goodsNameLocal" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             
+                <th>
+              天猫面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueTm" name="goodsValue" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    本地面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueLocal" name="goodsValueLocal" class="formText {required: true}"
+                                   value=""/>
+                    <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    价格比率：
+               </th>
+                <td>
+                     <input type="input" id="rechargeRate" name="rate" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+         
+            <tr>
+                <th>
+                   数量限制：
+                </th>
+                <td>
+                     <input type="input" id="numLimit" name="tianMaoGoodsInfo.numLimit" class="formText {required: true}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                  商品充值类型：
+                </th>
+                <td>
+                      <input type="input" id="goodsChargeType" name="tianMaoGoodsInfo.goodsChargeType" class="formText {required: false}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品充值类型名称：
+                </th>
+                <td>
+                      <input type="input"  id="goodsChargeTypeName" name="tianMaoGoodsInfo.goodsChargeTypeName" class="formText {required: false}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型：
+                </th>
+                <td>
+                     <input type="input" id="goodsAccountType" name="tianMaoGoodsInfo.goodsAccountType" class="formText {required: false}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型名称：
+               </th>
+                <td>
+                      <input type="input" id="goodsAccountTypeName" name="tianMaoGoodsInfo.goodsAccountTypeName" class="formText {required: false}"
+                                   value=""/>
+                                   <label class="requireField">*</label>
+                         
+               </td>
+            </tr>
+            
+         
+         <tr>
+                <th>
+                选择运营商：
+                </th>
+                <td>
+                   <select name="tianMaoGoodsInfo.ispInfo">
+                     <option value ="0" selected="selected">移动</option>
+                     <option value ="1">联通</option>
+                     <option value ="2">电信</option>
+                   </select>
+                </td>
+            </tr> 
+            
+              <tr>
+                <th>
+                是否 启用：
+                </th>
+                <td>
+                   <select name="tianMaoGoodsInfo.status" class="formText {required: true}>
+                   
+                   <!-- <option value ="0">禁用</option>-->
+                     <option value ="1" selecte="selected">启用</option>
+                     <option value ="0">禁用</option>
+                   </select>
+                        <label class="requireField">*</label>
+                </td>
+            </tr>
+            
+        </table>
+        <div class="buttonArea">
+            <input type="submit" id="mybutton" class="formButton" value="添加" hidefocus="true"  />&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+                   hidefocus="true"/>
+        </div>
+    </form>
+</div>
+</body>
+</@edit>

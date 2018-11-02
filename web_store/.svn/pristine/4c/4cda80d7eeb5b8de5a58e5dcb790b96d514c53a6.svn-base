@@ -1,0 +1,125 @@
+package com.leshun.plc.action.user;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.ProductMsgMapComp;
+import com.sls.core.socket.ServerDisponseException;
+
+public class ProductMsgMapAction
+		extends SuperAction<ProductMsgMap, ProductMsgMapComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734115479601622724L;
+	private List<ProductMsgMap> list;
+	private ProductInfo productInfo;
+
+	@Override
+	public String list() {
+		if (productInfo == null) {
+			addActionError("缺少产品型号");
+			throw new ServerDisponseException("4201", "缺少产品型号");
+		}
+		if (entity == null) {
+			entity = new ProductMsgMap();
+			entity.setProductKey(productInfo.getProductKey());
+			entity.setProductName(productInfo.getProductName());
+		}
+		try {
+			list = comp.queryList(entity);
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				entity = comp.selectByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("4101:查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return "update";
+	}
+
+	@Override
+	public String save() {
+		boolean result = false;
+		String actionErrors = null;
+		try {
+			if (entity != null && StringUtils.isNotBlank(entity.getId())) {
+				result = comp.updateByPrimaryKeySelective(entity);
+			} else {
+				result = comp.insertSelective(entity);
+			}
+		} catch (Exception e) {
+			log.info("保存异常", e);
+			result = false;
+			actionErrors = e.getMessage();
+		}
+		if (!result) {
+			flag = false;
+			addActionError(actionErrors == null ? "保存失败" : actionErrors);
+		}
+		redirectionUrl = "product_msg_map!list.htm?productInfo.productKey="
+				+ entity.getProductKey() + "&productInfo.productName="
+				+ entity.getProductName();
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		boolean result = false;
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				result = comp.deleteByPrimaryKey(id);
+			}
+		} catch (Exception e) {
+			log.info("删除异常", e);
+			result = false;
+		}
+		if (!result) {
+			flag = false;
+			message = ajaxResp(0, "删除失败");
+		} else {
+			message = ajaxResp(1, "操作成功");
+		}
+		return AJAX;
+	}
+
+	@Override
+	public String detail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ProductMsgMap> getList() {
+		return list;
+	}
+
+	public void setList(List<ProductMsgMap> list) {
+		this.list = list;
+	}
+
+	public ProductInfo getProductInfo() {
+		return productInfo;
+	}
+
+	public void setProductInfo(ProductInfo productInfo) {
+		this.productInfo = productInfo;
+	}
+
+}

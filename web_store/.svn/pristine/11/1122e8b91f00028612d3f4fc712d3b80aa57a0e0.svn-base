@@ -1,0 +1,51 @@
+package com.leshun.plc.action.business;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.ProductMsgMapComp;
+import com.leshun.plc.constant.Constant;
+
+public class ProductMsgMapAction
+		extends SuperAction<ProductMsgMap, ProductMsgMapComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734115479601622724L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new ProductMsgMap();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		page = comp.queryPage(entity);
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String detail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

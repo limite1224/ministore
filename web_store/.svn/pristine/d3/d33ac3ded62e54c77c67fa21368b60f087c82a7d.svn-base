@@ -1,0 +1,6 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceInfo;
+
+public interface DeviceInfoComp extends BaseComp<DeviceInfo> {
+}

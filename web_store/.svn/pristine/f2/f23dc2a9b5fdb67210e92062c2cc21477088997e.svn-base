@@ -1,0 +1,10 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceMessage;
+import com.sls.core.socket.ServerDisponseException;
+
+public interface DeviceMessageComp extends BaseComp<DeviceMessage> {
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity)
+			throws ServerDisponseException;
+
+}

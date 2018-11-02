@@ -1,0 +1,13 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.bean.Pagination;
+import com.sls.core.socket.ServerDisponseException;
+
+public interface DeviceShadowComp extends BaseComp<DeviceShadow> {
+
+	public Pagination<DeviceShadow> queryPage(DeviceShadow entity)
+			throws ServerDisponseException;
+
+	public DeviceShadow selectDetailByPrimaryKey(String id);
+}

@@ -1,0 +1,156 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="价格信息详情">
+
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>商品价格详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        商户号:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.userNo" class="formText {required: true}"
+               value="${(queryInfo.userNo)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商户名:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.userName" class="formText {required: true}"
+               value="${(queryInfo.userName)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.goodsId" class="formText {required: true}"
+               value="${(queryInfo.goodsId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.goodsName" class="formText {required: true}"
+               value="${(queryInfo.goodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        充值面值:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.rechargeValue" class="formText {required: true}"
+               value="${(queryInfo.rechargeValue)!}" readonly="readonly"/>
+               <#if queryInfo.businessType?? && queryInfo.businessType == "02">元
+               <#elseif queryInfo.businessType?? && queryInfo.businessType == "02">M
+               </#if>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        商品面值:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.goodsValue" class="formText {required: true}"
+               value="${(queryInfo.goodsValue*1.0/1000)?string("0.000")!}" readonly="readonly"/>*元*
+    </td>
+</tr>
+
+<tr>
+    <th>
+       售价:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.salePrice" class="formText {required: true}"
+               value="${(queryInfo.salePrice*1.0/1000)?string("0.000")!}" readonly="readonly"/>*元*
+    </td>
+</tr>
+<tr>
+    <th>
+     价格比率:
+    </th>
+    <td>
+        <input type="text" name="queryInfo.priceRate" class="formText {required: true}"
+               value="${(queryInfo.priceRate)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        业务类型:
+    </th>
+    <td>
+       <#if queryInfo.businessType?? && queryInfo.businessType == "01">
+            流量
+        <#elseif queryInfo.businessType?? && queryInfo.businessType == "02">
+            话费快充
+       <#else>
+       话费慢充   
+          </#if>    
+    </td>
+   
+</tr>
+
+<tr>
+    <th>
+        插入时间:
+    </th>
+    <td>
+       <input type="text" name="queryInfo.insertTime" class="formText {required: true}"
+               value="${(queryInfo.insertTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        修改时间:
+    </th>
+    <td>
+       <input type="text" name="queryInfo.modifyTime" class="formText {required: true}"
+               value="${(queryInfo.modifyTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<#--<tr>
+    <th>
+        操作员:
+    </th>
+    <td>   <input type="text" name="queryInfo.operator" class="formText {required: true}"
+               value="${(queryInfo.operator)!}" readonly="readonly"/>
+    </td>
+</tr>-->
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>

@@ -1,0 +1,96 @@
+package com.leshun.plc.comp.impl;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.bean.BaseQuery;
+import com.leshun.plc.bean.Pagination;
+import com.leshun.plc.comp.BaseComp;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.service.BaseService;
+import com.sls.core.socket.ServerDisponseException;
+
+public class BaseCompImpl<T extends BaseQuery, S extends BaseService<T>>
+		implements BaseComp<T> {
+
+	@Autowired
+	protected S service;
+
+	@Override
+	public boolean deleteByPrimaryKey(String id)
+			throws ServerDisponseException {
+		validate(id);
+		return service.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public boolean insert(T entity) throws ServerDisponseException {
+		validate(entity);
+		return service.insert(entity);
+	}
+
+	@Override
+	public boolean insertSelective(T entity) throws ServerDisponseException {
+		validate(entity);
+		return service.insertSelective(entity);
+	}
+
+	@Override
+	public T selectByPrimaryKey(String entity) throws ServerDisponseException {
+		validate(entity);
+		return service.selectByPrimaryKey(entity);
+	}
+
+	@Override
+	public Pagination<T> queryPage(T entity) throws ServerDisponseException {
+		validate(entity);
+		return service.queryPage(entity);
+	}
+
+	@Override
+	public int queryRowCount(T entity) throws ServerDisponseException {
+		validate(entity);
+		return service.queryRowCount(entity);
+	}
+
+	@Override
+	public List<T> queryList(T entity) throws ServerDisponseException {
+		validate(entity);
+		return service.queryList(entity);
+	}
+
+	@Override
+	public boolean updateByPrimaryKeySelective(T entity)
+			throws ServerDisponseException {
+		validate(entity);
+		if (StringUtils.isBlank(entity.getId())) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		return service.updateByPrimaryKeySelective(entity);
+	}
+
+	@Override
+	public boolean updateByPrimaryKey(T entity) throws ServerDisponseException {
+		validate(entity);
+		if (StringUtils.isBlank(entity.getId())) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		return service.updateByPrimaryKey(entity);
+	}
+
+	/** 校验是否为null */
+	protected void validate(Object obj) throws ServerDisponseException {
+		if (obj == null) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARAM_LOSE.getCode(),
+					ExceptionCodeDes.PARAM_LOSE.getDescription());
+		}
+	}
+
+}

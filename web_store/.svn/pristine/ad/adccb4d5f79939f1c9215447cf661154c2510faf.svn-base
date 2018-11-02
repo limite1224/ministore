@@ -1,0 +1,36 @@
+package com.leshun.plc.action.business;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceMsgMap;
+
+public class DeviceMsgMapAction extends SuperAction<DeviceMsgMap> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 912287709833963441L;
+
+	@Override
+	public String list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

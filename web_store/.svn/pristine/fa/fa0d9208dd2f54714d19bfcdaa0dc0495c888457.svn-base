@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.ProductMsgMapMapper" >
+  <resultMap id="BaseResultMap" type="com.leshun.plc.bean.ProductMsgMap" >
+    <id column="product_key" property="productKey" jdbcType="VARCHAR" />
+    <result column="product_msg_key" property="productMsgKey" jdbcType="VARCHAR" />
+    <result column="product_msg_name" property="productMsgName" jdbcType="VARCHAR" />
+    <result column="product_remark" property="productRemark" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    product_key, product_msg_key, product_msg_name, product_remark, product_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_msg_map
+    where product_key = #{productKey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product_msg_map
+    where product_key = #{productKey,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.leshun.plc.bean.ProductMsgMap" >
+    insert into product_msg_map (product_key, product_msg_key, product_msg_name, 
+      product_remark, product_name)
+    values (#{productKey,jdbcType=VARCHAR}, #{productMsgKey,jdbcType=VARCHAR}, #{productMsgName,jdbcType=VARCHAR}, 
+      #{productRemark,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leshun.plc.bean.ProductMsgMap" >
+    insert into product_msg_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productKey != null" >
+        product_key,
+      </if>
+      <if test="productMsgKey != null" >
+        product_msg_key,
+      </if>
+      <if test="productMsgName != null" >
+        product_msg_name,
+      </if>
+      <if test="productRemark != null" >
+        product_remark,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productKey != null" >
+        #{productKey,jdbcType=VARCHAR},
+      </if>
+      <if test="productMsgKey != null" >
+        #{productMsgKey,jdbcType=VARCHAR},
+      </if>
+      <if test="productMsgName != null" >
+        #{productMsgName,jdbcType=VARCHAR},
+      </if>
+      <if test="productRemark != null" >
+        #{productRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.ProductMsgMap" >
+    update product_msg_map
+    <set >
+      <if test="productMsgKey != null" >
+        product_msg_key = #{productMsgKey,jdbcType=VARCHAR},
+      </if>
+      <if test="productMsgName != null" >
+        product_msg_name = #{productMsgName,jdbcType=VARCHAR},
+      </if>
+      <if test="productRemark != null" >
+        product_remark = #{productRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_key = #{productKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.ProductMsgMap" >
+    update product_msg_map
+    set product_msg_key = #{productMsgKey,jdbcType=VARCHAR},
+      product_msg_name = #{productMsgName,jdbcType=VARCHAR},
+      product_remark = #{productRemark,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR}
+    where product_key = #{productKey,jdbcType=VARCHAR}
+  </update>
+</mapper>

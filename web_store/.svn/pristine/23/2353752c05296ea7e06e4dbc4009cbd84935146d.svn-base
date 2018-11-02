@@ -1,0 +1,44 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.dao.DeviceMessageDao;
+import com.leshun.plc.service.DeviceMessageService;
+import com.leshun.plc.service.DeviceShadowService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Service("deviceMessageService")
+public class DeviceMessageServiceImpl
+		extends BaseServiceImpl<DeviceMessage, DeviceMessageDao>
+		implements DeviceMessageService {
+
+	@Autowired
+	DeviceShadowService deviceShadowService;
+
+	@Override
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity) {
+		boolean insert_result = this.insert(entity);
+
+		if (!insert_result) {
+			throw new ServerDisponseException("9999", "插入消息失败");
+		}
+
+		DeviceShadow deviceShadow = deviceShadowService
+				.selectByPrimaryKey(entity.getDeviceId());
+		if (deviceShadow == null) {
+			throw new ServerDisponseException("9999", "根据设备编号查询设备影子信息不存在");
+		}
+		deviceShadow.setMsgInfo(entity.getMessage());
+		boolean update_result = deviceShadowService
+				.updateByPrimaryKey(deviceShadow);
+		if (!update_result) {
+			throw new ServerDisponseException("9999", "插入消息记录表和更新设备影子操作失败");
+		}
+
+		return true;
+	}
+
+}

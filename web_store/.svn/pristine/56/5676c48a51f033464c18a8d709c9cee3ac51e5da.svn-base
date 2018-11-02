@@ -1,0 +1,33 @@
+package com.leshun.plc.web.service.imp;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.web.service.MemCacheService;
+
+@Service("memCacheService")
+public class MemCacheServiceImp implements MemCacheService {
+
+//	@Resource(name = "memcachedClient")
+//	protected MemCachedClient memcached;
+//
+//	@Override
+//	public Object getMemValue(String key) {
+//		Object value = memcached.get(key);
+//		return value;
+//	}
+//
+//	@Override
+//	public void setMemValue(String key, Object obj, Date date) {
+//		memcached.set(key, obj, date);
+//	}
+//
+//	@Override
+//	public boolean setMemValueAddMethod(String key, Object obj, Date date) {
+//		return memcached.add(key, obj, date);
+//	}
+//
+//	@Override
+//	public void keyInfoForver(String key, Object obj) {
+//		memcached.set(key, obj, new Date(360 * 24 * 60 * 60 * 1000));
+//	}
+}

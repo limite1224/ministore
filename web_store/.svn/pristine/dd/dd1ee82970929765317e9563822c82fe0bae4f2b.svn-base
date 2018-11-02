@@ -1,0 +1,208 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="天猫商品详情">
+    <#if (areaServerRelationResult)?? && (areaServerRelationResult.id??)>
+        <#assign isEdit = true />
+    <#else>
+        <#assign isAdd = true />
+    </#if>
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        var $validateErrorContainer = $("#validateErrorContainer");
+        var $validateErrorLabelContainer = $("#validateErrorContainer ul");
+        var $validateForm = $("#inputForm");
+        var $tab = $("#tab");
+
+        // Tab效果
+        $tab.tabs(".tabContent", {
+            tabs:"input"
+        });
+        
+            submitHandler:function (form) {
+                $(form).find(":submit").attr("disabled", true);
+                form.submit();
+            }
+        });
+    <#if actionErrors??&&(actionErrors?size > 0)>
+        $.dialog({type: "warn", content: "<#list errorMessages as list>${list!}<br></#list>",
+            modal: true, autoCloseTime: 3000});
+    </#if>
+    });
+   
+</script>
+<div class="body">
+    <div class="inputBar">
+        <h1><span class="icon">&nbsp;</span>天猫商品详情</h1>
+    </div>
+    <form id="inputForm" class="validate" action="#">
+        <table class="inputTable tabContent">
+            <tr>
+                    <th>
+                      天猫商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdTm" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsIdTm!}"/>
+                                   <label class="requireField">*</label>
+                                   
+                    </td>
+                     
+                </tr>
+                <tr>
+                    <th>
+                      本地商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdLocal" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsIdLocal!}"/>
+                                   <label class="requireField">*</label>
+                                   
+                    </td>
+                     
+                </tr>
+          
+            <tr>
+                <th>
+               天猫商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsName" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsName!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             <tr>
+                <th>
+                     本地商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsNameLocal" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsNameLocal!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             
+                <th>
+              天猫面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueTm" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${(tmGoodQuery.goodsValueTm*1.0/1000)?string("0.000")!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    本地面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueLocal" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${(tmGoodQuery.goodsValueLocal*1.0/1000)?string("0.000")!}"/>
+                    <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    价格比率：
+               </th>
+                <td>
+                     <input type="input" id="rechargeRate" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${(tmGoodQuery.rechargeRate*1.0)?string("0.000")!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+         
+            <tr>
+                <th>
+                   数量限制：
+                </th>
+                <td>
+                     <input type="input" id="numLimit" name="#" class="formText {required: true}" readonly="readonly"
+                                   value="${tmGoodQuery.numLimit!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                  商品充值类型：
+                </th>
+                <td>
+                      <input type="input" id="goodsChargeType" name="#" class="formText {required: false}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsChargeType!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品充值类型名称：
+                </th>
+                <td>
+                      <input type="input"  id="goodsChargeTypeName" name="#" class="formText {required: false}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsChargeTypeName!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型：
+                </th>
+                <td>
+                     <input type="input" id="goodsAccountType" name="#" class="formText {required: false}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsAccountType!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型名称：
+               </th>
+                <td>
+                      <input type="input" id="goodsAccountTypeName" name="#" class="formText {required: false}" readonly="readonly"
+                                   value="${tmGoodQuery.goodsAccountTypeName!}"/>
+                                   <label class="requireField">*</label>
+                         
+               </td>
+            </tr>
+            
+         
+         <tr>
+                <th>
+                选择运营商：
+                </th>
+                <td>
+                   <input type="input" id="ispInfo" name="#" class="formText {required: false}" readonly="readonly"
+                                   value ="<#if tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="0">移动<#elseif tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="1">联通
+											<#elseif tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="2">电信</#if>"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr> 
+            
+              <tr>
+                <th>
+                是否 启用：
+                </th>
+                <td>
+                   <input type="input" id="status" name="#" class="formText {required: true}" readonly="readonly"
+                   
+                   value ="<#if tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="0">已禁用<#elseif tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="1">已启用</#if>"/>
+				  
+                        <label class="requireField">*</label>
+                </td>
+            </tr>
+            
+        </table>
+        <div class="buttonArea">
+            <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+                   hidefocus="true"/>
+        </div>
+    </form>
+</div>
+</body>
+</@edit>

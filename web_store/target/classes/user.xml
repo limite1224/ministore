@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_infos>
+    <user_info>
+        <account>test</account>
+        <pwd>123456</pwd>
+    </user_info>
+    <user_info>
+        <account>admin</account>
+        <pwd>123456</pwd>
+    </user_info>
+</user_infos>

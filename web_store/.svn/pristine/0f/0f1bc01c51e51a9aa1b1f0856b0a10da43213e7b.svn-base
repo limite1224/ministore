@@ -1,0 +1,68 @@
+package com.leshun.plc.bean;
+
+public class DeviceMsgMap extends BaseQuery{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4547683957441138670L;
+
+	private String diviceId;
+
+    private String diviceMsgKey;
+
+    private String diviceMsgName;
+
+    private String diviceRemark;
+
+    private String diviceName;
+
+    private String diviceMac;
+
+    public String getDiviceId() {
+        return diviceId;
+    }
+
+    public void setDiviceId(String diviceId) {
+        this.diviceId = diviceId == null ? null : diviceId.trim();
+    }
+
+    public String getDiviceMsgKey() {
+        return diviceMsgKey;
+    }
+
+    public void setDiviceMsgKey(String diviceMsgKey) {
+        this.diviceMsgKey = diviceMsgKey == null ? null : diviceMsgKey.trim();
+    }
+
+    public String getDiviceMsgName() {
+        return diviceMsgName;
+    }
+
+    public void setDiviceMsgName(String diviceMsgName) {
+        this.diviceMsgName = diviceMsgName == null ? null : diviceMsgName.trim();
+    }
+
+    public String getDiviceRemark() {
+        return diviceRemark;
+    }
+
+    public void setDiviceRemark(String diviceRemark) {
+        this.diviceRemark = diviceRemark == null ? null : diviceRemark.trim();
+    }
+
+    public String getDiviceName() {
+        return diviceName;
+    }
+
+    public void setDiviceName(String diviceName) {
+        this.diviceName = diviceName == null ? null : diviceName.trim();
+    }
+
+    public String getDiviceMac() {
+        return diviceMac;
+    }
+
+    public void setDiviceMac(String diviceMac) {
+        this.diviceMac = diviceMac == null ? null : diviceMac.trim();
+    }
+}

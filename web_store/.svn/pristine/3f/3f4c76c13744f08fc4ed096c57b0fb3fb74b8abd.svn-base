@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 是否显示详细错误信息 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 浏览器是否缓存静态内容 -->
+	<constant name="struts.server.static.browserCache" value="true" />
+	<!-- 国际化资源文件名称 -->
+	<constant name="struts.custom.i18n.resources" value="i18n" />
+	<constant name="struts.multipart.saveDir" value="/tmp" />
+	<constant name="struts.multipart.parser" value="jakarta" />
+	<constant name="struts.multipart.maxSize" value="-1" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
+	<!-- 编码 -->
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<constant name="struts.convention.default.parent.package"
+		value="struts" />
+	<constant name="struts.convention.action.name.separator"
+		value="_" />
+	<constant name="struts.convention.package.locators" value="action" />
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+	<constant name="struts.convention.relative.result.types"
+		value="freemarker" />
+	<constant name="struts.convention.result.path" value="/page/" />
+	<constant name="struts.convention.action.packages" value="/" />
+	<constant name="struts.action.extension" value="htm,ftl"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<constant name="struts.freemarker.manager.classname"
+		value="com.leshun.plc.web.freemarker.CustomFreemarkerManager"></constant>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<package name="struts" extends="convention-default" namespace="/">
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+		<interceptors>
+			<!-- 验证码 -->
+			<interceptor name="randomcodeinterceptor"
+				class="com.leshun.plc.web.interceptor.RandomCodeInterceptor"></interceptor>
+			<!-- 登录拦截器 -->
+			<interceptor name="loginInterceptor"
+				class="com.leshun.plc.web.interceptor.LoginInterceptor">
+			</interceptor>
+			<!-- -->
+			<interceptor-stack name="defalutStackSet">
+				<interceptor-ref name="chainStack" />
+				<interceptor-ref name="loginInterceptor">
+					<!-- 不拦截的方法 -->
+					<!-- <param name="excludeMethods">ekhuiNotify,tmGoodsOffsale,tmGoodsOnSale</param> -->
+				</interceptor-ref>
+
+			</interceptor-stack>
+
+		</interceptors>
+		<default-interceptor-ref name="defalutStackSet"></default-interceptor-ref>
+		<default-action-ref name="main"></default-action-ref>
+
+		<global-results>
+			<result name="nopermission" type="freemarker">/page/common/nopermission.ftl
+			</result>
+			<result name="json" type="json"></result>
+			<result name="ajax" type="freemarker">/page/common/ajax.ftl</result>
+			<result name="error" type="freemarker">/page/common/error.ftl</result>
+			<result name="success" type="freemarker">/page/common/success.ftl</result>
+			<result name="404" type="freemarker">/page/common/404.ftl</result>
+			<result name="redirect" type="redirect">
+				${redirectionUrl}
+			</result>
+			<result name="redirectMain" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">login!main</param>
+			</result>
+			<result name="logout" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">login!index</param>
+				<param name="redirectionUrl">${redirectionUrl}</param>
+			</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+	</package>
+</struts>

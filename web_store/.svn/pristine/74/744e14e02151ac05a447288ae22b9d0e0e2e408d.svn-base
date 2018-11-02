@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.GoodsReflectInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.GoodsReflectInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_no" property="userNo" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="local_goods_id" property="localGoodsId"
+			jdbcType="VARCHAR" />
+		<result column="local_goods_name" property="localGoodsName"
+			jdbcType="VARCHAR" />
+		<result column="down_goods_id" property="downGoodsId" jdbcType="VARCHAR" />
+		<result column="down_goods_name" property="downGoodsName"
+			jdbcType="VARCHAR" />
+		<result column="recharge_value" property="rechargeValue"
+			jdbcType="INTEGER" />
+		<result column="business_type" property="businessType"
+			jdbcType="VARCHAR" />
+		<result column="provice_code" property="proviceCode" jdbcType="VARCHAR" />
+		<result column="provice_name" property="proviceName" jdbcType="VARCHAR" />
+		<result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="effective_time" property="effectiveTime"
+			jdbcType="VARCHAR" />
+		<result column="flow_range" property="flowRange" jdbcType="VARCHAR" />
+		<result column="flow_type" property="flowType" jdbcType="VARCHAR" />
+		<result column="isp_id" property="ispId" jdbcType="VARCHAR" />
+		<result column="isp_info" property="ispInfo" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="insert_time" property="insertTime" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_no, user_name, local_goods_id, local_goods_name,
+		down_goods_id,
+		down_goods_name,
+		recharge_value, business_type,
+		provice_code, provice_name, city_code, city_name,
+		effective_time,
+		flow_range, flow_type, isp_id, isp_info, status,
+		insert_time,
+		modify_time,
+		operator
+	</sql>
+
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by insert_time desc
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and insert_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and insert_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+
+			<if test="userNo != null and userNo !=''">
+				and user_no =#{userNo,jdbcType=VARCHAR}
+			</if>
+
+			<if test="userName != null and userName !=''">
+				and user_name like "%${userName}%"
+			</if>
+
+			<if test="localGoodsId != null and localGoodsId !=''">
+				and local_goods_id = #{localGoodsId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="localGoodsName != null and localGoodsName !=''">
+				and local_goods_name like "%${localGoodsName}%"
+			</if>
+
+
+			<if test="downGoodsId != null and downGoodsId !=''">
+				and down_goods_id = #{downGoodsId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="downGoodsName != null and downGoodsName !=''">
+				and down_goods_name like "%${downGoodsName}%"
+			</if>
+			<if test="rechargeValue != null and rechargeValue !=''">
+				and recharge_value = #{rechargeValue,jdbcType=INTEGER}
+			</if>
+
+			<if test="businessType != null and businessType !=''">
+				and business_type =
+				#{businessType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="proviceCode != null and proviceCode !=''">
+				and provice_code =
+				#{proviceCode,jdbcType=VARCHAR}
+			</if>
+			<if test="proviceName != null and proviceName !=''">
+				and provice_name like "%${proviceName}%"
+			</if>
+
+			<if test="cityCode != null and cityCode !=''">
+				and city_code =
+				#{cityCode,jdbcType=VARCHAR}
+			</if>
+
+			<if test="cityName != null and cityName !=''">
+				and city_name like "%${cityName}%"
+			</if>
+
+			<if test="effectiveTime != null and effectiveTime !=''">
+				and effective_time =
+				#{effectiveTime,jdbcType=VARCHAR}
+			</if>
+
+			<if test="flowRange != null and flowRange !=''">
+				and flow_range =
+				#{flowRange,jdbcType=VARCHAR}
+			</if>
+
+			<if test="flowType != null and flowType !=''">
+				and flow_type =
+				#{flowType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="ispId != null and ispId !=''">
+				and isp_id =
+				#{ispId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="ispInfo != null and ispInfo !=''">
+				and isp_info like "%${ispInfo}%"
+			</if>
+
+			<if test="status != null and status !=''">
+				and status =
+				#{status,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+
+
+
+	<!-- 查询所有记录 -->
+	<select id="queryCount" resultType="java.lang.Integer"
+		parameterType="com.ekhui.pojo.GoodsReflectInfo">
+		select count(id) from goods_reflect_info
+		<include refid="pageCondition" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.GoodsReflectInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_reflect_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from goods_reflect_info
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		goods_reflect_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.ekhui.pojo.GoodsReflectInfo">
+		insert into goods_reflect_info
+		(id, user_no, user_name,
+		local_goods_id, local_goods_name,
+		down_goods_id,
+		down_goods_name, recharge_value, business_type,
+		provice_code, provice_name, city_code,
+		city_name, effective_time,
+		flow_range,
+		flow_type, isp_id, isp_info,
+		status, insert_time,
+		modify_time,
+		operator)
+		values (#{id,jdbcType=VARCHAR},
+		#{userNo,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{localGoodsId,jdbcType=VARCHAR}, #{localGoodsName,jdbcType=VARCHAR},
+		#{downGoodsId,jdbcType=VARCHAR},
+		#{downGoodsName,jdbcType=VARCHAR},
+		#{rechargeValue,jdbcType=INTEGER},
+		#{businessType,jdbcType=VARCHAR},
+		#{proviceCode,jdbcType=VARCHAR}, #{proviceName,jdbcType=VARCHAR},
+		#{cityCode,jdbcType=VARCHAR},
+		#{cityName,jdbcType=VARCHAR},
+		#{effectiveTime,jdbcType=VARCHAR},
+		#{flowRange,jdbcType=VARCHAR},
+		#{flowType,jdbcType=VARCHAR}, #{ispId,jdbcType=VARCHAR},
+		#{ispInfo,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{insertTime,jdbcType=VARCHAR},
+		#{modifyTime,jdbcType=VARCHAR},
+		#{operator,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.GoodsReflectInfo">
+		insert into goods_reflect_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userNo != null">
+				user_no,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="localGoodsId != null">
+				local_goods_id,
+			</if>
+			<if test="localGoodsName != null">
+				local_goods_name,
+			</if>
+			<if test="downGoodsId != null">
+				down_goods_id,
+			</if>
+			<if test="downGoodsName != null">
+				down_goods_name,
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value,
+			</if>
+			<if test="businessType != null">
+				business_type,
+			</if>
+			<if test="proviceCode != null">
+				provice_code,
+			</if>
+			<if test="proviceName != null">
+				provice_name,
+			</if>
+			<if test="cityCode != null">
+				city_code,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="effectiveTime != null">
+				effective_time,
+			</if>
+			<if test="flowRange != null">
+				flow_range,
+			</if>
+			<if test="flowType != null">
+				flow_type,
+			</if>
+			<if test="ispId != null">
+				isp_id,
+			</if>
+			<if test="ispInfo != null">
+				isp_info,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="insertTime != null">
+				insert_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userNo != null">
+				#{userNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="localGoodsId != null">
+				#{localGoodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="localGoodsName != null">
+				#{localGoodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="downGoodsId != null">
+				#{downGoodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="downGoodsName != null">
+				#{downGoodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				#{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="proviceCode != null">
+				#{proviceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="proviceName != null">
+				#{proviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				#{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="effectiveTime != null">
+				#{effectiveTime,jdbcType=VARCHAR},
+			</if>
+			<if test="flowRange != null">
+				#{flowRange,jdbcType=VARCHAR},
+			</if>
+			<if test="flowType != null">
+				#{flowType,jdbcType=VARCHAR},
+			</if>
+			<if test="ispId != null">
+				#{ispId,jdbcType=VARCHAR},
+			</if>
+			<if test="ispInfo != null">
+				#{ispInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="insertTime != null">
+				#{insertTime,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ekhui.pojo.GoodsReflectInfo">
+		update goods_reflect_info
+		<set>
+			<if test="userNo != null">
+				user_no = #{userNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="localGoodsId != null">
+				local_goods_id = #{localGoodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="localGoodsName != null">
+				local_goods_name = #{localGoodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="downGoodsId != null">
+				down_goods_id = #{downGoodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="downGoodsName != null">
+				down_goods_name = #{downGoodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value = #{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="businessType != null">
+				business_type = #{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="proviceCode != null">
+				provice_code = #{proviceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="proviceName != null">
+				provice_name = #{proviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				city_code = #{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="effectiveTime != null">
+				effective_time = #{effectiveTime,jdbcType=VARCHAR},
+			</if>
+			<if test="flowRange != null">
+				flow_range = #{flowRange,jdbcType=VARCHAR},
+			</if>
+			<if test="flowType != null">
+				flow_type = #{flowType,jdbcType=VARCHAR},
+			</if>
+			<if test="ispId != null">
+				isp_id = #{ispId,jdbcType=VARCHAR},
+			</if>
+			<if test="ispInfo != null">
+				isp_info = #{ispInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ekhui.pojo.GoodsReflectInfo">
+		update
+		goods_reflect_info
+		set user_no = #{userNo,jdbcType=VARCHAR},
+		user_name =
+		#{userName,jdbcType=VARCHAR},
+		local_goods_id =
+		#{localGoodsId,jdbcType=VARCHAR},
+		local_goods_name =
+		#{localGoodsName,jdbcType=VARCHAR},
+		down_goods_id =
+		#{downGoodsId,jdbcType=VARCHAR},
+		down_goods_name =
+		#{downGoodsName,jdbcType=VARCHAR},
+		recharge_value =
+		#{rechargeValue,jdbcType=INTEGER},
+		business_type =
+		#{businessType,jdbcType=VARCHAR},
+		provice_code =
+		#{proviceCode,jdbcType=VARCHAR},
+		provice_name =
+		#{proviceName,jdbcType=VARCHAR},
+		city_code =
+		#{cityCode,jdbcType=VARCHAR},
+		city_name = #{cityName,jdbcType=VARCHAR},
+		effective_time = #{effectiveTime,jdbcType=VARCHAR},
+		flow_range =
+		#{flowRange,jdbcType=VARCHAR},
+		flow_type =
+		#{flowType,jdbcType=VARCHAR},
+		isp_id = #{ispId,jdbcType=VARCHAR},
+		isp_info = #{ispInfo,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=VARCHAR},
+		insert_time =
+		#{insertTime,jdbcType=VARCHAR},
+		modify_time =
+		#{modifyTime,jdbcType=VARCHAR},
+		operator = #{operator,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,210 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="商品映射详情">
+
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>商品映射详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        商户号:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.userNo" class="formText {required: true}"
+               value="${(reflectInfo.userNo)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商户名:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.userName" class="formText {required: true}"
+               value="${(reflectInfo.userName)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+       本地 商品编号:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.localGoodsId" class="formText {required: true}"
+               value="${(reflectInfo.localGoodsId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        本地商品名称:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.localGoodsName" class="formText {required: true}"
+               value="${(reflectInfo.localGoodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       下游商品编号:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.downGoodsId" class="formText {required: true}"
+               value="${(reflectInfo.downGoodsId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+       下游商品名称:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.downGoodsName" class="formText {required: true}"
+               value="${(reflectInfo.downGoodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        充值面值:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.rechargeValue" class="formText {required: true}"
+               value="${(reflectInfo.rechargeValue)!}" readonly="readonly"/>
+               <#if reflectInfo.businessType?? && reflectInfo.businessType == "02">元
+               <#elseif reflectInfo.businessType?? && reflectInfo.businessType == "01">M
+               <#elseif reflectInfo.businessType?? && reflectInfo.businessType == "03">元
+               </#if>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        业务类型:
+    </th>
+    <td>
+        <select name="reflectInfo.businessType" id="businessType">
+           <option <#if reflectInfo.businessType=='01'>selected='selected'</#if>>流量</option>
+           <option <#if reflectInfo.businessType=='02'>selected='selected'</#if>>话费快充</option>
+           <option <#if reflectInfo.businessType=='03'>selected='selected'</#if>>话费慢充</option>
+        </select>  
+    </td>
+</tr>
+<tr>
+    <th>
+       省份名称:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.provinceName" class="formText {required: true}"
+               value="${(reflectInfo.provinceName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       省份名称:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.cityName" class="formText {required: true}"
+               value="${(reflectInfo.cityName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<#if reflectInfo.businessType??&&reflectInfo.businessType=='01'>
+<tr>
+    <th>
+       流量有效期(天):
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.effectiveTime" class="formText {required: true}"
+               value="${(reflectInfo.effectiveTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       使用范围:
+    </th>
+    <td>
+         <select name="reflectInfo.flowRange" id="businessType">
+           <option <#if reflectInfo.flowRange=='1'>selected='selected'</#if>>省内</option>
+           <option <#if reflectInfo.flowRange=='2'>selected='selected'</#if>>全国</option>
+        </select>
+    </td>
+</tr>
+</#if>
+
+<tr>
+    <th>
+       运营商:
+    </th>
+    <td>
+        <input type="text" name="reflectInfo.ispInfo" class="formText {required: true}"
+               value="${reflectInfo.ispInfo!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       状态:
+    </th>
+    <td>
+         <select name="reflectInfo.status" id="status">
+           <option <#if reflectInfo.status??&&reflectInfo.status=='0'>selected='selected'</#if>>下架</option>
+           <option <#if reflectInfo.status??&&reflectInfo.status=='1'>selected='selected'</#if>>上架</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        插入时间:
+    </th>
+    <td>
+       <input type="text" name="reflectInfo.insertTime" class="formText {required: true}"
+               value="${(reflectInfo.insertTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        修改时间:
+    </th>
+    <td>
+       <input type="text" name="reflectInfo.modifyTime" class="formText {required: true}"
+               value="${(reflectInfo.modifyTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<#--<tr>
+    <th>
+        操作员:
+    </th>
+    <td>   <input type="text" name="reflectInfo.operator" class="formText {required: true}"
+               value="${(queryInfo.operator)!}" readonly="readonly"/>
+    </td>
+</tr>-->
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>

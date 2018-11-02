@@ -1,0 +1,16 @@
+
+package com.leshun.plc.comp.impl;
+
+import org.springframework.stereotype.Component;
+
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.comp.DeviceShadowComp;
+import com.leshun.plc.service.DeviceShadowService;
+
+@Component
+public class DeviceShadowCompImpl
+		extends BaseCompImpl<DeviceShadow, DeviceShadowService>
+		implements DeviceShadowComp {
+
+
+}

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.GoodsOrderMessionMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.GoodsOrderMession">
+		<id column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="merchant_order_id" property="merchantOrderId"
+			jdbcType="VARCHAR" />
+		<result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+		<result column="ekhui_order_id" property="ekhuiOrderId"
+			jdbcType="VARCHAR" />
+		<result column="recharge_order_id" property="rechargeOrderId"
+			jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="order_limit_time" property="orderLimitTime"
+			jdbcType="VARCHAR" />
+		<result column="create_order_time" property="createOrderTime"
+			jdbcType="VARCHAR" />
+		<result column="order_api_start_time" property="orderApiStartTime"
+			jdbcType="VARCHAR" />
+		<result column="recharge_type" property="rechargeType"
+			jdbcType="VARCHAR" />
+		<result column="province_isp_info" property="provinceIspInfo"
+			jdbcType="VARCHAR" />
+		<result column="shoudan_limit_info" property="shoudanLimitInfo"
+			jdbcType="VARCHAR" />
+		<result column="business_type" property="businessType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		order_id, merchant_order_id, contract_id, ekhui_order_id,
+		recharge_order_id,status,shoudan_limit_info,order_limit_time,
+		create_order_time,order_api_start_time,recharge_type,
+		province_isp_info,business_type
+	</sql>
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by create_order_time desc
+	</sql>
+
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and create_order_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and create_order_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="orderId != null and orderId !=''">
+				and order_id =#{orderId,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantOrderId != null and merchantOrderId !=''">
+				and merchant_order_id =
+				#{merchantOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="contractId != null and contractId !=''">
+				and contract_id = #{contractId,jdbcType=VARCHAR}
+			</if>
+			<if test="ekhuiOrderId != null and ekhuiOrderId !=''">
+				and ekhui_order_id =#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="rechargeOrderId != null and rechargeOrderId !=''">
+				and recharge_order_id =#{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="status!=null and status !=''">
+				and status=#{status,jdbcType=VARCHAR}
+			</if>
+			<if test="rechargeType!=null and rechargeType !=''">
+				and recharge_type=#{rechargeType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="provinceIspInfo!=null and provinceIspInfo !=''">
+				and province_isp_info=#{provinceIspInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="shoudanLimitInfo!=null and shoudanLimitInfo !=''">
+				and
+				shoudan_limit_info=#{shoudanLimitInfo,jdbcType=VARCHAR}
+			</if>
+
+			<if test="businessType!=null and businessType !=''">
+				and
+				business_type=#{businessType,jdbcType=VARCHAR}
+			</if>
+
+		</trim>
+	</sql>
+
+	<!-- 查询总记录数 -->
+	<select id="queryCount" parameterType="com.ekhui.pojo.GoodsOrderMession"
+		resultType="java.lang.Integer">
+		select count(order_id) from goods_order_mession
+		<include refid="pageCondition" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.GoodsOrderMession"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order_mession
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+	<!-- 主键查询 -->
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order_mession
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</select>
+	<!-- 主键删除 -->
+	<delete id="deleteByOrderId" parameterType="java.lang.String">
+		delete from
+		goods_order_mession
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByOrderIdStatus" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		delete from
+		goods_order_mession
+		where order_id = #{orderId,jdbcType=VARCHAR}
+		and
+		status="0"
+	</delete>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		insert into
+		goods_order_mession (order_id, merchant_order_id,
+		contract_id,
+		ekhui_order_id, recharge_order_id, status,
+		order_limit_time,
+		create_order_time, order_api_start_time,
+		recharge_type,province_isp_info,shoudan_limit_info)
+		values
+		(#{orderId,jdbcType=VARCHAR}, #{merchantOrderId,jdbcType=VARCHAR},
+		#{contractId,jdbcType=VARCHAR},
+		#{ekhuiOrderId,jdbcType=VARCHAR},
+		#{rechargeOrderId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{orderLimitTime,jdbcType=VARCHAR},
+		#{createOrderTime,jdbcType=VARCHAR},
+		#{orderApiStartTime,jdbcType=VARCHAR},
+		#{rechargeType,jdbcType=VARCHAR},
+		#{provinceIspInfo,jdbcType=VARCHAR},
+		#{shoudanLimitInfo,jdbcType=VARCHAR},
+		)
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		insert into goods_order_mession
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id,
+			</if>
+			<if test="contractId != null">
+				contract_id,
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id,
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time,
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time,
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time,
+			</if>
+			<if test="rechargeType != null">
+				recharge_type,
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info,
+			</if>
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info,
+			</if>
+
+			<if test="businessType != null">
+				business_type,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				#{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				#{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				#{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				#{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				#{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				#{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				#{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				#{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="businessType != null">
+				#{businessType,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<!-- 根据订单号更新 -->
+	<update id="updateByOrderId" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		update goods_order_mession
+		<set>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				recharge_type = #{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info = #{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info =
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</update>
+	<!-- 更新补充状态的mession -->
+	<update id="updateByOrderIdFourStatus" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		update goods_order_mession
+		<set>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				recharge_type = #{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info = #{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info =
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+		and status='4'
+	</update>
+
+
+
+	<!-- 根据订单号和状态更新 -->
+	<update id="updateByOrderIdStatus" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		update goods_order_mession
+		<set>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				recharge_type = #{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info = #{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info =
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+		and status='1'
+	</update>
+	<!-- 代充值 -->
+	<update id="updateByOrderIdCreateRecharge" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		update goods_order_mession
+		<set>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				recharge_type = #{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info = #{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info =
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+		and status='2'
+	</update>
+	<!-- 收单状态 -->
+	<update id="updateByOrderIdThreeStatus" parameterType="com.ekhui.pojo.GoodsOrderMession">
+		update goods_order_mession
+		<set>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeOrderId != null">
+				recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="orderLimitTime != null">
+				order_limit_time = #{orderLimitTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderApiStartTime != null">
+				order_api_start_time =
+				#{orderApiStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeType != null">
+				recharge_type = #{rechargeType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="provinceIspInfo != null">
+				province_isp_info = #{provinceIspInfo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="shoudanLimitInfo != null">
+				shoudan_limit_info =
+				#{shoudanLimitInfo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR}
+		and status='3'
+	</update>
+	<select id="selectCollectMessList" parameterType="com.ekhui.pojo.GoodsOrderMession"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order_mession
+		where status ='3'
+	</select>
+	<select id="selectHangUpMessList" parameterType="com.ekhui.pojo.GoodsOrderMession"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_order_mession
+		where status ='0'
+	</select>
+
+</mapper>

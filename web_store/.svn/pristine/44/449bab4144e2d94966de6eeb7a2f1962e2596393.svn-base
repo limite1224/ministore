@@ -1,0 +1,111 @@
+package com.leshun.plc.bean;
+
+import java.util.Date;
+
+public class DeviceMessage extends BaseQuery {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8158153919274075882L;
+
+	private String id;
+
+	private String deviceId;
+
+	private String accessDeviceId;
+
+	private String messageId;
+
+	private String messageType;
+
+	private Date outPushTime;
+
+	private Date createTime;
+
+	private String createBy;
+
+	private String remark;
+
+	private String message;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId == null ? null : deviceId.trim();
+	}
+
+	public String getAccessDeviceId() {
+		return accessDeviceId;
+	}
+
+	public void setAccessDeviceId(String accessDeviceId) {
+		this.accessDeviceId = accessDeviceId == null ? null
+				: accessDeviceId.trim();
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId == null ? null : messageId.trim();
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType == null ? null : messageType.trim();
+	}
+
+	public Date getOutPushTime() {
+		return outPushTime;
+	}
+
+	public void setOutPushTime(Date outPushTime) {
+		this.outPushTime = outPushTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy == null ? null : createBy.trim();
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message == null ? null : message.trim();
+	}
+}

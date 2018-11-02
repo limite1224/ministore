@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+	</settings>
+	<mappers>
+		<!--<mapper resource="mybatis/AreaCodeMapper.xml" /> -->
+		<mapper resource="mybatis/GoodsOrderMapper.xml" />
+		<mapper resource="mybatis/GoodsOrderMessionMapper.xml" />
+		<mapper resource="mybatis/RechargeOrderMapper.xml" />
+		<mapper resource="mybatis/ProvinceWeiHuInfoMapper.xml" />
+		<mapper resource="mybatis/AdvanceNotifyInfoMapper.xml" />
+		<mapper resource="mybatis/GoodsPriceInfoMapper.xml" />
+		<mapper resource="mybatis/GoodsReflectInfoMapper.xml" />
+		<mapper resource="mybatis/SupplementOrderInfoMapper.xml" />
+	</mappers>
+</configuration>

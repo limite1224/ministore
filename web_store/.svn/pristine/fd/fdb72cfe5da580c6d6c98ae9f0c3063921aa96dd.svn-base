@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.DeviceMessageMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.DeviceMessage">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+		<result column="access_device_id" property="accessDeviceId"
+			jdbcType="VARCHAR" />
+		<result column="message_id" property="messageId" jdbcType="VARCHAR" />
+		<result column="message_type" property="messageType" jdbcType="VARCHAR" />
+		<result column="out_push_time" property="outPushTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.leshun.plc.bean.DeviceMessage"
+		extends="BaseResultMap">
+		<result column="message" property="message" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, device_id, access_device_id, message_id, message_type,
+		out_push_time,
+		create_time,
+		create_by, remark
+	</sql>
+	<sql id="Blob_Column_List">
+		message
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from device_message
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		device_message
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.DeviceMessage">
+		insert into device_message
+		(id, device_id, access_device_id,
+		message_id, message_type,
+		out_push_time,
+		create_time, create_by, remark,
+		message)
+		values
+		(#{id,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR},
+		#{accessDeviceId,jdbcType=VARCHAR},
+		#{messageId,jdbcType=VARCHAR},
+		#{messageType,jdbcType=VARCHAR}, #{outPushTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{message,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.DeviceMessage">
+		insert into device_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="deviceId != null">
+				device_id,
+			</if>
+			<if test="accessDeviceId != null">
+				access_device_id,
+			</if>
+			<if test="messageId != null">
+				message_id,
+			</if>
+			<if test="messageType != null">
+				message_type,
+			</if>
+			<if test="outPushTime != null">
+				out_push_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="message != null">
+				message,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceId != null">
+				#{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="accessDeviceId != null">
+				#{accessDeviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="messageId != null">
+				#{messageId,jdbcType=VARCHAR},
+			</if>
+			<if test="messageType != null">
+				#{messageType,jdbcType=VARCHAR},
+			</if>
+			<if test="outPushTime != null">
+				#{outPushTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="message != null">
+				#{message,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.DeviceMessage">
+		update device_message
+		<set>
+			<if test="deviceId != null">
+				device_id = #{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="accessDeviceId != null">
+				access_device_id = #{accessDeviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="messageId != null">
+				message_id = #{messageId,jdbcType=VARCHAR},
+			</if>
+			<if test="messageType != null">
+				message_type = #{messageType,jdbcType=VARCHAR},
+			</if>
+			<if test="outPushTime != null">
+				out_push_time = #{outPushTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="message != null">
+				message = #{message,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.leshun.plc.bean.DeviceMessage">
+		update
+		device_message
+		set device_id = #{deviceId,jdbcType=VARCHAR},
+		access_device_id = #{accessDeviceId,jdbcType=VARCHAR},
+		message_id =
+		#{messageId,jdbcType=VARCHAR},
+		message_type =
+		#{messageType,jdbcType=VARCHAR},
+		out_push_time =
+		#{outPushTime,jdbcType=TIMESTAMP},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		message = #{message,jdbcType=LONGVARCHAR}
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.DeviceMessage">
+		update
+		device_message
+		set device_id = #{deviceId,jdbcType=VARCHAR},
+		access_device_id = #{accessDeviceId,jdbcType=VARCHAR},
+		message_id =
+		#{messageId,jdbcType=VARCHAR},
+		message_type =
+		#{messageType,jdbcType=VARCHAR},
+		out_push_time =
+		#{outPushTime,jdbcType=TIMESTAMP},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR}
+		where
+		id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="queryList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.leshun.plc.bean.DeviceMessage">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from device_message
+		<include refid="pageCondition" />
+		<include refid="orderBy" />
+		<include refid="limit" />
+	</select>
+	<select id="queryRowCount" resultType="java.lang.Integer"
+		parameterType="com.leshun.plc.bean.DeviceMessage">
+		select count(id) from device_message
+		<include refid="pageCondition" />
+	</select>
+	<sql id="pageCondition">
+		<where>
+			<choose>
+				<when test="messageId != null and messageId!=''">
+					message_id = #{messageId,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					<if test="deviceId != null and deviceId!=''">
+						and device_id = #{deviceId,jdbcType=VARCHAR}
+					</if>
+					<if test="accessDeviceId != null and accessDeviceId != ''">
+						and access_device_id =
+						#{accessDeviceId,jdbcType=VARCHAR}
+					</if>
+					<if test="messageType != null and messageType != ''">
+						and message_type = #{messageType,jdbcType=VARCHAR}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<sql id="orderBy">
+		order by create_time desc
+	</sql>
+</mapper>

@@ -1,0 +1,15 @@
+package com.leshun.plc.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.dao.DeviceShadowDao;
+@Repository("deviceShadowDao")
+public class DeviceShadowDaoImpl extends BaseDaoImpl<DeviceShadow>
+		implements DeviceShadowDao {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8460363330956649615L;
+}

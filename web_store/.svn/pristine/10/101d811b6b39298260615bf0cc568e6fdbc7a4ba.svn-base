@@ -1,0 +1,158 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="订单详情">
+
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>订单详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        订单编号:
+    </th>
+    <td>
+        <input type="text" name="detailMession.orderId" class="formText {required: true}"
+               value="${(detailMession.orderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游订单号:
+    </th>
+    <td>
+        <input type="text" name="detailMession.merchantOrderId" class="formText {required: true}"
+               value="${(detailMession.merchantOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游商户号:
+    </th>
+    <td>
+        <input type="text" name="detailMession.contractId" class="formText {required: true}"
+               value="${(detailMession.contractId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        易卡汇订单号:
+    </th>
+    <td>
+        <input type="text" name="detailMession.ekhuiOrderId" class="formText {required: true}"
+               value="${(detailMession.ekhuiOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        充值订单号:
+    </th>
+    <td>
+        <input type="text" name="detailMession.ekhuiOrderId" class="formText {required: true}"
+               value="${(detailMession.ekhuiOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        订单限制时间:
+    </th>
+    <td>
+        <input type="text" name="detailMession.orderLimitTime" class="formText {required: true}"
+               value="${(detailMession.orderLimitTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       收单限制时间:
+    </th>
+    <td>
+        <input type="text" name="detailMession.shoudanLimitInfo" class="formText {required: true}"
+               value="${(detailMession.shoudanLimitInfo)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+      订单创建时间:
+    </th>
+    <td>
+        <input type="text" name="detailMession.createOrderTime" class="formText {required: true}"
+               value="${(detailMession.createOrderTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        开始充值时间:
+    </th>
+    <td>
+        <input type="text" name="detailMession.orderApiStartTime" class="formText {required: true}"
+               value="${(detailMession.orderApiStartTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        订单状态:
+    </th>
+    <td>
+        <#if detailMession.status?? && detailMession.status == "0">
+            失败
+        <#elseif detailMession.status?? && detailMession.status == "1">
+            成功
+        <#elseif detailMession.status?? && detailMession.status == "2">
+            处理中
+        <#elseif detailMession.status?? && detailMession.status == "3">
+            存疑     
+        </#if>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        充值来源:
+    </th>
+    <td>
+        <#if detailMession.rechargeType?? && detailMession.rechargeType == "1">
+           交易
+        <#elseif detailMession.rechargeType?? && detailMession.rechargeType == "2">
+           补充
+        </#if>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        省份运营商信信息:
+    </th>
+    <td>   <input type="text" name="detailMession.provinceIspInfo" class="formText {required: true}"
+               value="${(detailMession.provinceIspInfo)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>

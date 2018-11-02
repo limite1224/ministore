@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>订单管理</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/assign.ftl">
+    <#include "../template/include/source.ftl">
+    <#include "../template/template_listPage.ftl">
+    <style type="text/css">   
+        .page {
+            float: right;
+            padding-top: 15px;
+            margin-right: 15px;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($.browser.msie && $.browser.version == "6.0") {
+                setTimeout(function () {
+                    $('#status').val('<#if goodsOrder??>${(goodsOrder.status)!}</#if>');
+                }, 1);
+            }
+            else
+            {
+                $('#status').val('<#if goodsOrder??>${(goodsOrder.status)!}</#if>');
+            }
+
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list}<br></#list>", modal:true, autoCloseTime:3000});
+        </#if>
+
+            $('#searchButton').click(function () {
+                var startTime = document.getElementById("startTime").value;
+                var endTime = document.getElementById("endTime").value;
+                $("#dateSpan").html("<span></span>");
+                if (endTime != null && endTime != '') {
+                    return  compareTime(startTime, endTime);
+                }
+            });
+
+            
+             $('.follow-cursor').poshytip({
+                    className: 'tip-darkgray',
+	                followCursor: true,
+	                slide: false
+                });
+        });
+
+        function compareTime(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function compareTime2(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan2").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+        function dealS(orderId,contractId,status,ptOrderNo){
+            var submit = function (v, h, f) {
+                if (v == 'ok')  {
+                    var url = "http://mng.ekhui.com/game/pdd_order!deal.htm?orderId="+orderId+"&contractId="+contractId+"&status="+status+"&ptOrderNo="+ptOrderNo;
+                    //url = "http://localhost:8080/web_manager/game/pdd_order!deal.htm?orderId="+orderId+"&contractId="+contractId+"&status="+status+"&ptOrderNo="+ptOrderNo;
+                    document.forms[0].action = url;
+                    document.forms[0].submit();
+                }  else if (v == 'cancel')  {
+
+                }
+                    return true; //close
+            };
+            $.jBox.confirm("确定要进行此操作吗？", "温罄提示", submit);
+        }
+        
+</script>
+</head>
+<body class="list">
+<div class="body">
+    <div class="listBar">
+        <h1><span class="icon">&nbsp;</span>订单列表&nbsp;<span class="pageInfo"></span></h1>
+    </div>	
+<@pageList page=(page!) id="listForm" action="${web_base}/phone/goods_order!queryGoodsOrderPage.htm" query="goodsOrder" isEmpty=true>
+    <div class="operateBar">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      订单编号：<input type="text" name="goodsOrder.orderid" id="orderid"
+                    value="<#if goodsOrder??>${(goodsOrder.orderid)!}</#if>"
+                    />
+           &nbsp;&nbsp;&nbsp;
+      下游订单号：<input type="text" name="goodsOrder.merchantorderid" id="merchantorderid"
+                     value="<#if goodsOrder??>${(goodsOrder.merchantorderid)!}</#if>"/>
+        &nbsp;&nbsp;&nbsp;
+       充值账号：<input type="text" name="goodsOrder.gameaccount" id="gameaccount"
+                      value="<#if goodsOrder??>${(goodsOrder.gameaccount)!}</#if>"/>
+         &nbsp;&nbsp;&nbsp;
+        订单状态：<select name="goodsOrder.status" id="status">
+        <option value="">-请选择-</option>
+        <option value="0">失败</option>
+        <option value="1">成功</option>
+        <option value="2">处理中</option>
+        <option value="3">存疑</option>
+        <option value="4">失败待处理</option>
+    </select>
+        &nbsp;&nbsp;&nbsp;
+   <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
+    业务类型：<select name="goodsOrder.businessType" id="businessType">
+        <option value="">-请选择-</option>
+        <option value="01" <#if goodsOrder.businessType??&&goodsOrder.businessType=='01'>selected='selected'</#if>>流量</option>
+        <option value="02" <#if goodsOrder.businessType??&&goodsOrder.businessType=='02'>selected=selected'</#if>>话费快充</option>
+        <option value="03" <#if goodsOrder.businessType??&&goodsOrder.businessType=='03'>selected='selected'</#if>>话费慢充</option>
+    </select>
+   &nbsp;&nbsp;&nbsp;
+        商品名称：<input type="text" name="goodsOrder.goodsname" id="goodsname"
+                     value="<#if goodsOrder??>${(goodsOrder.goodsname)!}</#if>"/>
+        &nbsp;订单生成时间：<input type="text" id="startTime" name="goodsOrder.startTime"
+                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')||\'${(maxDate)!}\'}'})"
+                       value="${(goodsOrder.startTime)!}" class="Wdate" readonly="readonly">&nbsp;--&nbsp;
+        <input type="text" id="endTime" name="goodsOrder.endTime"
+               onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'${(maxDate)!}'})"
+               value="${(goodsOrder.endTime)!}" class="Wdate" readonly="readonly">
+        &nbsp;&nbsp;
+        <#--<input type="button" class="addButton" onclick="queryTotalPrice();" value="汇总总价" />
+        <input type="button" class="addButton" onclick="queryCostTotalPrice();" value="汇总成本" />
+        <input type="button" class="addButton" onclick="queryTotalNum();" value="汇总数量" />
+        <input type="button" class="addButton" onclick="queryCostTotalParvalue();" value="汇总面值" />-->
+        &nbsp;&nbsp;
+        <input type="submit" id="searchButton" class="searchButton" value=""/>
+        <span id="dateSpan" style="color: red"></span>
+    </div>
+    <table class="listTable" border="1">
+        <tr>
+            <th>
+                <span class="sort">订单编号</span>
+            </th>
+            <th>
+                <span class="sort">商品信息</span>
+            </th>
+            <th>
+                <span class="sort">充值账号</span>
+            </th>
+            <th>
+                <span class="sort">订单金额</span>
+            </th>
+            
+            <th>
+                <span class="sort">商户信息</span>
+            </th>
+            
+            <th>
+                <span class="sort">订单状态</span>
+            </th>
+             <th>
+                <span class="sort">订单说明</span>
+            </th>
+            <th>
+                <span class="sort">订单生成时间</span>
+            </th>
+            <th width="90">
+                                            操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作
+            <th/>
+        </tr>
+
+        <#if page?? && page.list?? && (page.list?size gt 0)>
+            <#list page.list as obj>
+                <tr>
+                <#--订单编号-->
+                    <td>
+                       下游：<a class="follow-cursor" title="${(obj.merchantorderid)!}" style="cursor: pointer;">
+                            <#if obj.merchantorderid?? && obj.merchantorderid?length gte 17>
+                            <#--//截取输出文字的长度-->
+                            ${obj.merchantorderid?substring(0,17)}...
+                            <#else>
+                            ${(obj.merchantorderid)!}
+                            </#if>
+                        </a>
+                        <br>
+                     本地：<a class="follow-cursor" title="${(obj.orderid)!}" style="cursor: pointer;">
+                            ${(obj.orderid)!}
+                        </a>
+                    </td>
+                    <#--商品信息-->
+                    
+                    <td>
+                    商品编号:${(obj.goodsid)!}
+                    	<br/>
+                    商品名称：<a class="follow-cursor" title="${(obj.goodsname)!}" style="cursor: pointer;">
+                            <#if obj.goodsname?? && obj.goodsname?length gte 8>
+                            <#--//截取输出文字的长度-->
+                            ${obj.goodsname?substring(0,8)}...
+                            <#else>
+                            ${(obj.goodsname)!}
+                            </#if>
+                        </a>
+                    </td>
+                    <#--充值账号-->
+                    <td>
+                        <a class="follow-cursor" title="${(obj.gameaccount)!}" style="cursor: pointer;">
+                            <#if obj.gameaccount?? && obj.gameaccount?length gt 11>
+                            <#--//截取输出文字的长度-->
+                            ${obj.gameaccount?substring(0,11)}...
+                            <#else>
+                            ${(obj.gameaccount)!}
+                            </#if>
+                        </a>  
+                        <br/>               
+                         商户IP：${(obj.merchantip)!}
+                         <br/>
+                         用户IP：${(obj.clentIp)!}
+               	    </td>
+               	    <#--订单金额-->
+        <td>       	        
+                        总价：${(obj.totalprice*1.0/1000)?string("0.000")!}<br/>
+        </td>
+          <#--商户信息-->          
+               		<td>
+                        下游编号：<a class="follow-cursor" title="${(obj.contractid)!}" style="cursor: pointer;">
+                           <#if obj.contractid?? && obj.contractid?length gte 10>
+                           <#--//截取输出文字的长度-->
+                           ${obj.contractid?substring(0,10)}...
+                           <#else>
+                           ${(obj.contractid)!}
+                           </#if>
+                       </a>
+                        <br/>
+                        上游工号： <a class="follow-cursor" title="${(obj.registeraccount)!}" style="cursor: pointer;">
+                           <#if obj.registeraccount?? && obj.registeraccount?length gte 10>
+                           <#--//截取输出文字的长度-->
+                           ${obj.registeraccount?substring(0,10)}...
+                           <#else>
+                           ${(obj.registeraccount)!}
+                           </#if>
+                       </a>
+                       <br/>
+                    </td>
+               <#--订单状态-->     
+                    <td>
+                        <#if obj.status?? && obj.status == "0">
+                            失败
+                        <#elseif obj.status?? && obj.status == "1">
+                            成功
+                        <#elseif obj.status?? && obj.status =="2">
+                            处理中
+                        <#elseif obj.status?? && obj.status =="3">
+                            存疑
+                        <#elseif obj.status?? && obj.status =="4">
+                          失败待处理
+                        </#if>
+         <#--订单说明-->             
+                    </td>
+                    <td>
+                        <a class="follow-cursor" title="${(obj.statusremark)!}" style="cursor: pointer;">
+                            <#if obj.statusremark?? && obj.statusremark?length gt 5>
+                            <#--//截取输出文字的长度-->
+                            ${obj.statusremark?substring(0,5)}...
+                            <#else>
+                            ${(obj.statusremark)!}
+                            </#if>
+                        </a>
+                    </td>
+                    <#--订单时间-->
+                    <td>
+                        本地创建时间: ${(obj.createordertime)!}
+                   <#if  obj.orderApiStartTime?? ><br/>API接口时间: ${(obj.orderApiStartTime)!}</#if><br/>
+                  <#if  obj.supOrderSuccessTime?? ><br/>上游成功时间: ${(obj.supordersuccesstime)!}</#if><br/>
+                    </td>
+                    <#--操作-->
+                    <td>
+                       <a href="${web_base}/phone/goods_order!queryByOrderId.htm?orderId=${(obj.orderid)!}" title="详情">[详情]</a>
+                       <br/>
+                       <a href="${web_base}/phone/goods_order!manualNotify.htm?orderId=${(obj.orderid)!}" title="手动通知">[手动通知]</a>
+                        
+                         <#if obj.status?? && obj.status == "2">
+                         <br/>
+                       		 <span class="spanLink" onclick="dealS('${(obj.orderid)!}','${(obj.contractid)!}','ORDER_SUCCESS','${(obj.merchantorderid)!}')" title="处理成功">[处理成功]</span>
+                       		 <span class="spanLink" onclick="dealS('${(obj.orderid)!}','${(obj.contractid)!}','ORDER_FAILED','${(obj.merchantorderid)!}')" title="处理失败">[处理失败]</span>
+                       	</#if>
+                    </td>
+                 </tr>
+            </#list>
+        </#if>
+    </table>
+
+    <#if page?? && page.list?? && (page.list?size <= 0)>
+        <div class="noRecord">
+            没有找到任何记录!
+        </div>
+    </#if>
+</@pageList>
+</div>
+</body>
+</html>

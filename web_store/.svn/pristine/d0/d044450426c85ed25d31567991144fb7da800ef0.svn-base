@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.AreaCodeMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.AreaCode">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="province_name" property="provinceName"
+			jdbcType="VARCHAR" />
+		<result column="province_code" property="provinceCode"
+			jdbcType="VARCHAR" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 查询所有字段 -->
+	<sql id="Base_Column_List">
+		id, province_name, province_code, city_name, city_code
+	</sql>
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="pageCondition">
+		<where>
+			<if test="provinceName!=null and provinceName!=''">
+				and province_name like '%${provinceName}%'
+			</if>
+			<if test="provinceCode!=null and provinceCode!=''">
+				and province_code=#{provinceCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityCode!=null and cityCode!=''">
+				and city_code=#{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName!=null and cityName!=''">
+				and city_name like '%${cityName}%'
+			</if>
+		</where>
+	</sql>
+
+	<!-- 查询总数 -->
+	<select id="selectAccount" resultType="java.lang.Integer"
+		parameterType="com.ekhui.pojo.AreaCode">
+		select count(id) from area_code
+		<include refid="pageCondition" />
+		<include refid="limit" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" resultMap="BaseResultMap" parameterType="com.ekhui.pojo.AreaCode">
+	select
+		<include refid="Base_Column_List" />
+		from area_code
+		<include refid="pageCondition" />
+		<include refid="limit" />
+	</select>
+	<!-- 主键查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from area_code
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<!-- 主键删除 -->
+	<delete id="deleteById" parameterType="java.lang.String">
+		delete from area_code
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<!--插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.AreaCode">
+		insert into area_code (id,
+		province_name, province_code,
+		city_name, city_code)
+		values
+		(#{id,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR},
+		#{provinceCode,jdbcType=VARCHAR},
+		#{cityName,jdbcType=VARCHAR},
+		#{cityCode,jdbcType=VARCHAR})
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.AreaCode">
+		insert into area_code
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="provinceName != null">
+				province_name,
+			</if>
+			<if test="provinceCode != null">
+				province_code,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="cityCode != null">
+				city_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				#{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				#{cityCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 根据选择性更新 -->
+	<update id="updateById" parameterType="com.ekhui.pojo.AreaCode">
+		update area_code
+		<set>
+			<if test="provinceName != null">
+				province_name = #{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				province_code = #{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				city_code = #{cityCode,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

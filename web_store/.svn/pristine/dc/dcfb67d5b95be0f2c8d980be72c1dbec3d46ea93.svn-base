@@ -1,0 +1,194 @@
+
+package com.leshun.plc.action.business;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.comp.DeviceMessageComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceMessageAction
+		extends SuperAction<DeviceMessage, DeviceMessageComp> {
+
+	private static final long serialVersionUID = -7359878984826956592L;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceMessage();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		page = comp.queryPage(entity);
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		entity = comp.selectByPrimaryKey(id);
+		return DETAIL;
+	}
+
+	/** 接收消息推送 */
+	public String deviceMessageAccept() {
+		String uuid = UUID.randomUUID().toString();
+
+		Map<String, String> parmMap = getParameterStringMap(request);
+		if (parmMap == null || parmMap.isEmpty()) {
+			log.info("reqId:[" + uuid + "]" + ",参数为空!");
+			message = "fail";
+			return "ajax";
+		}
+		log.info("reqId:[" + uuid + "]" + ",接收到的参数为：" + parmMap);
+
+		String deviceId = parmMap.get("deviceId");
+		String accessDeviceId = parmMap.get("accessDeviceId");
+		String mes = parmMap.get("message");
+		String timestamp = parmMap.get("timestamp");
+		String messageId = parmMap.get("messageId");
+		// String deviceType = parmMap.get("deviceType");
+		// String deviceStatus = parmMap.get("deviceStatus");
+		String messageType = parmMap.get("messageType");
+
+		String checkResult = checkParameter(deviceId, accessDeviceId, mes,
+				timestamp, messageId, messageType, uuid);
+		if (!"SUCCESS".equals(checkResult)) {
+			log.info("reqId:[" + uuid + "]" + ",校验参数结果：" + checkResult);
+			message = "fail";
+			return "ajax";
+		}
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date outPushTime = sdf.parse(timestamp);
+
+			// 根据消息Id查询数据唯一性
+			DeviceMessage entity = new DeviceMessage();
+			entity.setMessageId(messageId);
+
+			List<DeviceMessage> message_list = comp.queryList(entity);
+			if (message_list.isEmpty()) {
+				entity.setDeviceId(deviceId);
+				entity.setAccessDeviceId(accessDeviceId);
+				entity.setMessage(mes);
+				entity.setMessageType(messageType);
+				entity.setOutPushTime(outPushTime);
+				entity.setCreateTime(new Date());
+				entity.setCreateBy(deviceId);// 无法获得创建者，先set为设备id
+
+				boolean return_result = comp.insertMessageAndUpdateShow(entity);
+				if (!return_result) {
+					log.info("reqId:[" + uuid + "]" + ",插入消息记录表和更新设备影子操作失败!");
+					message = "fail";
+					return "ajax";
+				}
+			} else {
+				log.info("reqId:[" + uuid + "]" + ",根据消息Id查询数据返回结果不为空!");
+				message = "fail";
+				return "ajax";
+			}
+
+		} catch (Exception e) {
+			log.info("reqId:[" + uuid + "]" + ",未知错误!", e);
+			message = "fail";
+			return "ajax";
+		}
+		message = "success";
+		return "ajax";
+
+	}
+
+	// 返回值类型为Map<String, String>
+	public static Map<String, String> getParameterStringMap(
+			HttpServletRequest request) {
+		Map<String, String[]> properties = request.getParameterMap();// 把请求参数封装到Map<String,
+																		// String[]>中
+		Map<String, String> returnMap = new HashMap<String, String>();
+		String name = "";
+		String value = "";
+		for (Map.Entry<String, String[]> entry : properties.entrySet()) {
+			name = entry.getKey();
+			String[] values = entry.getValue();
+			if (null == values) {
+				value = "";
+			} else if (values.length > 1) {
+				for (int i = 0; i < values.length; i++) { // 用于请求参数中有多个相同名称
+					value = values[i] + ",";
+				}
+				value = value.substring(0, value.length() - 1);
+			} else {
+				value = values[0];// 用于请求参数中请求参数名唯一
+			}
+			returnMap.put(name, value);
+
+		}
+		return returnMap;
+	}
+
+	private String checkParameter(String deviceId, String accessDeviceId,
+			String mes, String timestamp, String messageId, String messageType,
+			String uuid) {
+		String checkResult = "SUCCESS";
+		if (StringUtils.isEmpty(deviceId)) {
+			checkResult = "参数缺失,平台设备编号[deviceId]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+		if (StringUtils.isEmpty(accessDeviceId)) {
+			checkResult = "参数缺失,第三方平台设备编号[accessDeviceId]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+		if (StringUtils.isEmpty(mes)) {
+			checkResult = "参数缺失,消息内容[mes]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+		if (StringUtils.isEmpty(timestamp)) {
+			checkResult = "参数缺失,第三方平台推送时间[timestamp]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+		if (StringUtils.isEmpty(messageId)) {
+			checkResult = "参数缺失,消息ID[messageId]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+		if (StringUtils.isEmpty(messageType)) {
+			checkResult = "参数缺失,消息类型[messageType]";
+			log.info("reqId:[" + uuid + "]" + message);
+		}
+
+		return checkResult;
+	}
+
+}

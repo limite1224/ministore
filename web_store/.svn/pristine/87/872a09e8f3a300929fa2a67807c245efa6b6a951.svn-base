@@ -1,0 +1,7 @@
+package com.leshun.plc.service;
+
+import com.leshun.plc.bean.ProductMsgMap;
+
+public interface ProductMsgMapService extends BaseService<ProductMsgMap> {
+
+}

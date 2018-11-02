@@ -1,0 +1,11 @@
+package com.leshun.plc.comp;
+
+import java.util.Map;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceShadow;
+
+public interface DeviceInfoComp extends BaseComp<DeviceInfo> {
+	public Map<String, String> parseMsgInfo(DeviceInfo deviceInfo,
+			DeviceShadow deviceShadow) throws Exception;
+}

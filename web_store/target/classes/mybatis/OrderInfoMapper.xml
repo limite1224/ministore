@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.OrderInfoMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.OrderInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+		<result column="goods_discount" property="goodsDiscount"
+			jdbcType="DECIMAL" />
+		<result column="goods_count" property="goodsCount" jdbcType="DECIMAL" />
+		<result column="order_source" property="orderSource" jdbcType="VARCHAR" />
+		<result column="order_type" property="orderType" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="district" property="district" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="recipients" property="recipients" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="open_id" property="openId" jdbcType="VARCHAR" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="delivery_time" property="deliveryTime"
+			jdbcType="TIMESTAMP" />
+		<result column="express_company" property="expressCompany"
+			jdbcType="VARCHAR" />
+		<result column="waybill_number" property="waybillNumber"
+			jdbcType="VARCHAR" />
+		<result column="delivery_method" property="deliveryMethod"
+			jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+		<result column="send_sms" property="sendSms" jdbcType="VARCHAR" />
+		<result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+		<result column="order_finish_time" property="orderFinishTime"
+			jdbcType="TIMESTAMP" />
+		<result column="order_kefu" property="orderKefu" jdbcType="VARCHAR" />
+		<result column="wx_pay_order_id" property="wxPayOrderId"
+			jdbcType="VARCHAR" />
+		<result column="goods_remark" property="goodsRemark" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+
+		<result column="goods_Names" property="goodsNames" jdbcType="VARCHAR" />
+		<result column="goods_prices" property="goodsPrices" jdbcType="VARCHAR" />
+		<result column="goods_discounts" property="goodsDiscounts"
+			jdbcType="VARCHAR" />
+		<result column="goods_counts" property="goodsCounts" jdbcType="VARCHAR" />
+		<result column="goods_remarks" property="goodsRemarks"
+			jdbcType="VARCHAR" />
+		<result column="order_total" property="orderTotal" jdbcType="DECIMAL" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, order_id,
+		order_source,
+		order_type, province, city,
+		district,
+		address, recipients, mobile, open_id,
+		order_time,
+		delivery_time,
+		express_company, waybill_number, delivery_method,
+		order_status,
+		send_sms,
+		send_time, order_finish_time, order_kefu,
+		wx_pay_order_id,
+		create_time,
+		create_by, update_time,
+		update_by, remarks,
+		del_flag,order_total
+	</sql>
+	<sql id="general_column">
+		goods_name, goods_price, goods_discount,
+		goods_remark,
+		goods_count
+	</sql>
+	<sql id="specific_column">
+		group_concat(goods_name) as 'goods_names',
+		group_concat(goods_price) as 'goods_prices',
+		group_concat(goods_discount) as 'goods_discounts',
+		group_concat(goods_count) as 'goods_counts',
+		group_concat(goods_remark)
+		as 'goods_remarks'
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_info
+		where id = #{id,jdbcType=VARCHAR} and del_flag = '0'
+	</select>
+	<update id="updateDelFlag" parameterType="java.lang.String">
+		update order_info set
+		del_flag = '1' where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		order_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.OrderInfo">
+		insert into order_info (id,
+		order_id, goods_name,
+		goods_price, goods_discount, goods_count,
+		order_source, order_type, province,
+		city, district, address,
+		recipients, mobile, open_id,
+		order_time, delivery_time,
+		express_company,
+		waybill_number, delivery_method, order_status,
+		send_sms, send_time, order_finish_time,
+		order_kefu, wx_pay_order_id,
+		goods_remark,
+		create_time, create_by, update_time,
+		update_by,
+		remarks,order_total
+		)
+		values (#{id,jdbcType=VARCHAR},
+		#{orderId,jdbcType=VARCHAR},
+		#{goodsName,jdbcType=VARCHAR},
+		#{goodsPrice,jdbcType=DECIMAL},
+		#{goodsDiscount,jdbcType=DECIMAL},
+		#{goodsCount,jdbcType=DECIMAL},
+		#{orderSource,jdbcType=VARCHAR},
+		#{orderType,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR},
+		#{district,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{recipients,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR},
+		#{openId,jdbcType=VARCHAR},
+		#{orderTime,jdbcType=TIMESTAMP},
+		#{deliveryTime,jdbcType=TIMESTAMP},
+		#{expressCompany,jdbcType=VARCHAR},
+		#{waybillNumber,jdbcType=VARCHAR},
+		#{deliveryMethod,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR},
+		#{sendSms,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP},
+		#{orderFinishTime,jdbcType=TIMESTAMP},
+		#{orderKefu,jdbcType=VARCHAR},
+		#{wxPayOrderId,jdbcType=VARCHAR}, #{goodsRemark,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR},#{orderTotal,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.OrderInfo">
+		insert into order_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsPrice != null">
+				goods_price,
+			</if>
+			<if test="goodsDiscount != null">
+				goods_discount,
+			</if>
+			<if test="goodsCount != null">
+				goods_count,
+			</if>
+			<if test="orderSource != null">
+				order_source,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="district != null">
+				district,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="recipients != null">
+				recipients,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="openId != null">
+				open_id,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time,
+			</if>
+			<if test="expressCompany != null">
+				express_company,
+			</if>
+			<if test="waybillNumber != null">
+				waybill_number,
+			</if>
+			<if test="deliveryMethod != null">
+				delivery_method,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="sendSms != null">
+				send_sms,
+			</if>
+			<if test="sendTime != null">
+				send_time,
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time,
+			</if>
+			<if test="orderKefu != null">
+				order_kefu,
+			</if>
+			<if test="wxPayOrderId != null">
+				wx_pay_order_id,
+			</if>
+			<if test="goodsRemark != null">
+				goods_remark,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="orderTotal != null">
+				order_total,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsPrice != null">
+				#{goodsPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsDiscount != null">
+				#{goodsDiscount,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsCount != null">
+				#{goodsCount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderSource != null">
+				#{orderSource,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				#{district,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="recipients != null">
+				#{recipients,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				#{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deliveryTime != null">
+				#{deliveryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="expressCompany != null">
+				#{expressCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="waybillNumber != null">
+				#{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryMethod != null">
+				#{deliveryMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="sendSms != null">
+				#{sendSms,jdbcType=VARCHAR},
+			</if>
+			<if test="sendTime != null">
+				#{sendTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderFinishTime != null">
+				#{orderFinishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderKefu != null">
+				#{orderKefu,jdbcType=VARCHAR},
+			</if>
+			<if test="wxPayOrderId != null">
+				#{wxPayOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsRemark != null">
+				#{goodsRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTotal!=null">
+				#{orderTotal,jdbcType=DECIMAL}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.OrderInfo">
+		update order_info
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsPrice != null">
+				goods_price = #{goodsPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsDiscount != null">
+				goods_discount = #{goodsDiscount,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsCount != null">
+				goods_count = #{goodsCount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderSource != null">
+				order_source = #{orderSource,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="recipients != null">
+				recipients = #{recipients,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				open_id = #{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="expressCompany != null">
+				express_company = #{expressCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="waybillNumber != null">
+				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryMethod != null">
+				delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="sendSms != null">
+				send_sms = #{sendSms,jdbcType=VARCHAR},
+			</if>
+			<if test="sendTime != null">
+				send_time = #{sendTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time =
+				#{orderFinishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderKefu != null">
+				order_kefu = #{orderKefu,jdbcType=VARCHAR},
+			</if>
+			<if test="wxPayOrderId != null">
+				wx_pay_order_id = #{wxPayOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsRemark != null">
+				goods_remark = #{goodsRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTotal!=null">
+				order_total = #{orderTotal,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR} and del_flag = '0'
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.OrderInfo">
+		update order_info
+		set order_id = #{orderId,jdbcType=VARCHAR},
+		goods_name =
+		#{goodsName,jdbcType=VARCHAR},
+		goods_price =
+		#{goodsPrice,jdbcType=DECIMAL},
+		goods_discount =
+		#{goodsDiscount,jdbcType=DECIMAL},
+		goods_count =
+		#{goodsCount,jdbcType=DECIMAL},
+		order_source =
+		#{orderSource,jdbcType=VARCHAR},
+		order_type =
+		#{orderType,jdbcType=VARCHAR},
+		province = #{province,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		district =
+		#{district,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		recipients = #{recipients,jdbcType=VARCHAR},
+		mobile =
+		#{mobile,jdbcType=VARCHAR},
+		open_id = #{openId,jdbcType=VARCHAR},
+		order_time = #{orderTime,jdbcType=TIMESTAMP},
+		delivery_time =
+		#{deliveryTime,jdbcType=TIMESTAMP},
+		express_company =
+		#{expressCompany,jdbcType=VARCHAR},
+		waybill_number =
+		#{waybillNumber,jdbcType=VARCHAR},
+		delivery_method =
+		#{deliveryMethod,jdbcType=VARCHAR},
+		order_status =
+		#{orderStatus,jdbcType=VARCHAR},
+		send_sms =
+		#{sendSms,jdbcType=VARCHAR},
+		send_time =
+		#{sendTime,jdbcType=TIMESTAMP},
+		order_finish_time =
+		#{orderFinishTime,jdbcType=TIMESTAMP},
+		order_kefu =
+		#{orderKefu,jdbcType=VARCHAR},
+		wx_pay_order_id =
+		#{wxPayOrderId,jdbcType=VARCHAR},
+		goods_remark =
+		#{goodsRemark,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		update_time =
+		#{updateTime,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		order_total = #{orderTotal,jdbcType=DECIMAL}
+		where id = #{id,jdbcType=VARCHAR} and
+		del_flag = '0'
+	</update>
+	<!-- 根据订单查询 -->
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_info
+		where order_id = #{orderId,jdbcType=VARCHAR} and
+		del_flag = '0'
+	</select>
+	<!--根据订单删除 -->
+	<update id="updateDelFlagByOrderId" parameterType="java.lang.String">
+		update
+		order_info set
+		del_flag = '1' where order_id =
+		#{orderId,jdbcType=VARCHAR}
+	</update>
+	<delete id="deleteByOrderId" parameterType="java.lang.String">
+		delete from
+		order_info
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 根据订单修改 -->
+	<update id="updateByOrderId" parameterType="com.leshun.plc.bean.OrderInfo">
+		update order_info
+		<set>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsPrice != null">
+				goods_price = #{goodsPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsDiscount != null">
+				goods_discount = #{goodsDiscount,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsCount != null">
+				goods_count = #{goodsCount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderSource != null">
+				order_source = #{orderSource,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="recipients != null">
+				recipients = #{recipients,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				open_id = #{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="expressCompany != null">
+				express_company = #{expressCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="waybillNumber != null">
+				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryMethod != null">
+				delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="sendSms != null">
+				send_sms = #{sendSms,jdbcType=VARCHAR},
+			</if>
+			<if test="sendTime != null">
+				send_time = #{sendTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderFinishTime != null">
+				order_finish_time =
+				#{orderFinishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderKefu != null">
+				order_kefu = #{orderKefu,jdbcType=VARCHAR},
+			</if>
+			<if test="wxPayOrderId != null">
+				wx_pay_order_id = #{wxPayOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsRemark != null">
+				goods_remark = #{goodsRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTotal!=null">
+				order_total = #{orderTotal,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=VARCHAR} and del_flag = '0'
+	</update>
+
+	<select id="queryList" parameterType="com.leshun.plc.bean.OrderInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="specific_column" />
+		from order_info
+		<include refid="condition" />
+		group by order_id
+		<include refid="orderBy" />
+		<include refid="limit" />
+	</select>
+	<sql id="condition">
+		<where>
+			and del_flag = '0'
+			<choose>
+				<when test="orderId!=null and orderId!=''">
+					and order_id= #{orderId,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					<if test="beginDate!=null and beginDate!=''">
+				<![CDATA[and create_time>=str_to_date('${beginDate} 00:00:00','%Y-%m-%d %T')]]>
+					</if>
+					<if test="endDate!=null and endDate!=''">
+				<![CDATA[and create_time<=str_to_date('${endDate} 23:59:59','%Y-%m-%d %T')]]>
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	<sql id="limit">
+		limit ${offset},${limit}
+	</sql>
+	<sql id="orderBy">
+		order by order_id
+	</sql>
+</mapper>

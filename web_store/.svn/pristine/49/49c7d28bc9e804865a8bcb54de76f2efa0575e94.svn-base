@@ -1,0 +1,326 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="添加/更新设备信息">
+	<#if (deviceId)??>
+		<#assign isEdit = true />
+	<#else>
+		<#assign isAdd = true />
+	</#if>
+<body>
+	<div class="main-content">
+		<@messageModal message="${message!}"/>
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备信息管理
+					<small>
+					信息
+        					<#if isAdd?? && isAdd = true>添加<#else>修改</#if>
+					</small>
+				</h1>
+			</div>
+			
+     <form class="form-horizontal"
+    	<#if isAdd?? && isAdd = true>action="${web_base}/business/p_device_info!add.htm" 
+        <#else>action="${web_base}/business/p_device_info!edit.htm" 
+		</#if>  onsubmit= "return checkParams()"  method="post">	 
+    	 
+    	<#if isEdit??> 
+    	<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">设备编号</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceId" name="deviceInfo.deviceId" 
+					value="${(deviceInfo!).deviceId!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	</#if>
+    	 
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceName">设备名称</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceName" name="deviceInfo.deviceName" 
+					value="${(deviceInfo!).deviceName!}" 	/>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必填项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceMac">mac地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceMac" name="deviceInfo.deviceMac" 
+				value="${(deviceInfo!).deviceMac!}"  />
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必填项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceSecret">设备秘钥</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceSecret" name="deviceInfo.deviceSecret" 
+					value="${(deviceInfo!).deviceSecret!}" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productName">产品名称</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" id="productName" name= "deviceInfo.productName">
+					<option value="">
+                    -请选择产品-
+                	</option>
+                    <#if productIdAndNameList?? && (productIdAndNameList?size gt 0)>
+                        <#list productIdAndNameList as record>
+                            <option value="${(record.productName)!}" <#if deviceInfo?? && deviceInfo.productName?? && deviceInfo.productName=record.productName>selected</#if>>
+                            ${(record.productName)!}
+                            </option>
+                        </#list>
+                    </#if>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必选项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="groupId">分组</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" id="groupId" name= "deviceInfo.groupId">
+					<option value="">
+                    -请选择分组-
+                	</option>
+                    <#if groupIdAndNameList?? && (groupIdAndNameList?size gt 0)>
+                        <#list groupIdAndNameList as record>
+                            <option value="${(record.groupId)!}" <#if deviceInfo?? && deviceInfo.groupId?? && deviceInfo.groupId=record.groupId>selected</#if>>
+                            ${(record.groupName)!}
+                            </option>
+                        </#list>
+                    </#if>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必选项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="location">定位地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="location" name="deviceInfo.location" 
+				value="${(deviceInfo!).location!}"  />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="status">设备状态</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5"  id="status" name= "deviceInfo.status">
+                	<option value="1" <#if deviceInfo?? && deviceInfo.status?? && deviceInfo.status="1">selected</#if>>
+                		启用
+                	</option>
+                	<option value="0" <#if deviceInfo?? && deviceInfo.status?? && deviceInfo.status="0">selected</#if>>
+                		禁用
+                	</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="comProtocol">通讯协议</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5"  id="comProtocol" name= "deviceInfo.comProtocol">
+					<option value="">
+                    -请选择通讯协议-
+                	</option>
+                	<option value="1"  <#if deviceInfo?? && deviceInfo.comProtocol?? && deviceInfo.comProtocol="1" > selected </#if>>
+           				 mqtt
+           			</option>
+           			<option value="2"  <#if deviceInfo?? && deviceInfo.comProtocol?? && deviceInfo.comProtocol="2" > selected </#if>>
+           				 http
+           			</option>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必选项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="version">接口版本</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="version" name="deviceInfo.version" 
+				value="${(deviceInfo!).version!}" 	 />
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必填项</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="ip">IP</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="ip" name="deviceInfo.ip" 
+				value="${(deviceInfo!).ip!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="imei">imei</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="imei" name="deviceInfo.imei" 
+				value="${(deviceInfo!).imei!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="iccid">iccid</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="iccid" name="deviceInfo.iccid" 
+				value="${(deviceInfo!).iccid!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="imsi">imsi</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="imsi" name="deviceInfo.imsi" 
+				value="${(deviceInfo!).imsi!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="bts">基站信息</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="bts" name="deviceInfo.bts" 
+				value="${(deviceInfo!).bts!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceHV">deviceHV</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceHV" name="deviceInfo.deviceHV" 
+				value="${(deviceInfo!).deviceHV!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceSV">deviceSV</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceSV" name="deviceInfo.deviceSV" 
+				value="${(deviceInfo!).deviceSV!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceType">设备类型</label>
+			<div class="col-sm-9">
+				<select  class="col-xs-10 col-sm-5" id="deviceType" name= "deviceInfo.deviceType"  >
+					<option value="">
+                    -请选择设备类型-
+                	</option>
+                <#---
+                	<option value=""  <#if deviceInfo?? && deviceInfo.deviceType?? && deviceInfo.deviceType="" > selected </#if>>
+           				 
+           			</option>
+           			<option value=""  <#if deviceInfo?? && deviceInfo.deviceType?? && deviceInfo.deviceType="" > selected </#if>>
+           				 
+           			</option>
+           		-->
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="accessDeviceId">对接平台设备id</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="accessDeviceId" name="deviceInfo.accessDeviceId" 
+				value="${(deviceInfo!).accessDeviceId!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="authCode">鉴权码</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="authCode" name="deviceInfo.authCode" 
+				value="${(deviceInfo!).authCode!}" 	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="apiKey">设备的apiKey</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="apiKey" name="deviceInfo.apiKey" 
+				value="${(deviceInfo!).apiKey!}" 	 />
+			</div>
+		</div>
+		
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注 </label>
+			<div class="col-sm-9">
+				 <textarea class="form-control" name="deviceInfo.remark" >${(deviceInfo!).remark!}</textarea>
+			</div>
+		</div>
+		
+		<div class="space-4"></div>
+        <div class="center">
+	        <button type="submit" class="btn btn-info btn-sm"><i class="icon-print  align-top bigger-125 icon-on-right"></i>
+	        	保存
+	        </button>
+	        <button type="button" class="btn btn-sm" onclick="window.history.back(); return false;"><i class="icon-pencil align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+
+	<#--校验参数-->
+	function checkParams(){
+       	
+       	var deviceName= $('#deviceName').val();
+        if(deviceName==""){
+          alert("设备名称不能为空");
+          return false;
+       }
+       
+       var productName= $('#productName').val();
+        if(productName==""){
+          alert("产品名称不能为空");
+          return false;
+       }
+       
+       var groupId= $('#groupId').val();
+        if(groupId==""){
+          alert("设备分组不能为空");
+          return false;
+       }
+       
+       var deviceMac=$('#deviceMac').val();
+       if(deviceMac==""){
+          alert("mac地址，模块地址不能为空");
+          return false;
+       }  
+       
+       var comProtocol= $('#comProtocol').val();
+        if(comProtocol==""){
+          alert("通讯协议不能为空");
+          return false;
+       }    
+       
+    	var version= $('#version').val();
+        if(version==""){
+          alert("版本不能为空");
+          return false;
+       }	
+    	return true;
+    }
+</script>
+</body>
+</@edit>

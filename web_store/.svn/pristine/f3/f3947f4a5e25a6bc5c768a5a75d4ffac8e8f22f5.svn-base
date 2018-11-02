@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>流量省份维护信息</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/source.ftl">
+    <script> 
+        function update_pro(status,id){
+              var result = confirm("确定要执行此操作吗？");
+            if(result){
+                var url="${web_base}/phone/flow_pro_weihu_info!update.htm?id="+id+"&status="+status;
+                window.location.href=url;
+            }
+        }
+    </script>
+</head>
+<body class="list">
+     <div style="margin-left:100px;">
+    
+    </div>  
+    <div class="body">
+    <h1>流量三大运营商省份维护信息</h1>
+    <table class="listTable" border="3" style="border-collapse:separate; border-spacing:0px 30px;">
+        
+        <tr style="margin:5px 0";>
+          <td>
+            中国移动
+          </td>
+          <td>
+              <#list ydProList as obj>
+                     <#if obj_index%5==0><br/></#if>
+                     <#if obj.provinceName?? && obj.provinceName?length gt 3>
+                        ${obj.provinceName!?substring(0,3)}
+                        <#else>
+                         ${obj.provinceName!}
+                    </#if>
+                     <input type="button" value="上架" <#if obj.status?? &&obj.status=='1'> style='COLOR:red;'</#if> onclick='update_pro("1","${obj.id}")'/>
+                     <input type="button" value="下架" <#if obj.status?? &&obj.status=='0'> style='COLOR:red;'</#if> onclick='update_pro("0","${obj.id}")'/>
+                     <input type="button" value="收单" <#if obj.status?? &&obj.status=='2'> style='COLOR:red;'</#if> onclick='update_pro("2","${obj.id}")'/>
+                     <input type="button"<#if obj.flowRange?? &&obj.flowRange=='2'>value="全国" style="font-weight:900"<#elseif obj.flowRange?? &&obj.flowRange=='1'>value="省内" style='COLOR:blue'</#if>/>
+                     &nbsp;&nbsp;&nbsp;    
+               </#list>
+          </td>
+          </tr>
+          <tr>
+          <td>
+                    中国联通
+          </td>
+          <td>
+              <#list ltProList as obj>
+               <#if obj_index%5==0><br/></#if>
+                    <#if obj.provinceName?? && obj.provinceName?length gt 3>
+                        ${obj.provinceName!?substring(0,3)}
+                        <#else>
+                         ${obj.provinceName!}
+                    </#if>
+                     
+                    <input type="button" value="上架" <#if obj.status?? &&obj.status=='1'> style='COLOR:red;'</#if> onclick='update_pro("1","${obj.id}")'/>
+                    <input type="button" value="下架" <#if obj.status?? &&obj.status=='0'> style='COLOR:red;'</#if> onclick='update_pro("0","${obj.id}")'/>
+                     <input type="button" value="收单" <#if obj.status?? &&obj.status=='2'> style='COLOR:red;'</#if> onclick='update_pro("2","${obj.id}")'/>
+                       <input type="button"<#if obj.flowRange?? &&obj.flowRange=='2'>value="全国" style="font-weight:900"<#elseif obj.flowRange?? &&obj.flowRange=='1'>value="省内" style='COLOR:blue'</#if>/>
+                     &nbsp;&nbsp;&nbsp;
+               </#list>
+          </td>
+          </tr>
+          <tr>
+          <td>
+                    中国联通
+          </td>
+          <td>
+              <#list dxProList as obj>
+               <#if obj_index%5==0><br/></#if>
+                      <#if obj.provinceName?? && obj.provinceName?length gt 3>
+                        ${obj.provinceName!?substring(0,3)}
+                        <#else>
+                         ${obj.provinceName!}
+                    </#if>
+                    <input type="button" value="上架" <#if obj.status?? &&obj.status=='1'> style='COLOR:red;'</#if> onclick='update_pro("1","${obj.id}")'/>
+                    <input type="button" value="下架" <#if obj.status?? &&obj.status=='0'> style='COLOR:red;'</#if> onclick='update_pro("0","${obj.id}")'/>
+                     <input type="button" value="收单" <#if obj.status?? &&obj.status=='2'> style='COLOR:red;'</#if> onclick='update_pro("2","${obj.id}")'/>
+                       <input type="button"<#if obj.flowRange?? &&obj.flowRange=='2'>value="全国" style="font-weight:900"<#elseif obj.flowRange?? &&obj.flowRange=='1'>value="省内" style='COLOR:blue'</#if>/>
+                     &nbsp;&nbsp;&nbsp;
+               </#list>
+             
+          </td>
+          </tr>
+     </table>
+   </div>
+</body>
+</html>

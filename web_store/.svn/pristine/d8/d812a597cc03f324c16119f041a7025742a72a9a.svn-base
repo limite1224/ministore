@@ -1,0 +1,85 @@
+package com.leshun.plc.service.impl;
+
+import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.dao.DeviceMessageDao;
+import com.leshun.plc.service.DeviceInfoService;
+import com.leshun.plc.service.DeviceMessageService;
+import com.leshun.plc.service.DeviceShadowService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Service("deviceMessageService")
+public class DeviceMessageServiceImpl
+		extends BaseServiceImpl<DeviceMessage, DeviceMessageDao>
+		implements DeviceMessageService {
+
+	@Autowired
+	DeviceShadowService deviceShadowService;
+	@Autowired
+	DeviceInfoService deviceInfoService;
+
+	@Override
+	public boolean insertMessageAndUpdateShow(DeviceMessage entity,
+			String deviceStatus) {
+		boolean insert_result = this.insert(entity);
+
+		if (!insert_result) {
+			throw new ServerDisponseException("9999", "插入消息失败");
+		}
+
+		DeviceShadow deviceShadow = deviceShadowService
+				.selectByPrimaryKey(entity.getDeviceId());
+		if (deviceShadow == null) {
+			throw new ServerDisponseException("9999", "根据设备编号查询设备影子信息不存在");
+		}
+
+		Date modifyTime = deviceShadow.getModifyTime();
+		Date outPushTime = entity.getOutPushTime();// 推送时间
+		if (modifyTime != null) {
+			// 设备影子修改时间.compareTo(推送时间)，相等则返回0
+			int num = modifyTime.compareTo(outPushTime);
+			if (num > 0) {// 如果设备影子时间，比推送时间大，返回1，则表示推送的内容晚了，不更新
+				throw new ServerDisponseException("9999",
+						"推送时间比设备影子修改时间小，推送内容已过时");
+			} else if (num < 0) {
+				String mes = entity.getMessage();
+				if (StringUtils.isNotBlank(mes)) {
+					deviceShadow.setMsgInfo(mes);
+				}
+				DeviceInfo deviceInfo = new DeviceInfo();
+				deviceInfo.setDeviceId(entity.getDeviceId());
+				if (StringUtils.isNotBlank(deviceStatus)) {
+					deviceShadow.setComStatus(deviceStatus);
+					deviceShadow.setStatus(deviceStatus);
+					deviceInfo.setComStatus(deviceStatus);
+					deviceInfo.setStatus(deviceStatus);
+				}
+
+				deviceShadow.setModifyTime(outPushTime);
+				boolean update_result = deviceShadowService
+						.updateByPrimaryKey(deviceShadow);
+				if (!update_result) {
+					throw new ServerDisponseException("9999",
+							"插入消息记录表和更新设备影子操作失败");
+				}
+				update_result = deviceInfoService
+						.updateByPrimaryKeySelective(deviceInfo);
+				if (!update_result) {
+					throw new ServerDisponseException("9999",
+							"插入消息记录表和更新设备影子操作失败");
+				}
+
+			}
+		}
+
+		return true;
+	}
+
+}

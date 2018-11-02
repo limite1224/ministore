@@ -1,0 +1,135 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="产品">
+<body>
+	<div class="main-content">
+		<@messageModal message="${message!}"/>
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					产品信息
+					<small>
+						产品${isAdd?string("添加","修改")!}
+					</small>
+				</h1>
+			</div>
+    <form class="form-horizontal" id="dataForm" action="${web_base}/business/product_info!save.htm"
+    	 onsubmit= "return checkParams();"  method="post">
+       <input id="id" name="entity.id" type="hidden" value="${(entity!).id!}"/>
+       <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productName"> 产品名称 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productName"name="entity.productName" value="${(entity!).productName!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productKey">产品型号</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productKey"name="entity.productKey" value="${(entity!).productKey!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group" style="display:none;">
+			<label class="col-sm-3 control-label no-padding-right" for="comMode">通讯 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" id="comMode" name="entity.comMode" value="${(entity.comMode)!}">
+					<option value="">请选择通讯方式</option>
+					<option value="1" <#if entity?? && entity.comMode?? && entity.comMode="1">selected</#if>>
+                		wifi
+                	</option>
+                	<option value="2" <#if entity?? && entity.comMode?? && entity.comMode="2">selected</#if>>
+                		rfid
+                	</option>
+                	<option value="3" selected>
+                		gprs
+                	</option>
+                	<option value="4" <#if entity?? && entity.comMode?? && entity.comMode="4">selected</#if>>
+                		buletooth
+                	</option>
+                	<option value="5" <#if entity?? && entity.comMode?? && entity.comMode="4">selected</#if>>
+                		其他
+                	</option>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注</label>
+			<div class="col-sm-9">
+				<textarea class="col-xs-10 col-sm-5" name="entity.remark" id="remark" value="${(entity.remark)!}"></textarea>
+			</div>
+		</div>
+		
+		<div class="space-4"></div>
+        <div class="center">
+        <#if isAdd>
+	        <button type="button" id="nextAdd" class="btn btn-info btn-sm"><i class="icon-arrow-right  align-top bigger-125 icon-on-right"></i>
+	        	下一步
+	        </button>
+	    <#else>
+	       <button type="submit" class="btn btn-info btn-sm"><i class="icon-print align-top bigger-125 icon-on-right"></i>
+	        	保存
+	        </button>
+	        <button type="button" class="btn btn-sm"  onclick="window.history.back(); return false;"><i class="icon-arrow-left align-top bigger-125"></i>
+				返回
+			</button>
+		</#if>
+        </div>
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#nextAdd").click(function(){
+		console.log(1);
+		console.log(checkParams());
+		if(!checkParams()){
+			console.log(111111);
+			return false;
+		}
+		var url = $("#dataForm").attr("action");
+		var data = $("#dataForm").serialize();
+		$.ajax({
+			data:data,
+			url:url,
+			dataType:'json',
+			type:'post',
+			success:function(result){
+				var code = result.code;
+				var msg = result.msg;
+				if('0'==code){
+					alert_leshun("danger", "操作失败："+msg, true);
+				}else if('1'==code){
+					window.location.href='${web_base}'+msg;
+				}
+			},
+			error:function(message){
+				if(message.responseText.indexOf("请先登录")!=-1){
+					window.location.href='${web_base}/login!index.htm';
+					return false;
+				}
+				alert_leshun("danger", "操作异常："+message, true);
+			}
+		})
+	})
+})
+    function checkParams(){
+       var productName= $('#productName').val();
+        if(productName==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("产品名称不能为空");
+          	return false;
+       }
+       var productKey= $('#productKey').val();
+        if(productKey==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("产品型号不能为空");
+          	return false;
+       }
+       return true;
+    }
+
+</script>
+</body>
+</@edit>

@@ -1,0 +1,7 @@
+package com.leshun.plc.dao;
+
+import com.leshun.plc.bean.DeviceMsgMap;
+
+public interface DeviceMsgMapDao extends BaseDao<DeviceMsgMap> {
+
+}

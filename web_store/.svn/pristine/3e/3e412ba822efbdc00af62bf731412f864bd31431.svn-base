@@ -1,0 +1,14 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.dao.ProductInfoDao;
+import com.leshun.plc.service.ProductInfoService;
+
+@Service("productInfoService")
+public class ProductInfoServiceImpl
+		extends BaseServiceImpl<ProductInfo, ProductInfoDao>
+		implements ProductInfoService {
+
+}

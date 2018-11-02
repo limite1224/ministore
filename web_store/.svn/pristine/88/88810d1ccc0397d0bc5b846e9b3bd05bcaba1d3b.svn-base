@@ -1,0 +1,148 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@detail title="设备详情">
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备信息管理
+					<small>
+					设备详情
+					</small>
+				</h1>
+			</div>
+			
+     <form class="form-horizontal" action=""   method="post">	 
+    	 
+    	<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">设备编号</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceId" name="entity.deviceId" 
+					value="${(entity!).deviceId!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 <div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceName">设备名称</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceName" name="entity.deviceName" 
+					value="${(entity!).deviceName!}" 	/>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必填项</span>
+				</span>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceMac">mac地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceMac" name="entity.deviceMac" 
+				value="${(entity!).deviceMac!}"  />
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必填项</span>
+				</span>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceSecret">设备秘钥</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceSecret" name="entity.deviceSecret" 
+					value="${(entity!).deviceSecret!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productName">产品名称</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" id="productName" name= "entity.productName" disabled="true">
+					<option value="">无
+                	</option>
+                    <#if productList?? && (productList?size gt 0)>
+                        <#list productList as record>
+                            <option value="${(record.productName)!}" <#if entity?? && entity.productName?? && entity.productName=record.productName>selected</#if>>
+                            ${(record.productName)!}
+                            </option>
+                        </#list>
+                    </#if>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle red">* 必选项</span>
+				</span>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="status">设备状态</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5"  id="status" name= "entity.status" disabled="true">
+                	<option value="1" <#if entity?? && entity.status?? && entity.status="1">selected</#if>>
+                		启用
+                	</option>
+                	<option value="0" <#if entity?? && entity.status?? && entity.status="0">selected</#if>>
+                		禁用
+                	</option>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="msgType">解析类型</label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5"  id="msgType" name= "entity.msgType" disabled="true">
+                	<option value="1" <#if entity?? && entity.msgType?? && entity.msgType="1">selected</#if>>
+                		根据产品规则
+                	</option>
+                	<option value="2" <#if entity?? && entity.msgType?? && entity.msgType="2">selected</#if>>
+                		根据设备规则
+                	</option>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注 </label>
+			<div class="col-sm-9">
+				 <textarea class="col-xs-10 col-sm-5" name="entity.remark" >${(entity!).remark!}</textarea>
+			</div>
+		</div>
+		<div class="space-4"></div><div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createBy">创建人</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createBy" name="entity.createBy" 
+					value="${(entity!).createBy!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 <div class="space-4"></div><div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createTime">创建时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createTime" name="entity.createTime" 
+					value="${(entity!).createTime?string('yyyy-dd-MM HH:mm:ss')!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 <div class="space-4"></div><div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="updateBy">最新修改人</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="updateBy" name="entity.updateBy" 
+					value="${(entity!).updateBy!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 <div class="space-4"></div><div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="modifyTime">修改时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="modifyTime" name="entity.modifyTime" 
+					value="${(entity!).modifyTime!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 <div class="space-4"></div>
+        <div class="center">
+	        <button type="button" class="btn btn-sm" style="margin-left:100px;" onclick="window.history.back(); return false;"><i class="icon-arrow-left align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</@detail>

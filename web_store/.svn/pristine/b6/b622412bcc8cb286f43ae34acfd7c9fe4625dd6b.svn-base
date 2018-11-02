@@ -1,0 +1,10 @@
+#http\u7684\u57df\u540d\u7aef\u53e3
+web_domain=
+#contextPath
+web_contextPath=/web_ebike
+#cookiePath
+web_cookie_path=${web_contextPath}
+#http\u7684url
+web_static=${web_domain}${web_contextPath}/staticFiles
+#http\u7684url
+web_base=${web_domain}${web_contextPath}

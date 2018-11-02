@@ -1,0 +1,118 @@
+package com.leshun.plc.comp.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.google.gson.reflect.TypeToken;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceMsgMap;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.DeviceInfoComp;
+import com.leshun.plc.comp.DeviceShadowComp;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.service.DeviceInfoService;
+import com.leshun.plc.service.DeviceMsgMapService;
+import com.leshun.plc.service.ProductMsgMapService;
+import com.leshun.plc.util.CommonUtil;
+import com.sls.core.socket.ServerDisponseException;
+
+@Component("deviceInfoComp")
+public class DeviceInfoCompImpl extends
+		BaseCompImpl<DeviceInfo, DeviceInfoService> implements DeviceInfoComp {
+
+	@Autowired
+	private DeviceShadowComp deviceShadowComp;
+
+	@Autowired
+	private ProductMsgMapService productMsgMapService;
+	@Autowired
+	private DeviceMsgMapService deviceMsgMapService;
+
+	@Override
+	public boolean updateByPrimaryKeySelective(DeviceInfo entity)
+			throws Exception {
+		super.validate(entity);
+		if (StringUtils.isBlank(entity.getDeviceId())) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		return service.updateByPrimaryKeySelective(entity);
+	}
+
+	@Override
+	public DeviceInfo selectByPrimaryKey(String entity) throws Exception {
+		DeviceInfo deviceInfo = super.selectByPrimaryKey(entity);
+		ProductMsgMap pmm = new ProductMsgMap();
+		pmm.setProductKey(deviceInfo.getProductKey());
+		pmm.setProductName(deviceInfo.getProductName());
+		List<ProductMsgMap> propertyList = productMsgMapService.queryList(pmm);
+		deviceInfo.setCustomPropertyList(propertyList);
+		DeviceShadow deviceShadow = deviceShadowComp
+				.selectByPrimaryKey(deviceInfo.getDeviceId());
+		Map<String, String> customPropertyMap = null;
+		if (deviceShadow != null) {
+			customPropertyMap = parseMsgInfo(deviceInfo, deviceShadow);
+		}
+		deviceInfo.setCustomPropertyMap(customPropertyMap);
+		return deviceInfo;
+	}
+
+	public Map<String, String> parseMsgInfo(DeviceInfo deviceInfo,
+			DeviceShadow deviceShadow) {
+		String msgInfo = deviceShadow.getMsgInfo();
+		if (StringUtils.isBlank(msgInfo)) {
+			return null;
+		}
+		List<Map<String, String>> msgList = null;
+		try {
+			msgList = CommonUtil.gson().fromJson(msgInfo,
+					new TypeToken<ArrayList<HashMap<String, String>>>() {
+					}.getType());
+		} catch (Exception e) {
+			log.info("Gson解析数据：" + msgInfo + "出现异常！", e);
+			return null;
+		}
+		Map<String, String> customPropertyMap = new HashMap<String, String>();
+		if (msgList == null || msgList.isEmpty()) {
+			return null;
+		}
+		for (Map<String, String> m : msgList) {
+			// 属性值
+			String key = m.get("i");
+			String value = m.get("v");
+
+			if ("1".equals(deviceInfo.getMsgType())) {
+				// 根据产品规则
+				ProductMsgMap pmm = new ProductMsgMap();
+				pmm.setProductKey(deviceInfo.getProductKey());
+				pmm.setProductMsgKey(key);
+				List<ProductMsgMap> pmml = productMsgMapService.queryList(pmm);
+				if (pmml != null && pmml.size() > 0) {
+					customPropertyMap.put(
+							pmml.get(0).getProductMsgName() + "(" + key + ")",
+							value);
+				}
+			} else {
+				// 其他均根据设备
+				DeviceMsgMap dmm = new DeviceMsgMap();
+				dmm.setDiviceId(deviceInfo.getDeviceId());
+				dmm.setDiviceMsgKey(key);
+				List<DeviceMsgMap> dmml = deviceMsgMapService.queryList(dmm);
+				if (dmml != null && dmml.size() > 0) {
+					customPropertyMap.put(
+							dmml.get(0).getDiviceMsgName() + "(" + key + ")",
+							value);
+				}
+			}
+		}
+		return customPropertyMap;
+	}
+}

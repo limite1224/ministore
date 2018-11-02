@@ -1,0 +1,235 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="设备影子信息详情">
+<body>
+	<div class="main-content">
+		<@messageModal message="${message!}"/>
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备影子信息
+					<small>
+					详情
+					</small>
+				</h1>
+			</div>
+			
+     <form class="form-horizontal" method="post">	 
+    	 
+    	<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">唯一标识编号(设备编号)</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceId" name="deviceShadow.deviceId" 
+					value="${(deviceShadow!).deviceId!}" 	readonly="readonly" />
+			</div>
+		</div>
+    	 
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceName">设备名称</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceName" name="deviceShadow.deviceName" 
+					value="${(deviceShadow!).deviceName!}" 	readonly="readonly" />
+			</div>
+		</div>
+				
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="location">定位地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="location" name="deviceShadow.location" 
+				value="${(deviceShadow!).location!}"  readonly="readonly"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="accessAddress">接入地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="accessAddress" name="deviceShadow.accessAddress" 
+				value="${(deviceShadow!).accessAddress!}" readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="status">设备状态</label>
+			<div class="col-sm-9">
+				<select  class="col-xs-10 col-sm-5" id="status" name= "deviceShadow.status"  disabled="disabled" >
+					<option value="1" <#if deviceShadow?? && deviceShadow.status?? && deviceShadow.status="1">selected</#if>>
+                		启用
+                	</option>
+                	<option value="0" <#if deviceShadow?? && deviceShadow.status?? && deviceShadow.status="0">selected</#if>>
+                		禁用
+                	</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="comStatus">通讯状态</label>
+			<div class="col-sm-9">
+				<select  class="col-xs-10 col-sm-5" id="comStatus" name= "deviceShadow.comStatus"  disabled="disabled" >
+					<option value="">
+                    -请选择通讯状态-
+                	</option>
+                	<option value="0" <#if deviceShadow?? && deviceShadow.comStatus?? && deviceShadow.comStatus="0">selected</#if>>
+                		离线
+                	</option>
+                	<option value="1" <#if deviceShadow?? && deviceShadow.comStatus?? && deviceShadow.comStatus="1">selected</#if>>
+                		在线
+                	</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="version">接口版本</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="version" name="deviceShadow.version" 
+				value="${(deviceShadow!).version!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceMac">mac地址，模块地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="deviceMac" name="deviceShadow.deviceMac" readonly="readonly"
+				value="${(deviceShadow!).deviceMac!}"  />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="ip">IP</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="ip" name="deviceShadow.ip" 
+				value="${(deviceShadow!).ip!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="imei">imei</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="imei" name="deviceShadow.imei" 
+				value="${(deviceShadow!).imei!}" readonly="readonly"	 />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="imsi">imsi</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="imsi" name="deviceShadow.imsi" 
+				value="${(deviceShadow!).imsi!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="bts">基站信息</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="bts" name="deviceShadow.bts" 
+				value="${(deviceShadow!).bts!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="deviceType">设备类型</label>
+			<div class="col-sm-9">
+				<select  class="col-xs-10 col-sm-5" id="deviceType" name= "deviceShadow.deviceType"  disabled="disabled" >
+					<option value="">
+                    -请选择设备类型-
+                	</option>
+                <#---
+                	<option value=""  <#if deviceShadow?? && deviceShadow.deviceType?? && deviceShadow.deviceType="" > selected </#if>>
+           				 
+           			</option>
+           			<option value=""  <#if deviceShadow?? && deviceShadow.deviceType?? && deviceShadow.deviceType="" > selected </#if>>
+           				 
+           			</option>
+           		-->
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="lon">经度</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="lon" name="deviceShadow.lon" 
+				value="${(deviceShadow!).lon!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="lat">纬度</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="lat" name="deviceShadow.lat" 
+				value="${(deviceShadow!).lat!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createTime">创建时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createTime" name="deviceShadow.createTime" 
+				value="${(deviceShadow.createTime?string("yyyy-MM-dd HH:mm:ss"))!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="createBy">创建者</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="createBy" name="deviceShadow.createBy" 
+				value="${(deviceShadow.createBy)!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="modifyTime">修改时间</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="modifyTime" name="deviceShadow.modifyTime" 
+				value="${(deviceShadow.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="updateBy">修改者</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="updateBy" name="deviceShadow.updateBy" 
+				value="${(deviceShadow.updateBy)!}" 	readonly="readonly" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="remark">备注 </label>
+			<div class="col-sm-9">
+				 <textarea class="form-control" name="deviceShadow.remark" readonly="readonly">${(deviceShadow!).remark!}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="delFlag">删除标记</label>
+			<div class="col-sm-9">
+				 <select  name= "deviceShadow.delFlag"   class="col-xs-10 col-sm-5" disabled="disabled" >	
+					<option value="">
+                    -请选择设删除标记-
+                	</option>
+                	<option value="0"  <#if deviceShadow?? && deviceShadow.delFlag?? && deviceShadow.delFlag="0" > selected </#if>>
+           				 正常
+           			</option>
+           			<option value="1"  <#if deviceShadow?? && deviceShadow.delFlag?? && deviceShadow.delFlag="1" > selected </#if>>
+           				 删除
+           			</option>
+           			<option value="2"  <#if deviceShadow?? && deviceShadow.delFlag?? && deviceShadow.delFlag="2" > selected </#if>>
+           				 审核
+           			</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="space-4"></div>
+        <div class="center">
+	      
+	        <button type="button" class="btn btn-sm" onclick="window.history.back(); return false;"><i class="icon-pencil align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</@edit>

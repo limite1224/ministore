@@ -1,0 +1,209 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="天猫商品编辑">
+    <#if (areaServerRelationResult)?? && (areaServerRelationResult.id??)>
+        <#assign isEdit = true />
+    <#else>
+        <#assign isAdd = true />
+    </#if>
+<body class="input">
+
+<script type="text/javascript">
+    $().ready(function () {
+        var $validateErrorContainer = $("#validateErrorContainer");
+        var $validateErrorLabelContainer = $("#validateErrorContainer ul");
+        var $validateForm = $("#inputForm");
+        var $tab = $("#tab");
+
+        // Tab效果
+        $tab.tabs(".tabContent", {
+            tabs:"input"
+        });
+        
+            submitHandler:function (form) {
+                $(form).find(":submit").attr("disabled", true);
+                form.submit();
+            }
+        });
+    <#if actionErrors??&&(actionErrors?size > 0)>
+        $.dialog({type: "warn", content: "<#list errorMessages as list>${list!}<br></#list>",
+            modal: true, autoCloseTime: 3000});
+    </#if>
+    });
+   
+</script>
+<div class="body">
+    <div class="inputBar">
+        <h1><span class="icon">&nbsp;</span>天猫商品编辑</h1>
+    </div>
+    <form id="inputForm" class="validate" action="${web_base}/tmapp/tm_goods!updateByGoodsIdTm.htm" method="post">
+        <table class="inputTable tabContent">
+            <tr>
+                    <th>
+                      天猫商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdTm" name="tianMaoGoodsInfo.goodsIdTm" class="formText {required: true}"
+                                   value="${tmGoodQuery.goodsIdTm!}"/>
+                                   <label class="requireField">*</label>
+                    </td>
+                     
+                </tr>
+                <tr>
+                    <th>
+                      本地商品编号：
+                    </th>
+                    <td>
+                       <input type="input" id="goodsIdLocal" name="tianMaoGoodsInfo.goodsIdLocal" class="formText {required: true}"
+                                   value="${tmGoodQuery.goodsIdLocal!}"/>
+                                   <label class="requireField">*</label>
+                                   
+                    </td>
+                     
+                </tr>
+          
+            <tr>
+                <th>
+               天猫商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsName" name="tianMaoGoodsInfo.goodsName" class="formText {required: true}"
+                                   value="${tmGoodQuery.goodsName!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             <tr>
+                <th>
+                     本地商品名称：
+                </th>
+                <td>
+                     <input type="input" id="goodsNameLocal" name="tianMaoGoodsInfo.goodsNameLocal" class="formText {required: true}"
+                                   value="${tmGoodQuery.goodsNameLocal!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+             
+                <th>
+              天猫面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueTm" name="goodsValue" class="formText {required: true}"
+                                   value="${(tmGoodQuery.goodsValueTm*1.0/1000)?string("0.000")!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    本地面值：
+                </th>
+                <td>
+                     <input type="input" id="goodsValueLocal" name="goodsValueLocal" class="formText {required: true}"
+                                   value="${(tmGoodQuery.goodsValueLocal*1.0/1000)?string("0.000")!}"/>
+                    <label class="requireField">*</label>
+                </td>
+            </tr>
+             <tr>
+                <th>
+                    价格比率：
+               </th>
+                <td>
+                     <input type="input" id="rechargeRate" name="rate" class="formText {required: true}"
+                                   value="${(tmGoodQuery.rechargeRate*1.0)?string("0.000")!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+         
+            <tr>
+                <th>
+                   数量限制：
+                </th>
+                <td>
+                     <input type="input" id="numLimit" name="tianMaoGoodsInfo.numLimit" class="formText {required: true}"
+                                   value="${tmGoodQuery.numLimit!}"/>
+                                   <label class="requireField">*</label>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                  商品充值类型：
+                </th>
+                <td>
+                      <input type="input" id="goodsChargeType" name="tianMaoGoodsInfo.goodsChargeType" class="formText {required: false}"
+                                   value="${tmGoodQuery.goodsChargeType!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品充值类型名称：
+                </th>
+                <td>
+                      <input type="input"  id="goodsChargeTypeName" name="tianMaoGoodsInfo.goodsChargeTypeName" class="formText {required: false}"
+                                   value="${tmGoodQuery.goodsChargeTypeName!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型：
+                </th>
+                <td>
+                     <input type="input" id="goodsAccountType" name="tianMaoGoodsInfo.goodsAccountType" class="formText {required: false}"
+                                   value="${tmGoodQuery.goodsAccountType!}"/>
+                                   <label class="requireField">*</label>
+                         
+                </td>
+            </tr>
+              <tr>
+                <th>
+                  商品账号类型名称：
+               </th>
+                <td>
+                      <input type="input" id="goodsAccountTypeName" name="tianMaoGoodsInfo.goodsAccountTypeName" class="formText {required: false}"
+                                   value="${tmGoodQuery.goodsAccountTypeName!}"/>
+                                   <label class="requireField">*</label>
+                         
+               </td>
+            </tr>
+            
+         
+         <tr>
+                <th>
+                选择运营商：
+                </th>
+                <td>
+                   <select name="tianMaoGoodsInfo.ispInfo">
+                     <option value ="0" <#if tmGoodQuery??&&tmGoodQuery.ispInfo == '0'>selected="selected"</#if>>移动</option>
+                     <option value ="1" <#if tmGoodQuery??&&tmGoodQuery.ispInfo == '1'>selected="selected"</#if>>联通</option>
+                     <option value ="2" <#if tmGoodQuery??&&tmGoodQuery.ispInfo == '2'>selected="selected"</#if>>电信</option>
+                   </select>
+                </td>
+            </tr> 
+            
+              <tr>
+                <th>
+                是否 启用：
+                </th>
+                <td>
+                   <select name="tianMaoGoodsInfo.status" class="formText {required: true}>
+                     <option value ="1"<#if tmGoodQuery??&&tmGoodQuery.status == '1'>selected="selected"</#if>>启用</option>
+                     <option value ="0"<#if tmGoodQuery??&&tmGoodQuery.status == '0'>selected="selected"</#if>>禁用</option>
+                   </select>
+                        <label class="requireField">*</label>
+                </td>
+            </tr>
+            
+        </table>
+        <div class="buttonArea">
+            <input type="submit" id="mybutton" class="formButton" value="更新" hidefocus="true"  />&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+                   hidefocus="true"/>
+        </div>
+    </form>
+</div>
+</body>
+</@edit>

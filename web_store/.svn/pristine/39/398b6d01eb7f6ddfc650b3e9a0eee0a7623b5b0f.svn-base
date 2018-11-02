@@ -1,0 +1,12 @@
+package com.leshun.plc.comp;
+
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.bean.Pagination;
+
+public interface DeviceShadowComp extends BaseComp<DeviceShadow> {
+
+	public Pagination<DeviceShadow> queryPage(DeviceShadow entity)
+			throws Exception;
+
+	public DeviceShadow selectDetailByPrimaryKey(String id) throws Exception;
+}

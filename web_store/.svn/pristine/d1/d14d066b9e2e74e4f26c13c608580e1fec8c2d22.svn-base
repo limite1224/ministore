@@ -1,0 +1,29 @@
+package com.leshun.plc.web.timetask;
+//package com.leshun.ebike.web.timetask;
+//
+//import java.util.UUID;
+//
+//import javax.annotation.Resource;
+//
+//import org.springframework.stereotype.Component;
+//
+//import com.leshun.ebike.web.db.comp.AdvanceNotifyComp;
+//import com.sls.core.socket.Head;
+//
+//@Component("advanceTimeTask")
+//public class AdvanceTimeTask {
+//	/**
+//	 * 提前通知
+//	 * 
+//	 * @param body
+//	 * @param head
+//	 */
+//	@Resource(name = "advanceNotifyComp")
+//	private AdvanceNotifyComp advanceNotifyComp;
+//
+//	public void advanceNotify() {
+//		Head head = new Head();
+//		head.setRequestId(UUID.randomUUID().toString());
+//		advanceNotifyComp.adVanceNotify("", head);
+//	}
+//}

@@ -1,0 +1,116 @@
+package com.leshun.plc.web.action;
+
+import java.net.URLEncoder;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
+
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.pojo.sys.OperatorVO;
+import com.leshun.plc.pojo.sys.UserInfoVO;
+import com.leshun.plc.util.ParseUtil;
+import com.leshun.plc.util.UserInfoVOThreadLocal;
+import com.leshun.plc.web.freemarker.CustomFreemarkerManager;
+import com.opensymphony.xwork2.ActionContext;
+import com.whalin.MemCached.MemCachedClient;
+
+@InterceptorRefs(value = { @InterceptorRef("chainStack"),
+		@InterceptorRef("loginInterceptor") })
+public class LoginAction extends SuperAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2617796169933222153L;
+	private OperatorVO operator;
+	public static Map<String, String> userMap = new HashMap<String, String>();
+
+	@Resource(name = "memcachedClient")
+	private MemCachedClient memCachedClient;
+
+	static {
+		List<OperatorVO> list = ParseUtil.readConfigurateFile();
+		for (OperatorVO vo : list) {
+			userMap.put(vo.getAccount(), vo.getPwd());
+		}
+	}
+
+	/*
+	 * 用户登陆
+	 */
+	public String login() {
+		try {
+			String account = operator.getAccount();
+			String pwd = operator.getPwd();
+			if (userMap.containsKey(account)) {
+				String value = userMap.get(account);
+				if (StringUtils.isNotBlank(value)
+						&& StringUtils.isNotBlank(pwd)) {
+					if (value.equals(pwd)) {
+						memCachedClient.add(Constant.MEM_KEY + account,
+								operator, new Date(30 * 60 * 1000));
+						Cookie cookie = new Cookie(Constant.COOKIE_KEY,
+								account);
+						String web_cookie_path = CustomFreemarkerManager
+								.getCookiePath();
+						cookie.setPath(web_cookie_path);
+						ServletActionContext.getResponse().addCookie(cookie);
+						UserInfoVO us = new UserInfoVO();
+						us.setOperator(operator);
+						UserInfoVOThreadLocal.set(us);
+						return "redirectMain";
+					} else {
+						ActionContext.getContext().put("login_error", "密码错误");
+					}
+				}
+			} else {
+				ActionContext.getContext().put("login_error", "用户不存在");
+			}
+		} catch (Exception e) {
+			try {
+				if (StringUtils.isNotBlank(redirectionUrl))
+					this.redirectionUrl = URLEncoder.encode(redirectionUrl,
+							"utf-8");
+			} catch (Exception es) {
+			}
+			ActionContext.getContext().put("login_error", e.getMessage());
+			log.error("登录失败！");
+		}
+		return this.index();
+	}
+
+	// 后台Header
+	public String header() {
+		return "header";
+	}
+
+	// 后台首页
+	public String index() {
+		return "index";
+	}
+
+	// 列表
+	public String list() {
+		return "list";
+	}
+
+	public String main() {
+		return "main";
+	}
+
+	public OperatorVO getOperator() {
+		return operator;
+	}
+
+	public void setOperator(OperatorVO operator) {
+		this.operator = operator;
+	}
+}

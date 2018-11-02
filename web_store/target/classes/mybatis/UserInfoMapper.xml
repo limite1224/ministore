@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.UserInfoMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.UserInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+		<result column="open_id" property="openId" jdbcType="VARCHAR" />
+		<result column="nikename" property="nikename" jdbcType="VARCHAR" />
+		<result column="sync_time" property="syncTime" jdbcType="TIMESTAMP" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, wx_id, open_id, nikename, sync_time, mobile,
+		create_time, create_by,
+		update_time,
+		update_by, remarks, del_flag
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where id = #{id,jdbcType=VARCHAR} and del_flag = '0'
+	</select>
+	
+	<update id="updateDelFlag" parameterType="java.lang.String">
+		update user_info set del_flag = '1' where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		user_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.UserInfo">
+		insert into user_info (id,
+		wx_id, open_id,
+		nikename, sync_time, mobile,
+		create_time, create_by,
+		update_time,
+		update_by, remarks
+		)
+		values
+		(#{id,jdbcType=VARCHAR}, #{wxId,jdbcType=VARCHAR},
+		#{openId,jdbcType=VARCHAR},
+		#{nikename,jdbcType=VARCHAR},
+		#{syncTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.UserInfo">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="wxId != null">
+				wx_id,
+			</if>
+			<if test="openId != null">
+				open_id,
+			</if>
+			<if test="nikename != null">
+				nikename,
+			</if>
+			<if test="syncTime != null">
+				sync_time,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="wxId != null">
+				#{wxId,jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				#{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="nikename != null">
+				#{nikename,jdbcType=VARCHAR},
+			</if>
+			<if test="syncTime != null">
+				#{syncTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.UserInfo">
+		update user_info
+		<set>
+			<if test="wxId != null">
+				wx_id = #{wxId,jdbcType=VARCHAR},
+			</if>
+			<if test="openId != null">
+				open_id = #{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="nikename != null">
+				nikename = #{nikename,jdbcType=VARCHAR},
+			</if>
+			<if test="syncTime != null">
+				sync_time = #{syncTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR} and del_flag = '0'
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.UserInfo">
+		update user_info
+		set wx_id = #{wxId,jdbcType=VARCHAR},
+		open_id =
+		#{openId,jdbcType=VARCHAR},
+		nikename = #{nikename,jdbcType=VARCHAR},
+		sync_time = #{syncTime,jdbcType=TIMESTAMP},
+		mobile =
+		#{mobile,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		update_time =
+		#{updateTime,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		remarks = #{remarks,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR} and 
+		del_flag = '0'
+	</update>
+</mapper>

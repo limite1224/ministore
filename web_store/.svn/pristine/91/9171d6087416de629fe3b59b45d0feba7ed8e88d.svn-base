@@ -1,0 +1,86 @@
+package com.leshun.plc.service.impl;
+
+import java.util.Date;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.dao.DeviceInfoDao;
+import com.leshun.plc.dao.DeviceShadowDao;
+import com.leshun.plc.service.DeviceInfoService;
+import com.leshun.plc.util.UserInfoVOThreadLocal;
+import com.sls.core.socket.ServerDisponseException;
+
+@Service("deviceInfoService")
+public class DeviceInfoServiceImpl
+		extends BaseServiceImpl<DeviceInfo, DeviceInfoDao>
+		implements DeviceInfoService {
+	@Autowired
+	private DeviceShadowDao deviceShadowDao;
+
+	public boolean insertSelective(DeviceInfo entity) {
+		int i = 0;
+		try {
+			String deviceId = UUID.randomUUID().toString();
+			Date now = new Date();
+			String operator = UserInfoVOThreadLocal.get() == null ? "unknown"
+					: UserInfoVOThreadLocal.get().getAccount();
+			entity.setDeviceId(deviceId);
+			entity.setCreateBy(operator);
+			entity.setCreateTime(now);
+			entity.setUpdateBy(operator);
+			entity.setModifyTime(now);
+
+			DeviceShadow deviceShadow = new DeviceShadow();
+			deviceShadow.setDeviceId(deviceId);
+			deviceShadow.setDeviceMac(entity.getDeviceMac());
+			deviceShadow.setDeviceName(entity.getDeviceName());
+			deviceShadow.setStatus(entity.getStatus());
+			deviceShadow.setCreateBy(operator);
+			deviceShadow.setCreateTime(now);
+			deviceShadow.setUpdateBy(operator);
+			deviceShadow.setModifyTime(now);
+			i = deviceShadowDao.insertSelective(deviceShadow);
+			i += dao.insertSelective(entity);
+		} catch (Exception e) {
+			log.info("筛选单条插入发生异常!", e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.ACCESS_DATABASE_ERROR.getCode(),
+					ExceptionCodeDes.ACCESS_DATABASE_ERROR.getDescription());
+		}
+		return i > 1 ? true : false;
+	}
+
+	public boolean updateByPrimaryKeySelective(DeviceInfo entity) {
+		int i = 0;
+		try {
+			Date now = new Date();
+			String operator = UserInfoVOThreadLocal.get() == null ? "unknown"
+					: UserInfoVOThreadLocal.get().getAccount();
+
+			entity.setUpdateBy(operator);
+			entity.setModifyTime(now);
+
+			DeviceShadow deviceShadow = new DeviceShadow();
+			deviceShadow.setDeviceId(entity.getDeviceId());
+			deviceShadow.setDeviceMac(entity.getDeviceMac());
+			deviceShadow.setDeviceName(entity.getDeviceName());
+			deviceShadow.setStatus(entity.getStatus());
+			deviceShadow.setUpdateBy(operator);
+			deviceShadow.setModifyTime(now);
+			i = deviceShadowDao.updateByPrimaryKeySelective(deviceShadow);
+			i += dao.updateByPrimaryKeySelective(entity);
+		} catch (Exception e) {
+			log.info("筛选单条更新发生异常!", e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.ACCESS_DATABASE_ERROR.getCode(),
+					ExceptionCodeDes.ACCESS_DATABASE_ERROR.getDescription());
+		}
+		return i > 1 ? true : false;
+	}
+
+}

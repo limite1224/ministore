@@ -1,0 +1,27 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.dao.ProductInfoDao;
+import com.leshun.plc.service.ProductInfoService;
+import com.sls.core.socket.ServerDisponseException;
+
+@Service("productInfoService")
+public class ProductInfoServiceImpl
+		extends BaseServiceImpl<ProductInfo, ProductInfoDao>
+		implements ProductInfoService {
+	@Override
+	public boolean insertSelective(ProductInfo entity) {
+		ProductInfo productInfo = dao
+				.selectByProductKey(entity.getProductKey());
+		if (productInfo != null) {
+			throw new ServerDisponseException(
+					ExceptionCodeDes.DATA_IS_EXISTS.getCode(),
+					ExceptionCodeDes.DATA_IS_EXISTS.getDescription());
+		}
+		return super.insertSelective(entity);
+	}
+
+}

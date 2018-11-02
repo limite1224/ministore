@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>天猫价格查询</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/source.ftl">
+    
+</head>
+<body class="list">
+     <div style="margin-left:100px;">
+    <form method="post" action="${web_base}/tmapp/tm_query_price!query.htm">
+    <br/>
+     <span>搜索</span>&nbsp
+               商品名称：<input name="queryName"  value="${queryName!}"/>
+              
+     <input type="submit" value="点击搜索"/> 
+    </form>
+    </div>  
+    <br/>
+<div class="body">
+    <table class="listTable" border="2" cellpadding="2" cellspacing="2">       
+        <tr style="font-size:10px;font-weight:900;text-align:center">
+            <td>
+                <span>商品信息</span>
+            </td>
+            <td>
+                <span>店铺折扣信息</span>
+            </td>
+        </tr>
+        <#list disMap?keys as key> 
+         <tr style="font-size:10px;">   
+                   <td style="text-align:center;font-weight:900">
+                     <#--商品信息-->
+                     ${queryName!}${key!}元
+                   </td>
+                   <td >
+                   <#--商品折扣信息-->
+                   <#assign mylist=disMap[key] />
+                    <table class="listTable" border="2" cellpadding="1" cellspacing="1">
+                     <#list mylist  as obj>
+                      <tr style="height:15px">
+                         <td style="text-align:center">店铺名称:<span>&nbsp;&nbsp;&nbsp;&nbsp;${obj.shopName!}</span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <#--<td style="text-align:center">商品名称:<span>&nbsp;&nbsp;&nbsp;&nbsp;${obj.goodsName!}</span>&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                         <td style="text-align:center">店铺售价：<span>&nbsp;&nbsp;&nbsp;&nbsp;${obj.price!}元</span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td style="text-align:center">店铺折扣：&nbsp;&nbsp;&nbsp;&nbsp;${obj.discount!}</span></td>
+                      </tr>
+                     </#list>
+                    </table>                                      
+                     <br/>
+                   </td>
+        </tr>
+     </#list>
+    </table>
+</div>
+</body>
+</html>

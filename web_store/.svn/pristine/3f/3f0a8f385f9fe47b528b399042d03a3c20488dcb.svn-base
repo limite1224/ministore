@@ -1,0 +1,36 @@
+package com.leshun.plc.action.business;
+
+import com.leshun.plc.action.SuperAction;
+
+public class ProductMsgMapAction extends SuperAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734115479601622724L;
+
+	@Override
+	public String list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String form() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

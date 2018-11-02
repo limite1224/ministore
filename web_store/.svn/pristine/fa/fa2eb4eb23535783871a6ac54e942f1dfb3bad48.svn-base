@@ -1,0 +1,26 @@
+package com.leshun.plc.service;
+
+import java.util.List;
+
+import com.leshun.plc.bean.DataEntity;
+import com.leshun.plc.bean.Pagination;
+
+public interface BaseService<T extends DataEntity<T>> {
+	public boolean deleteByPrimaryKey(String id);
+
+	public boolean insert(T entity);
+
+	public boolean insertSelective(T entity);
+
+	public T selectByPrimaryKey(String entity);
+
+	public boolean updateByPrimaryKeySelective(T entity);
+
+	public boolean updateByPrimaryKey(T entity);
+
+	public Pagination<T> queryPage(T entity);
+
+	public int queryRowCount(T entity);
+
+	public List<T> queryList(T entity);
+}

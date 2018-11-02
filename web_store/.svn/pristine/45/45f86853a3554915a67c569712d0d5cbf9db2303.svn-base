@@ -1,0 +1,28 @@
+package com.leshun.plc.comp;
+
+import java.util.List;
+
+import com.leshun.plc.bean.DataEntity;
+import com.leshun.plc.bean.Pagination;
+
+public interface BaseComp<T extends DataEntity<T>> {
+
+	public boolean deleteByPrimaryKey(String id) throws Exception;
+
+	public boolean insert(T entity) throws Exception;
+
+	public boolean insertSelective(T entity) throws Exception;
+
+	public T selectByPrimaryKey(String id) throws Exception;
+
+	public Pagination<T> queryPage(T entity) throws Exception;
+
+	public int queryRowCount(T entity) throws Exception;
+
+	public List<T> queryList(T entity) throws Exception;
+
+	public boolean updateByPrimaryKeySelective(T entity) throws Exception;
+
+	public boolean updateByPrimaryKey(T entity) throws Exception;
+
+}

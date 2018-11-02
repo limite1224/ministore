@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>商品映射管理</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/assign.ftl">
+    <#include "../template/include/source.ftl">
+    <#include "../template/template_listPage.ftl">
+    <style type="text/css">   
+        .page {
+            float: right;
+            padding-top: 15px;
+            margin-right: 15px;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list}<br></#list>", modal:true, autoCloseTime:3000});
+        </#if>
+
+            $('#searchButton').click(function () {
+                var startTime = document.getElementById("startTime").value;
+                var endTime = document.getElementById("endTime").value;
+                $("#dateSpan").html("<span></span>");
+                if (endTime != null && endTime != '') {
+                    return  compareTime(startTime, endTime);
+                }
+            });
+
+            
+             $('.follow-cursor').poshytip({
+                    className: 'tip-darkgray',
+	                followCursor: true,
+	                slide: false
+                });
+        });
+
+        function compareTime(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function compareTime2(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan2").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+</script>
+</head>
+<body class="list">
+<div class="body">
+    <div class="listBar">
+        <h1><span class="icon">&nbsp;</span>列表&nbsp;<span class="pageInfo"></span></h1>
+    </div>	
+<@pageList page=(page!) id="listForm" action="${web_base}/phone/goods_refect_info!queryPage.htm" query="priceInfo" isEmpty=true>
+    <div class="operateBar">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     商户号：<input type="text" name="reflectInfo.userNo" id="userNo"
+                    value="<#if reflectInfo??>${(reflectInfo.userNo)!}</#if>"
+                    />
+           &nbsp;&nbsp;&nbsp;
+      商户名称：<input type="text" name="reflectInfo.userName" id="userName"
+                     value="<#if reflectInfo??>${(reflectInfo.userName)!}</#if>"/>
+        &nbsp;&nbsp;&nbsp;
+       商品编号：<input type="text" name="reflectInfo.goodsId" id="goodsId"
+                      value="<#if reflectInfo??>${(reflectInfo.goodsId)!}</#if>"/>
+         &nbsp;&nbsp;&nbsp;
+       本地商品名称：<input type="text" name="reflectInfo.localGoodsName" id="localGoodsName"
+                      value="<#if reflectInfo??>${(reflectInfo.localGoodsName)!}</#if>"/>
+
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp
+          下游商品名称：<input type="text" name="reflectInfo.downGoodsName" id="downGoodsName"
+                      value="<#if reflectInfo??>${(downGoodsName.localGoodsName)!}</#if>"/>
+    &nbsp;&nbsp;&nbsp
+     <#--业务类型：<select name="reflectInfo.businessType" id="businessType">
+        <option value="">-请选择-</option>
+        <option value="01"<#if reflectInfo.businessType??&&reflectInfo.businessType=='01'>selected='selected'</#if>>流量</option>
+        <option value="02" <#if reflectInfo.businessType??&&reflectInfo.businessType=='02'>selected='selected'</#if>>话费快充</option>
+        <option value="03" <#if reflectInfo.businessType??&&reflectInfo.businessType=='03'>selected='selected'</#if>>话费慢充</option>
+    </select>
+   &nbsp;&nbsp;&nbsp;&nbsp-->
+        <#--&nbsp;订单生成时间：<input type="text" id="startTime" name="priceInfo.startTime"
+                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')||\'${(maxDate)!}\'}'})"
+                       value="${(priceInfo.startTime)!}" class="Wdate" readonly="readonly">&nbsp;--&nbsp;
+        <input type="text" id="endTime" name="advanceInfo.endTime"
+               onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'${(maxDate)!}'})"
+               value="${(priceInfo.endTime)!}" class="Wdate" readonly="readonly">-->
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+        <input type="submit" id="searchButton" class="searchButton" value=""/>
+        <input type="button" class="addButton" onclick="location.href='${web_base}/phone/goods_refect_info!insert.htm'" value="添加信息" />
+        <span id="dateSpan" style="color: red"></span>
+    </div>
+    <table class="listTable" border="1">
+        <tr>
+            <th>
+                <span class="sort">商户号</span>
+            </th>
+            <th>
+                <span class="sort">商户名称</span>
+            </th>
+            
+            <th>
+                <span class="sort">本地商品信息</span>
+            </th>
+            
+            <th>
+                <span class="sort">下游商品信息</span>
+            </th>
+            
+            <th>
+                <span class="sort">充值面值(元/M)</span>
+            </th>
+            
+            <th>
+                <span class="sort">省份</span>
+            </th>
+            
+            <th>
+                <span class="sort">运营商</span>
+            </th>
+            
+            <th>
+                <span class="sort">插入时间</span>
+            </th>
+            
+              <th>
+                <span class="sort">修改时间</span>
+            </th>
+            
+            <th width="90">
+                                            操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作
+            <th/>
+        </tr>
+
+        <#if page?? && page.list?? && (page.list?size gt 0)>
+            <#list page.list as obj>
+                <tr>
+                    <td>
+                       商户号：<a class="follow-cursor" title="${(obj.userNo)!}" style="cursor: pointer;">
+                            <#if obj.userNo?? && obj.userNo?length gte 17>
+                            <#--//截取输出文字的长度-->
+                            ${obj.userNo?substring(0,17)}...
+                            <#else>
+                            ${(obj.userNo)!}
+                            </#if>
+                        </a>
+                        
+                    </td>
+                     <td>
+                       商户名：<a class="follow-cursor" title="${(obj.userName)!}" style="cursor: pointer;">
+                            <#if obj.userName?? && obj.userName?length gte 17>
+                            <#--//截取输出文字的长度-->
+                            ${obj.userName?substring(0,17)}...
+                            <#else>
+                            ${(obj.userName)!}
+                            </#if>
+                        </a>
+                    </td>
+                 
+                    <#--商品信息-->  
+                    <td>
+                    商品编号:${(obj.localGoodsId)!}
+                    	<br/>
+                    商品名称：<a class="follow-cursor" title="${(obj.localGoodsName)!}" style="cursor: pointer;">
+                            <#if obj.localGoodsName?? && obj.localGoodsName?length gte 8>
+                            <#--//截取输出文字的长度-->
+                            ${obj.localGoodsName?substring(0,8)}...
+                            <#else>
+                            ${(obj.localGoodsName)!}
+                            </#if>
+                        </a>
+                    </td>
+ 
+                    <td>
+                    商品编号:${(obj.downGoodsId)!}
+                    	<br/>
+                    商品名称：<a class="follow-cursor" title="${(obj.downGoodsName)!}" style="cursor: pointer;">
+                            <#if obj.downGoodsName?? && obj.downGoodsName?length gte 8>
+                            <#--//截取输出文字的长度-->
+                            ${obj.downGoodsName?substring(0,8)}...
+                            <#else>
+                            ${(obj.downGoodsName)!}
+                            </#if>
+                        </a>
+                    </td>
+                    
+                    
+                    
+                    <#--充值面值-->
+                     <td>
+                       <#if obj.businessType??&&obj.businessType=='02'>
+                        ${(obj.rechargeValue)?string("0")!}元<br/>
+                         <#elseif obj.businessType??&&obj.businessType=='03'>
+                         ${(obj.rechargeValue)?string("0")!}元<br/>
+                         <#else>
+                           ${(obj.rechargeValue)?string("0")!}M<br/>
+                         </#if>
+               	    </td>
+        <td>       	        
+                        省份：${obj.proviceCode!}<br/>
+        </td>         
+               		<td>
+                        运营商：${obj.ispInfo!}<br/>
+                    </td>   
+                    <td>
+                        插入时间: ${(obj.insertTime)!}
+                    </td>
+                    
+                      <td>
+                        修改时间: ${(obj.modifyTime)!}
+                    </td>
+                    
+                    <#--操作-->
+                    <td>
+                      <a href="${web_base}/phone/goods_refect_info!detail.htm?id=${(obj.id)!}" title="详情">[详情]</a>
+                      
+                       <#--<a href="${web_base}/phone/goods_refect_info!toEdit.htm?id=${(obj.id)!}" title="编辑">[编辑]</a>-->
+                    <br/>
+                         <a href="${web_base}/phone/goods_refect_info!updateStatus.htm?id=${(obj.id)!}&type=off" title="下架">[下架]</a>
+                       <a href="${web_base}/phone/goods_refect_info!updateStatus.htm?id=${(obj.id)!}&type=on" title="上架">[上架]</a>
+                    </td>
+                 </tr>
+            </#list>
+        </#if>
+    </table>
+
+    <#if page?? && page.list?? && (page.list?size <= 0)>
+        <div class="noRecord">
+            没有找到任何记录!
+        </div>
+    </#if>
+</@pageList>
+</div>
+</body>
+</html>

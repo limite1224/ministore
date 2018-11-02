@@ -1,0 +1,141 @@
+<#-- 导入模版定义文件-->
+<#include "template/template_login.ftl">
+<@login title=t?default("登录")>
+	<body class="login">
+	<script type="text/javascript">
+	// 登录页面若在框架内，则跳出框架
+	if (self != top) {
+		top.location = self.location;
+	};
+	$().ready( function() {
+	
+		var $username = $("#account");
+		var $password = $("#pwd");
+		var $captcha = $("#captcha");
+		var $captchaImage = $("#captchaImage");
+		var $isSaveUsername = $("#isSaveUsername");
+	
+		// 判断"记住用户名"功能是否默认选中,并自动填充登录用户名
+		if($.cookie("adminUsername") != null) {
+			$isSaveUsername.attr("checked", true);
+			$username.val($.cookie("adminUsername"));
+			$password.focus();
+		} else {
+			$isSaveUsername.attr("checked", false);
+			$username.focus();
+		}
+	
+		// 提交表单验证,记住登录用户名
+		$("#loginForm").submit( function() {
+			if ($username.val() == "") {
+			    jBox.alert("请输入您的用户名!","警告");
+				return false;
+			}
+			if ($password.val() == "") {
+			    jBox.alert("请输入您的密码!","警告");
+				return false;
+			}
+			if ($captcha.val() == "") {
+			    jBox.alert("请输入您的验证码!","警告");
+				return false;
+			}	
+				
+			if (!!$isSaveUsername.attr("checked") == true) {
+				$.cookie("adminUsername", $username.val(), {expires: 30});
+			} else {
+				$.cookie("adminUsername", null);
+			}
+			
+		});
+	
+		// 刷新验证码
+		$captchaImage.click( function() {
+			var timestamp = (new Date()).valueOf();
+			var imageSrc = $captchaImage.attr("src");
+			if(imageSrc.indexOf("?") >= 0) {
+				imageSrc = imageSrc.substring(0, imageSrc.indexOf("?"));
+			}
+			imageSrc = imageSrc + "?" + timestamp;
+			$captchaImage.attr("src", imageSrc);
+		});
+	
+		<#if login_error??>
+			jBox.alert("${(login_error)!}","错误");
+		</#if>
+	
+	});
+	</script>
+	
+		<div class="body">
+			<div class="loginBox">
+				<div class="boxTop"></div>
+				<div class="boxMiddle">
+					<form id="loginForm" class="form" action="${web_base}/login!login.htm<#if redirectionUrl??>?redirectionUrl=${redirectionUrl!}</#if>" method="post"  enctype="multipart/form-data" >
+						<div class="loginLogo">
+					    	<img src="${web_static}/admin/images/login_logo.gif" />
+					    </div>
+			            <table class="loginTable">
+			            	<tr>
+			                    <th>
+			                    	用户名:
+			                    </th>
+								<td>
+			                    	<div class="formText">
+			                    		<input type="text" id="account" name="operator.account" />
+			                    	</div>
+			                    </td>
+			                </tr>
+			                <tr>
+								<th>
+									密&nbsp;&nbsp;&nbsp;码:
+								</th>
+			                    <td>
+			                    	<div class="formText">
+			                    		<input type="password" id="pwd" name="operator.pwd" />
+			                    	</div>
+			                    </td>
+			                </tr>
+			                
+			                <tr>
+			                	<th>
+			                		验证码:
+			                	</th>
+			                    <td>
+			                    	<div class="formTextS">
+			                    		<input type="text" id="captcha" name="captcha"  />
+			                    	</div>
+			                    	<div class="captchaImage">
+			                   			<img id="captchaImage" src="${web_base}/random_code.htm" alt="换一张" />
+			                   		</div>
+			                    </td>
+			                </tr>
+			                <tr>
+			                	<th>
+			                		&nbsp;
+			                	</th>
+			                    <td>
+			                    	<input type="checkbox" id="isSaveUsername" /><label for="isSaveUsername">&nbsp;记住用户名</label>
+			                    </td>
+			                </tr>
+			                <tr>
+			                	<th>
+			                		&nbsp;
+			                	</th>
+			                    <td>
+			                        <input type="button" class="homeButton ignoreForm" value="" onclick="window.open('${web_static}/')" hidefocus="true" />
+			                        <input type="submit" class="submitButton ignoreForm" value="登 陆" hidefocus="true" />
+			                        <input type="button" class="helpButton ignoreForm" value="帮 助" onclick="window.open('http://help.shopxx.net')" hidefocus="true" />
+			                    </td>
+			                </tr>
+			            </table>
+			        </form>
+				</div>
+				<div class="boxBottom"></div>
+			</div>
+			<div class="blank"></div>
+			<div class="footer">
+				<a href="http://www.ekhui.com">前台首页</a>
+			</div>
+		</div>
+	</body>
+</@login>

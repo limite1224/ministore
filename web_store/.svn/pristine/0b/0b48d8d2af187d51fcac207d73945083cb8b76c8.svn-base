@@ -1,0 +1,8 @@
+##\u51cf\u5c11\u65f6\u95f4
+reduce_time=30
+###rechageOrder
+start.time=10
+end.time=1440
+limit=400
+#mession_order \u6536\u5355\u8ba2\u5355\u8d85\u65f6\u5269\u4f59\u65f6\u95f4(\u5206\u949f)
+mession.collect.limit.time=30

@@ -1,0 +1,80 @@
+package com.leshun.plc.action.business;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.bean.ProductMsgMap;
+import com.leshun.plc.comp.ProductInfoComp;
+import com.leshun.plc.comp.ProductMsgMapComp;
+import com.leshun.plc.constant.Constant;
+
+public class ProductMsgMapAction
+		extends SuperAction<ProductMsgMap, ProductMsgMapComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734115479601622724L;
+	@Autowired
+	private ProductInfoComp productInfoComp;
+	private List<ProductInfo> productList;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new ProductMsgMap();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		page = comp.queryPage(entity);
+		productList = productInfoComp.queryList(new ProductInfo());
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		if (StringUtils.isNotBlank(id)) {
+			entity = comp.selectByPrimaryKey(id);
+		}
+		return "update";
+	}
+
+	@Override
+	public String save() {
+		boolean result = false;
+		if (entity != null && StringUtils.isNotBlank(entity.getId())) {
+			result = comp.updateByPrimaryKeySelective(entity);
+		}
+		if (!result) {
+			flag = false;
+			addActionError("保存失败");
+		}
+		redirectionUrl = "product_msg_map!list.htm";
+		return SUCCESS;
+	}
+
+	@Override
+	public String delete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String detail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ProductInfo> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<ProductInfo> productList) {
+		this.productList = productList;
+	}
+
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>天猫商品信息关联</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<#include "../template/include/assign.ftl">
+<#include "../template/include/source.ftl">
+<#include "../template/template_listPage.ftl">
+<link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.page{
+		float:right;
+		padding-top: 15px;
+		margin-right: 15px;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#searchButton').click( 
+  	function () { 
+  		$('#currentPage_listForm').val('1');
+  	}  	
+  	);
+  	
+    <#if actionErrors??&&(actionErrors?size > 0)>
+        $.dialog({type: "warn", content: "<#list errorMessages as list>${list!}<br></#list>",
+            modal: true, autoCloseTime: 3000});
+    </#if>
+    
+    $('.follow-cursor').poshytip({
+            className: 'tip-darkgray',
+            followCursor: true,
+            slide: false
+          });
+    });
+    
+   function commitDelete(){
+       var r=confirm("确定要删除吗？","提示");
+       if(r==true){
+         return true;
+       }
+       else{
+        return false;
+       }
+     }   
+       
+</script>
+
+<script type="text/javascript" >
+	var flag =1;
+ 	 function showinput() {
+ 	
+ 		 document.getElementById('inputDiv').style.display='';
+ 	 		if(1==flag){
+ 	 			document.getElementById('inputDiv').style.display='';
+ 	 			flag = 2;
+ 	 		}else{
+ 	 			document.getElementById('inputDiv').style.display= 'none'; 
+ 	 			flag = 1;
+ 	 		}
+ 	 }
+ 	 
+ 	 var tag=1;
+ 	 function showexport(){
+ 		 document.getElementById('exportDiv').style.display='';
+ 	 		if(1==tag){
+ 	 			document.getElementById('exportDiv').style.display='';
+ 	 			tag = 2;
+ 	 		}else{
+ 	 			document.getElementById('exportDiv').style.display= 'none'; 
+ 	 			tag = 1;
+ 	 		}
+ 	 }	 
+ 	  	
+</script> 
+
+
+
+
+</head>
+<body class="list">
+	<div class="body">
+		<div class="listBar">
+			<h1><span class="icon">&nbsp;</span>天猫商品信息关联管理&nbsp;<span class="pageInfo"></span></h1>
+		</div>
+<div>
+    <form id="inputForm" class="validate" action="${web_base}/tmapp/tm_goods!export.htm" method="post">
+        <div id="exportDiv" class="operateBar" style="display:none">
+        	<label>选择条件:</label>
+        	天猫商品编号：<input style="width:120px;" id="goodsIdTm" name="tmGoodQuery.goodsIdTm"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsIdTm)!}</#if>"/>
+					本地商品编号：<input style="width:120px;" id="gameId" name="tmGoodQuery.goodsIdLocal"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsInLocal)!}</#if>"/>
+				           天猫商品名称：<input style="width:120px;" id="goodsName" name="tmGoodQuery.goodsName"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsName)!}</#if>"/>
+				           本地商品名称：<input style="width:120px;" id="goodsNameLocal" name="tmGoodQuery.goodsNameLocal"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsNameLocal)!}</#if>"/>
+				           充值类型：<input style="width:120px;" id="goodsChargeType" name="tmGoodQuery.goodsChargeType"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsChargeType)!}</#if>"/>
+				   <br/><span style="margin-left:85px"></span>     
+				        充值类型名称：<input style="width:120px;"  id="goodsChargeTypeName" name="tmGoodQuery.goodsChargeTypeName"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsChargeTypeName)!}</#if>"/>
+				   &nbsp;&nbsp;&nbsp;
+				     账号类型：<input style="width:120px;" id="goodsAccountType" name="tmGoodQuery.goodsAccountType"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsAccountType)!}</#if>"/>
+				  &nbsp;&nbsp;&nbsp;     
+				        账号类型名称：<input style="width:120px;" id="goodsAccountTypeName" name="tmGoodQuery.goodsAccountTypeName"  value="<#if tmGoodQueryInfo??>${(tmGoodQueryInfo.goodsAccountTypeName)!}</#if>"/>      
+				  &nbsp;&nbsp;&nbsp;    
+				       是否启用:<select name="tmGoodQuery.status"><option value="">请选择</option><option value="1"
+				       <#if tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="1">selected="selected"</#if> >已启用</option>
+				       <option value="0"  <#if tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="0">selected="selected"</#if> 
+				       >已禁用</option></select>	
+				    &nbsp;&nbsp;&nbsp;			        					        
+          <input type="submit" id="exportButton" value="导出天猫商品信息"/>
+         </div>
+         </form>
+          <div id="inputDiv" style="margin-left:30px;display:none">
+          <form action="${web_base}/tmapp/tm_goods!upload.htm"  method="post" enctype="multipart/form-data" isEmpty=true>
+                <label>批量导入：</label>&nbsp;&nbsp;&nbsp;
+				<input name="file" type="file"  value="/" />
+				<input type="submit"  value="导入天猫商品信息" />
+				格式：天猫ID,天猫名称,本地商品ID,状态(0失败,1成功),数量比例,天猫面额,本地面额,充值类型,账号类型,数量规则,天猫工号   逗号分隔
+				<br/>
+		 </form> 
+          </div> 
+   </div>
+   
+	    <div style="margin-left:30px;">
+	    <input type="button" onclick="location.href='${web_base}/tmapp/tm_goods!insert.htm'" value="新增天猫商品" />
+	    <input type="button"  id="input" value="导出数据" onclick="showexport();"/>
+	    <input type="button"  id="export" value="导入数据" onclick="showinput();"/>
+	   </div>
+		<@pageList page=(page!) id="listForm" action="${web_base}/tmapp/tm_goods!queryPage.htm" query="tmGoodQuery" isEmpty=true>
+			<div class="operateBar">
+					<span style="margin-left:38px;">查找商品：</span>
+					天猫商品编号：<input type="text" id="goodsIdTm" name="tmGoodQuery.goodsIdTm"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsIdTm)!}</#if>"/>
+				           天猫商品名称：<input type="text" id="goodsName" name="tmGoodQuery.goodsName"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsName)!}</#if>"/>
+	 				充值类型名称：<input type="text" id="goodsChargeTypeName" name="tmGoodQuery.goodsChargeTypeName"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsChargeTypeName)!}</#if>"/>
+	 				 账号类型名称：<input type="text" id="goodsAccountTypeName" name="tmGoodQuery.goodsAccountTypeName"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsAccountTypeName)!}</#if>"/>				        
+				    </br> <span style="margin-left:102px;"></span>
+		       	           本地商品编号：<input type="text" id="gameId" name="tmGoodQuery.goodsIdLocal"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsInLocal)!}</#if>"/>
+		       	          本地商品名称：<input type="text" id="goodsNameLocal" name="tmGoodQuery.goodsNameLocal"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsNameLocal)!}</#if>"/>     
+		    	          商品充值类型：<input type="text" id="goodsChargeType" name="tmGoodQuery.goodsChargeType"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsChargeType)!}</#if>"/>   
+				          商品账号类型：<input type="text" id="goodsAccountType" name="tmGoodQuery.goodsAccountType"  value="<#if tmGoodQuery??>${(tmGoodQuery.goodsAccountType)!}</#if>"/>
+				   <br/><span style="margin-left:102px;"></span>
+				        选择运营商：<select name="tmGoodQuery.ispInfo">
+				             <option value="">--请选择运营商--</option>
+				              <option value="0"<#if tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="0">selected="selected"</#if>>--移动--</option>
+				              <option value="1" <#if tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="1">selected="selected"</#if>>--联通--</option>
+				              <option value="2" <#if tmGoodQuery??&&tmGoodQuery.ispInfo??&&tmGoodQuery.ispInfo=="2">selected="selected"</#if>>--电信--</option>
+				             </select>
+				   <span style="margin-left:37px;"></span>
+				        选择是否启用： <select name="tmGoodQuery.status">
+				           <option value="">--请选择--</option>
+				           <option value="1" <#if tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="1">selected="selected"</#if>>--已启用--</option>
+				           <option value="0"  <#if tmGoodQuery??&&tmGoodQuery.status??&&tmGoodQuery.status=="0">selected="selected"</#if>>--已禁用--</option></select>
+				       <span style="margin: 0 0 0 40px;"></span>
+					<input type="submit" id="searchButton" class="searchButton" value="" />
+			</div>
+			<#if error_list?? && (error_list?size gt 0)>
+				<#include "errorlist.ftl" />
+			<#else>
+			<table class="listTable">
+				<tr >
+					<th >
+                        <spans class="sort" name="goodsIdTm">天猫商品</span>
+					</th>
+					<th>
+						<span class="sort" name="goodsIdLocal">本地商品编号</span>
+					</th>
+					<th>
+						<span class="sort" name="goodsValueTm">商品面值</span>
+					</th>
+					<th>
+						<span class="sort" name="rechargeRate">价格比率</span>
+					</th>
+                    <th>
+                        <span class="sort" name="numLimit">数量限制</span>
+                    </th>
+                    <th>
+                        <span class="sort" name="status">是否启用</span>
+                    </th>
+                    <th>
+                        <span class="sort" name="goodsChargeType">商品充值类型</span>
+                    </th>
+                     <th>
+                        <span class="sort" name="goodsAccountType">商品账号类型</span>
+                    </th>
+                    <th>
+                        <span class="sort" name="timeCreate">创建时间</span>
+                    </th>
+                    <th>
+                        <span class="sort" name="operator">操作员</span>
+                    </th>
+					<th width="80" align="center">操作<th/>
+				</tr>
+
+            <#if page?? && page.list?? && (page.list?size gt 0)>
+				<#list page.list as obj>
+					<tr>
+						<td>
+		                         TSC： ${(obj.goodsIdTm)!}  <br/>
+		                         <a class="follow-cursor" title="${(obj.goodsName)!}" style="cursor: pointer;">
+	                            <#if obj.goodsNameTm?? && obj.goodsNameTm?length gte 10>
+	                                ${obj.goodsName?substring(0,10)}...
+	                            <#else>
+	                                ${(obj.goodsName)!}
+	                        </#if>
+                        	</a>
+                        </td>
+                         <td>
+               		            商品编号:  ${(obj.goodsIdLocal)!} <br/>
+                             <a class="follow-cursor" title="${(obj.goodsNameLocal)!}" style="cursor: pointer;">
+	                            <#if obj.goodsNameLocal?? && obj.goodsNameLocal?length gte 10>
+	                                ${obj.goodsNameLocal?substring(0,10)}...
+	                      <#else>
+	                                ${(obj.goodsNameLocal)!}
+	                            </#if>
+                         	</a>
+                       </td>
+						 <td>
+							天猫面额:${((obj.goodsValueTm)*1.0/1000)?string("0.000")!}<br/>
+							本地面额:${((obj.goodsValueLocal)*1.0/1000)?string("0.000")!}
+						</td>
+						<td>
+							${(obj.rechargeRate)!}
+						</td>
+						<td>
+							${(obj.numLimit)!}
+						</td>
+						<td>
+						<#if obj.status??&&obj.status=='1'>
+						     已启用
+						<#else>
+					               已禁用
+						</#if>
+						</td>
+						<td>
+							充值类型：${(obj.goodsChargeType)!}<br/>
+							充类名称：<a class="follow-cursor" title="${(obj.goodsChargeTypeName)!}" style="cursor: pointer;">
+	                            <#if obj.goodsChargeTypeName?? && obj.goodsChargeTypeName?length gte 10>
+	                                ${obj.goodsChargeTypeName?substring(0,10)}...
+	                            <#else>
+	                                ${(obj.goodsChargeTypeName)!}
+	                            </#if>
+                        	</a>
+						</td>
+						
+						<td>
+							${(obj.goodsAccountType)!}<br/>
+							<a class="follow-cursor" title="${(obj.goodsAccountTypeName)!}" style="cursor: pointer;">
+	                            <#if obj.goodsAccountTypeName?? && obj.goodsAccountTypeName?length gte 10>
+	                                ${obj.goodsAccountTypeName?substring(0,10)}...
+	                            <#else>
+	                                ${(obj.goodsAccountTypeName)!}
+	                            </#if>
+                        	</a>
+						</td>
+						<td>
+							创建：${(obj.timeCreate)!}<br/>
+							修改:${(obj.timeModify)!}
+						</td>
+                        <td>
+                             ${(obj.oper)!}
+                        </td>
+						<td width="80">
+							<a href="${web_base}/tmapp/tm_goods!queryByGoodsIdTm.htm?goodsIdTm=${obj.goodsIdTm}" title="编辑">[编辑]</a>
+							
+							<a href="${web_base}/tmapp/tm_goods!queryGoodsIdDetail.htm?goodsIdTm=${obj.goodsIdTm}" title="详情">[详情]</a>
+							<br/>
+							<a onclick="return commitDelete()" href="${web_base}/tmapp/tm_goods!delete.htm?goodsIdTm=${obj.goodsIdTm}" title="删除">[删除]</a>
+							
+						<#if obj.status??&&obj.status=='0'>
+						<a href="${web_base}/tmapp/tm_goods!updateTianmaoGoodsInfoStatus.htm?tmGoodQueryInfo.goodsIdTm=${obj.goodsIdTm}&&tianMaoGoodsInfo.status=1">[启用]</a>
+						<#else>
+					    <a href="${web_base}/tmapp/tm_goods!updateTianmaoGoodsInfoStatus.htm?tmGoodQueryInfo.goodsIdTm=${obj.goodsIdTm}&&tianMaoGoodsInfo.status=0">[禁用]</a>
+						</#if>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+			</table>
+			</#if>
+			<#if page?? && page.list?? && (page.list?size <= 0)>
+				<div class="noRecord">
+					没有找到任何记录!
+				</div>
+			</#if>
+		</@pageList>
+	</div>
+	
+</body>
+</html>

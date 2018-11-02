@@ -1,0 +1,162 @@
+package com.leshun.plc.action.user;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.gson.Gson;
+import com.leshun.plc.action.SuperAction;
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.bean.DeviceMessage;
+import com.leshun.plc.bean.DeviceShadow;
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.comp.DeviceInfoComp;
+import com.leshun.plc.comp.DeviceMessageComp;
+import com.leshun.plc.constant.Constant;
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.util.CommonUtil;
+import com.leshun.plc.util.DateUtils;
+import com.sls.core.socket.ServerDisponseException;
+
+public class DeviceInfoAction extends SuperAction<DeviceInfo, DeviceInfoComp> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1447130409772565410L;
+	private List<ProductInfo> productList;
+	@Autowired
+	private DeviceMessageComp deviceMessageComp;
+
+	@Override
+	public String list() {
+		if (entity == null) {
+			entity = new DeviceInfo();
+			entity.setPageSize(Constant.INIT_PAGESIZE);
+			entity.setCurrentPage(Constant.INIT_CURRENTPAGE);
+		}
+		try {
+			page = comp.queryPage(entity);
+		} catch (Exception e) {
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return LIST;
+	}
+
+	@Override
+	public String form() {
+		return NONE;
+	}
+
+	@Override
+	public String save() {
+
+		return NONE;
+	}
+
+	@Override
+	public String delete() {
+
+		return NONE;
+	}
+
+	private String historyStr;
+
+	@Override
+	public String detail() {
+		if (StringUtils.isBlank(id)) {
+			addActionError(ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getCode(),
+					ExceptionCodeDes.PRIMARY_KEY_LOSE.getDescription());
+		}
+		try {
+			entity = comp.selectByPrimaryKey(id);
+		} catch (Exception e) {
+			log.info("查询异常", e);
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		return DETAIL;
+	}
+
+	public String date;
+
+	public String history() {
+		String beginDate = "";
+		String endDate = "";
+		if (StringUtils.isBlank(date) || date.indexOf(" - ") == -1) {
+			beginDate = DateUtils.getDayBefore(new Date(), 7);
+			endDate = DateUtils.formatDate(new Date());
+		} else {
+			beginDate = DateUtils.formatChanger(date.split(" - ")[0],
+					"MM/dd/yyyy", "yyyy-MM-dd");
+			endDate = DateUtils.formatChanger(date.split(" - ")[1],
+					"MM/dd/yyyy", "yyyy-MM-dd");
+		}
+
+		DeviceMessage dm = new DeviceMessage();
+		dm.setBeginDate(beginDate);
+		dm.setEndDate(endDate);
+		dm.setDeviceId(id);
+		dm.setLimit(100);
+		dm.setOffset(0);
+		List<DeviceMessage> list = null;
+		Gson gson = CommonUtil.gson();
+		try {
+			list = deviceMessageComp.queryList(dm);
+			DeviceShadow deviceShadow = new DeviceShadow();
+			DeviceInfo deviceInfo = comp.selectByPrimaryKey(id);
+			Map<String, String> customPropertyMap = null;
+			for (DeviceMessage msg : list) {
+				deviceShadow.setMsgInfo(msg.getMessage());
+				customPropertyMap = comp.parseMsgInfo(deviceInfo, deviceShadow);
+				msg.setMessage(gson.toJson(customPropertyMap));
+			}
+		} catch (Exception e) {
+			log.info("查询异常", e);
+			addActionError(e.getMessage());
+			throw new ServerDisponseException("4101:查询异常", e.getMessage());
+		}
+		message = gson.toJson(list);
+		return AJAX;
+	}
+
+	/**
+	 * 一键上锁
+	 * 
+	 * @return
+	 */
+	public String locked() {
+		// TODO
+		return AJAX;
+	}
+
+	public String getHistoryStr() {
+		return historyStr;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setHistoryMap(String historyStr) {
+		this.historyStr = historyStr;
+	}
+
+	public List<ProductInfo> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<ProductInfo> productList) {
+		this.productList = productList;
+	}
+
+}

@@ -1,0 +1,23 @@
+package com.leshun.plc.web.service;
+
+import java.util.Date;
+
+public interface MemCacheService {
+
+	// Object getMemValue(String key);
+	//
+	// void setMemValue(String key, Object obj, Date date);
+	//
+	// /***
+	// * 假如返回false 则说明，已经重复提交了。已经存在了
+	// *
+	// * @param key
+	// * @param obj
+	// * @param date
+	// * @return
+	// */
+	// boolean setMemValueAddMethod(String key, Object obj, Date date);
+	//
+	// void keyInfoForver(String key, Object obj);
+
+}

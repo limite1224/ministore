@@ -1,0 +1,20 @@
+package com.leshun.plc.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.leshun.plc.bean.ProductInfo;
+import com.leshun.plc.dao.ProductInfoDao;
+
+@Repository("productInfoDao")
+public class ProductInfoDaoImpl extends BaseDaoImpl<ProductInfo>
+		implements ProductInfoDao {
+
+	@Override
+	public ProductInfo selectByProductKey(String productKey) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectOne("mybatis.xml."
+				+ entityClass.getSimpleName() + "Mapper.selectByProductKey",
+				productKey);
+	}
+
+}

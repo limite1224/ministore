@@ -1,0 +1,8 @@
+package com.leshun.plc.service;
+
+import com.leshun.plc.bean.DeviceInfo;
+
+public interface DeviceInfoService
+		extends BaseService<DeviceInfo> {
+
+}

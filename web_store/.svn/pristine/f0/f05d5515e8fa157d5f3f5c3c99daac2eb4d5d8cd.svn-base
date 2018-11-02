@@ -1,0 +1,178 @@
+package com.leshun.plc.util;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.log4j.Logger;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import com.leshun.plc.constant.ExceptionCodeDes;
+import com.leshun.plc.pojo.sys.Permission;
+import com.leshun.plc.pojo.sys.UserInfoVO;
+import com.sls.core.socket.ServerDisponseException;
+
+/**
+ * 
+ * @description
+ */
+public class ParseUtil {
+
+	private static Logger log = Logger.getLogger(ParseUtil.class);
+
+	/**
+	 */
+	public static List<UserInfoVO> readConfigurateFile() {
+
+		List<UserInfoVO> list = null;
+		InputStream xmlStream = ParseUtil.class.getClassLoader()
+				.getResourceAsStream("user.xml");
+		try {
+			// 得到DOM解析器的工厂实例
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			// 从DOM工厂中获得DOM解析器
+			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
+
+			// 把要解析的xml文档读入DOM解析器
+			Document doc = dbBuilder.parse(xmlStream);
+			Element root = doc.getDocumentElement();
+			NodeList childNodes = root.getChildNodes(); // 获得根元素下的子节点
+			list = new ArrayList<UserInfoVO>();
+			// 遍历子节点
+			for (int i = 0; i < childNodes.getLength(); i++) {
+				Node node = childNodes.item(i); // 对每个子节点进行判断
+				if ("user_info".equals(node.getNodeName())) { // 第二层节点
+					UserInfoVO UserInfoVO = parseItermInfo(node);
+					if (UserInfoVO != null) {
+						list.add(UserInfoVO);
+					}
+				}
+			}
+			return list;
+		} catch (DOMException e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getCode(),
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getDescription());
+		} catch (UnsupportedEncodingException e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.TRANS_CODE_FAILURE.getCode(),
+					ExceptionCodeDes.TRANS_CODE_FAILURE.getDescription());
+		} catch (ParserConfigurationException e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getCode(),
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getDescription());
+		} catch (SAXException e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getCode(),
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getDescription());
+		} catch (IOException e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getCode(),
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getDescription());
+		}
+	}
+
+	private static UserInfoVO parseItermInfo(Node listNode)
+			throws UnsupportedEncodingException {
+		NodeList secChildNodes = listNode.getChildNodes();
+		if (secChildNodes == null || secChildNodes.getLength() == 0) {
+			return null;
+		}
+		UserInfoVO info = new UserInfoVO();
+		for (int k = 0; k < secChildNodes.getLength(); k++) {
+			Node node = secChildNodes.item(k); // 对每个子节点进行判断
+			if ("account".equalsIgnoreCase(node.getNodeName())) {
+				String account = node.getFirstChild().getNodeValue();
+				info.setAccount(account);
+			} else if ("pwd".equalsIgnoreCase(node.getNodeName())) {
+				String pwd = node.getFirstChild().getNodeValue();
+				info.setPwd(pwd);
+			}
+		}
+		return info;
+	}
+
+	public static List<Permission> readConfigFile() {
+
+		List<Permission> list = null;
+		InputStream xmlStream = ParseUtil.class.getClassLoader()
+				.getResourceAsStream("header_menu.xml");
+		try {
+			// 得到DOM解析器的工厂实例
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			// 从DOM工厂中获得DOM解析器
+			DocumentBuilder dbBuilder = dbFactory.newDocumentBuilder();
+			// 把要解析的xml文档读入DOM解析器
+			Document doc = dbBuilder.parse(xmlStream);
+			Element root = doc.getDocumentElement();
+			NodeList childNodes = root.getChildNodes(); // 获得根元素下的子节点
+			list = new ArrayList<Permission>();
+			// 遍历子节点
+			for (int i = 0; i < childNodes.getLength(); i++) {
+				Node node = childNodes.item(i); // 对每个子节点进行判断
+				if ("header_menu".equals(node.getNodeName())) { // 第二层节点
+					Permission per = parseHeader(node);
+					if (per != null) {
+						list.add(per);
+					}
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			log.error(e);
+			throw new ServerDisponseException(
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getCode(),
+					ExceptionCodeDes.PARSE_REQUEST_ERROR.getDescription());
+		}
+	}
+    // 解析
+	private static Permission parseHeader(Node listNode)
+			throws UnsupportedEncodingException {
+		NodeList secChildNodes = listNode.getChildNodes();
+		if (secChildNodes == null || secChildNodes.getLength() == 0) {
+			return null;
+		}
+		Permission per = new Permission();
+		for (int k = 0; k < secChildNodes.getLength(); k++) {
+			Node node = secChildNodes.item(k); // 对每个子节点进行判断
+			if ("code".equalsIgnoreCase(node.getNodeName())) {
+				String code = node.getFirstChild().getNodeValue();
+				per.setCode(code);
+			}
+			if ("name".equalsIgnoreCase(node.getNodeName())) {
+				String name = node.getFirstChild().getNodeValue();
+				per.setName(name);
+			}
+			if ("url".equalsIgnoreCase(node.getNodeName())) {
+				String url = node.getFirstChild().getNodeValue();
+				per.setUrl(url);
+			}
+		}
+		return per;
+	}
+
+	public static void main(String[] args) {
+		List<UserInfoVO> list = readConfigurateFile();
+		for (UserInfoVO goods : list) {
+			System.out.println(goods);
+		}
+	}
+}

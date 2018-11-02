@@ -1,0 +1,14 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceMsgMap;
+import com.leshun.plc.dao.DeviceMsgMapDao;
+import com.leshun.plc.service.DeviceMsgMapService;
+
+@Service("deviceMsgMapService")
+public class DeviceMsgMapServiceImpl
+		extends BaseServiceImpl<DeviceMsgMap, DeviceMsgMapDao>
+		implements DeviceMsgMapService {
+
+}

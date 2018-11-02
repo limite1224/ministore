@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>预警管理</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/source.ftl">
+    
+</head>
+<body class="list">
+    <span style="color:red;font-size:20px;">当前默认阀值：${defaultValue!}</span>
+     <div style="margin-left:100px;">
+    <form method="post" action="${web_base}/tmapp/alipay_warn!warnlist.htm">
+     <span>搜索区域</span>&nbsp
+            省份:
+          <select name="provinceCode" class="formText">
+                <option value="" selected="selected">
+                    -请选择省份-
+                </option>
+                <#list selectMap?keys as key>
+                    <option value="${key!}"> ${selectMap.get(key)!}</option>
+                </#list>
+             
+          </select>
+     <input type="submit" value="点击搜索"/>
+    </form>
+    <span style="margin: 0 0 0 367px;" ></span>
+    <span >当前上下架状态：<span style="color:red;font-size:20px;"> 
+    <#if kkFlag?? && kkFlag=='0' >
+    	开启状态
+    <#else>
+    	关闭状态
+    </#if>
+    </span>
+      — — 操作： 
+      <a style="font-size:20px;font-weight:bold;" href = "${web_base}/tianmao/tian_mao_goods!doSetkkFlagOn.htm">开启</a>  
+      <a style="font-size:20px;font-weight:bold; " href = "${web_base}/tianmao/tian_mao_goods!doSetkkFlagOFF.htm">关闭</a>
+    </span>
+    </div>  
+    <br/>
+<div class="body">
+    <table class="listTable" border="1">
+        <tr>
+            <th>
+                <span class="sort">中国移动</span>
+            </th>
+            <th>
+                <span class="sort">中国联通</span>
+            </th>
+            <th>
+                <span class="sort">中国电信</span>
+            </th>
+        </tr>
+        <#list areaMap?keys as key> 
+         <tr>    
+                 <#--移动专区-->
+                   <td>
+                   <#if ydmap?exists> 
+                     <form method="post" action="${web_base}/tmapp/alipay_warn!commit.htm">
+                     ${areaMap.get(key)!}移动:<input name="warnValue" value="${ydmap.get(key).warnValue!}"/>
+                        <input type="hidden" name="provinceCode" value="${key!}"/>
+                        <input type="hidden" name="ispInfo" value="${ydmap.get(key).ispInfo!}"/>
+                         <input type="submit" value="提交"/>
+                     </form>
+                   </#if>
+                   </td>
+                   
+                  <#--联通专区-->
+                   <td>
+                   <#if ltmap?exists> 
+                     <form method="post" action="${web_base}/tmapp/alipay_warn!commit.htm">
+                      ${areaMap.get(key)!}联通:<input name="warnValue" value="${ltmap.get(key).warnValue!}"/>
+                        <input type="hidden" name="provinceCode" value="${key!}"/>
+                        <input type="hidden" name="ispInfo" value="${ltmap.get(key).ispInfo!}"/>
+                         <input type="submit" value="提交"/>
+                      </form>
+                  </#if>
+                   </td>
+                   
+                    <#--电信专区-->
+                   <td>
+                   <#if dxmap?exists> 
+                     <form method="post" action="${web_base}/tmapp/alipay_warn!commit.htm">
+                      ${areaMap.get(key)!}电信:<input name="warnValue" value="${dxmap.get(key).warnValue!}"/>
+                        <input type="hidden" name="provinceCode" value="${key!}"/>
+                        <input type="hidden" name="ispInfo" value="${dxmap.get(key).ispInfo!}"/>
+                         <input type="submit" value="提交"/>
+                       </form> 
+                  </#if>
+                 </td>    
+        </tr>
+     </#list>
+</div>
+</body>
+</html>

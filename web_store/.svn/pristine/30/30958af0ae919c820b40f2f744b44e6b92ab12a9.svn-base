@@ -1,0 +1,328 @@
+<#include "../template/template_listPage.ftl"/>
+<@header title="paas平台设备信息">
+
+</@header>
+<body>
+	<div class="main-content">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					设备信息
+					<small>
+						设备信息管理
+					</small>
+				</h1>
+			</div>
+			<div class="row" style="padding-left:20px;padding-right:20px">
+			
+			<@pageList page=(page!) id="listForm" action="${web_base}/business/device_info!list.htm" query="deviceInfo" isEmpty=true>
+					<!--条件查询-->
+				<div class="row">
+				
+				<div class="row">
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-1">唯一标识编号(设备编号)</label>
+								<input type="text" id="id-1" placeholder="唯一标识编号(设备编号)" class="form-control required"
+								 		name="deviceInfo.deviceId" value="${deviceInfo.deviceId!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-2">设备名称</label>
+								<input type="text" id="id-2" placeholder="设备名称" class="form-control required"
+								 		name="deviceInfo.deviceName" value="${(deviceInfo.deviceName)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-3">设备秘钥</label>
+								<input type="text" id="id-3" placeholder="设备秘钥" class="form-control required"
+								 		name="deviceInfo.deviceSecret" value="${(deviceInfo.deviceSecret)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-4">产品名称</label>
+								<input type="text" id="id-4" placeholder="产品名称" class="form-control required"
+								 		name="deviceInfo.productName" value="${(deviceInfo.productName)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-5">产品标识</label>
+								<input type="text" id="id-5" placeholder="产品标识" class="form-control required"
+								 		name="deviceInfo.productKey" value="${(deviceInfo.productKey)!}" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-6">所属商户名称</label>
+								<input type="text" id="id-6" placeholder="所属商户名称" class="form-control required"
+								 		name="deviceInfo.traderName" value="${(deviceInfo.traderName)!}" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="id-7">设备分组名称</label>
+								<input type="text" id="id-7" placeholder="设备分组名称" class="form-control required"
+								 		name="deviceInfo.groupName" value="${(deviceInfo.groupName)!}" />
+						</div>
+					</div>
+					
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="form-field-select-1">设备维护状态</label>
+							<br>
+							<select  class="width-90 link-height-1 chosen-select"  id="expStatus" name= "deviceInfo.expStatus">
+								<option value="">
+                    				-请选择设备维护状态-
+					        	</option>
+					        	<option value="0" <#if deviceInfo?? && deviceInfo.expStatus?? && deviceInfo.expStatus="0">selected</#if>>
+					        		维护
+					        	</option>
+					        	<option value="1" <#if deviceInfo??  && deviceInfo.expStatus?? && deviceInfo.expStatus="1">selected</#if>>
+					        		未维护
+					        	</option>
+							</select>
+						</div>
+					</div>
+					
+					
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="col-xs-12 control-label no-padding-right" for="form-field-select-2">设备状态</label>
+							<br>
+							<select class="width-90 link-height-1 chosen-select"  id="form-field-select-2" data-placeholder="Choose status..." style="display: none;"
+								 		name="deviceInfo.status" value="${(deviceInfo.status)!}" >
+								<option value="">
+			                    -请选择设备状态-
+			                	</option>
+			                	<option value="0" <#if deviceInfo?? && deviceInfo.status?? && deviceInfo.status="0">selected</#if>>
+			                		禁用
+			                	</option>
+			                	<option value="1" <#if deviceInfo?? && deviceInfo.status?? && deviceInfo.status="1">selected</#if>>
+			                		启用
+			                	</option>
+							</select>
+						</div>
+					</div>
+					
+				<#--
+					<div class="col-xs-2">
+							<div class="form-group">
+								<label class="col-xs-12 control-label no-padding-right" for="id-date-range-picker-1">日期范围</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="icon-calendar bigger-110"></i>
+									</span>
+									<input class="form-control date-range-picker-leshun" type="text" name="accessLog.createTime" id="id-date-range-picker-1" />
+									
+								</div>
+							</div>
+					</div>
+				-->
+				<#---
+					时间范围:
+					<input type="text"id="createTime" name="deviceInfo.createTime"  value="${(deviceInfo.createTime?string("yyyy-MM-dd HH:mm:ss"))!}" 
+						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  class="Wdate" readonly="readonly">&nbsp;----&nbsp;
+					<input type="text" id="modifyTime" name="deviceInfo.modifyTime" value="${(deviceInfo.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}"
+               			onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" readonly="readonly">
+				---->
+				</div>
+				
+				<div class="row" style="padding-left:20px;">
+					<button  type="submit" class="btn btn-sm btn-primary no-border"><i class="icon-search icon-1x icon-only"></i>查询</button>&nbsp;
+					<a href="${web_base}/business/p_device_info!toAdd.htm" >
+						<button  type="button" class="btn btn-sm btn-success no-border"><i class="icon-plus icon-1x icon-only"></i>新增</button>&nbsp;
+	                </a>
+		       		<a href="${web_base}/business/p_device_info!uploadFileAndAdd.htm" >
+		            	<button  type="button" class="btn btn-sm btn-purple  no-border"><i class="icon-upload-alt icon-1x icon-only"></i>导入</button>&nbsp;
+		        	</a>
+		            	<button  type="button" class="btn btn-sm btn-warning no-border"  id="export" onclick="exportFromQuery()" ><i class="icon-download-alt icon-1x icon-only"></i>导出</button>&nbsp;
+		         		
+		         		<button  type="button" class="btn btn-sm btn-warning no-border"  id="example" onclick="exportExample()" ><i class="icon-download-alt icon-1x icon-only"></i>下载导入样例</button>&nbsp;
+				<#----					
+		       		<a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-danger  no-border"><i class="icon-trash icon-1x icon-only"></i>删除</button>&nbsp;
+		            </a>
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-info no-border"><i class="icon-edit icon-1x icon-only"></i>修改</button>&nbsp;
+		            </a>
+		            <a href="#" >
+		            	<button  type="button" class="btn btn-sm btn-warning  no-border"><i class="icon-arrow-right icon-1x icon-on-right "></i>注销</button>
+                  	</a>
+              --->  
+		                	
+				</div>
+
+                 </div>
+                 <hr>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="table-header">
+							paas平台设备信息
+						</div>
+							<div class="table-responsive">
+								<table id="userTable" class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="center">
+												<label>
+													<input type="checkbox" class="ace"/>
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>唯一标识编号(设备编号)</th>
+											<th>设备名称</th>
+											<th>产品名称</th>
+											<th>产品标识</th>
+											<th>所属商户名称</th>
+											<th>设备分组名称</th>
+											<th>设备维护状态</th>
+											<th>设备状态</th>
+											<th>创建时间</th>
+											<th>修改时间</th>
+										</tr>
+									</thead>
+								<tbody>
+								<#if page?? && page.list??>
+									<#list  page.list as obj>
+										<tr>
+											<td class="center">
+												<label>
+													<input type="checkbox" class="ace"   name="ids" value="${(obj.deviceId)!}" />
+													<span class="lbl"></span>
+												</label>
+											</td>
+											<td>
+												<span>${(obj.deviceId)!}</span>
+											</td>
+											<td>
+												<span>${(obj.deviceName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.productName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.productKey)!}</span>
+											</td>
+											<td>
+												<span>${(obj.traderName)!}</span>
+											</td>
+											<td>
+												<span>${(obj.groupName)!}</span>
+											</td>
+											<td>
+												<#if obj?? && obj.expStatus?? && obj.expStatus="0" > 
+													维护
+						           	    		<#elseif obj?? && obj.expStatus?? && obj.expStatus="1" >
+						           	    	 		未维护
+												</#if>
+											</td>
+											<td>
+												<#if obj?? && obj.status?? && obj.status="0" > 
+													禁用
+						           	    		<#elseif obj?? && obj.status?? && obj.status="1" >
+						           	    	 		启用
+												</#if>
+											</td>
+											<td>
+												<span> ${(obj.createTime?string("yyyy-MM-dd HH:mm:ss"))!}</span>
+											</td>
+											<td>
+												<span> ${(obj.modifyTime?string("yyyy-MM-dd HH:mm:ss"))!}</span>
+											</td>																					
+											<td>
+												<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="${web_base}/business/p_device_info!details.htm?deviceId=${(obj.deviceId)!}"  title="详情" >
+														<i class="icon-zoom-in bigger-130"></i>
+													</a>
+			
+													<a class="green" href="${web_base}/business/p_device_info!toEdit.htm?deviceId=${(obj.deviceId)!}"  title="编辑" >
+														<i class="icon-pencil bigger-130"></i>
+													</a>
+			
+													<a class="red" href="javascript:void(0);" onclick="deleteOne('${obj.deviceId!}','${obj.deviceName!}');" title="删除">
+														<i class="icon-trash bigger-130"></i>
+													</a>
+												</div>
+			
+											</td>
+										</tr>
+									</#list>
+								</#if>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</@pageList>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	   	<#--导出设备信息详情--->
+         function exportFromQuery(){
+       		var f = document.getElementById('listForm');
+       		f.action="${web_base}/business/p_device_info!exportFile.htm";
+       		f.submit();
+        		$("#listForm").action="${web_base}/business/p_device_info!list.htm";
+         }
+         
+         <#--下载导入样例--->
+         function exportExample(){
+           var url = "${web_base}/business/p_device_info!exportExample.htm";
+                        document.forms[1].action = url;
+                        document.forms[1].submit();
+         }
+    
+		function deleteOne(id,name){
+			var msg = "你确定删除"+name+"吗？";
+			var data = {
+				deviceId:id
+			}
+			bootbox.confirm({
+				message: msg,
+				buttons: {
+					cancel: {
+						label: '取消',
+					},
+					confirm: {
+						label: '确定',
+						className: 'btn btn-info'
+					}
+				},
+				callback: function(result) {
+					if(result) {
+						$.ajax({
+							type: "post",
+							url: "${web_base}/business/p_device_info!delete.htm",
+							data: data,
+							async: true,
+							dataType:'json',
+							success: function(res) {
+								var code = res.code;
+								var msg = res.msg;
+								if('0'==code){
+									alert_leshun("danger", "操作失败："+msg, true);
+								}else if('1'==code){
+									alert_leshun("success", "删除操作成功", true);
+								}
+							},
+							error: function(message) {
+								alert_leshun("danger", "操作异常："+message, true);
+							}
+						});
+					}
+				}
+			});
+		}
+		     
+	</script>	
+</div>
+</body>
+</html>

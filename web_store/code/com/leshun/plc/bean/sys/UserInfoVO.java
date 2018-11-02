@@ -1,0 +1,133 @@
+package com.leshun.plc.bean.sys;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class UserInfoVO extends OperatorInfo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3818038107624632299L;
+
+	/**
+	 * 当前用户临时分配的编号
+	 */
+	private String loginTmpId;
+	/**
+	 * 用户id
+	 */
+	private String userId;
+	/**
+	 * 最后登陆ip
+	 */
+	private String currentIp;
+	/**
+	 * 有权限的交易代码
+	 */
+	private String serviceCode;
+	/**
+	 * 新密码
+	 */
+	private String newPwd;
+	/**
+	 * 角色名
+	 */
+	private String roleName;
+	/**
+	 * 角色备注
+	 */
+	private String roleRemark;
+	/**
+	 * 角色信息
+	 */
+	private List<Role> role;
+	private String codes;
+
+	private String mobile;
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getLoginTmpId() {
+		return loginTmpId;
+	}
+
+	public void setLoginTmpId(String loginTmpId) {
+		this.loginTmpId = loginTmpId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getCurrentIp() {
+		return currentIp;
+	}
+
+	public void setCurrentIp(String currentIp) {
+		this.currentIp = currentIp;
+	}
+
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getRoleRemark() {
+		return roleRemark;
+	}
+
+	public void setRoleRemark(String roleRemark) {
+		this.roleRemark = roleRemark;
+	}
+
+	public List<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
+
+	public String getCodes() {
+		return codes;
+	}
+
+	public void setCodes(String codes) {
+		this.codes = codes;
+	}
+
+}

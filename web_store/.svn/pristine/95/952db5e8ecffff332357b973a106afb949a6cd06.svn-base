@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.DeviceMsgMapMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.DeviceMsgMap">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="divice_id" property="diviceId" jdbcType="VARCHAR" />
+		<result column="divice_msg_key" property="diviceMsgKey"
+			jdbcType="VARCHAR" />
+		<result column="divice_msg_name" property="diviceMsgName"
+			jdbcType="VARCHAR" />
+		<result column="divice_remark" property="diviceRemark"
+			jdbcType="VARCHAR" />
+		<result column="divice_name" property="diviceName" jdbcType="VARCHAR" />
+		<result column="divice_mac" property="diviceMac" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,divice_id, divice_msg_key, divice_msg_name,
+		divice_remark,
+		divice_name,
+		divice_mac
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_msg_map
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		device_msg_map
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.DeviceMsgMap">
+		insert into device_msg_map
+		(id,divice_id, divice_msg_key,
+		divice_msg_name,
+		divice_remark,
+		divice_name,
+		divice_mac
+		)
+		values
+		(#{id,jdbcType=VARCHAR},#{diviceId,jdbcType=VARCHAR},
+		#{diviceMsgKey,jdbcType=VARCHAR},
+		#{diviceMsgName,jdbcType=VARCHAR},
+		#{diviceRemark,jdbcType=VARCHAR}, #{diviceName,jdbcType=VARCHAR},
+		#{diviceMac,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.DeviceMsgMap">
+		insert into device_msg_map
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="diviceId != null">
+				divice_id,
+			</if>
+			<if test="diviceMsgKey != null">
+				divice_msg_key,
+			</if>
+			<if test="diviceMsgName != null">
+				divice_msg_name,
+			</if>
+			<if test="diviceRemark != null">
+				divice_remark,
+			</if>
+			<if test="diviceName != null">
+				divice_name,
+			</if>
+			<if test="diviceMac != null">
+				divice_mac,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceId != null">
+				#{diviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceMsgKey != null">
+				#{diviceMsgKey,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceMsgName != null">
+				#{diviceMsgName,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceRemark != null">
+				#{diviceRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceName != null">
+				#{diviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceMac != null">
+				#{diviceMac,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.DeviceMsgMap">
+		update device_msg_map
+		<set>
+			<if test="diviceMsgKey != null">
+				divice_msg_key = #{diviceMsgKey,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceMsgName != null">
+				divice_msg_name = #{diviceMsgName,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceRemark != null">
+				divice_remark = #{diviceRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceName != null">
+				divice_name = #{diviceName,jdbcType=VARCHAR},
+			</if>
+			<if test="diviceMac != null">
+				divice_mac = #{diviceMac,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.DeviceMsgMap">
+		update
+		device_msg_map
+		set divice_msg_key = #{diviceMsgKey,jdbcType=VARCHAR},
+		divice_msg_name = #{diviceMsgName,jdbcType=VARCHAR},
+		divice_remark =
+		#{diviceRemark,jdbcType=VARCHAR},
+		divice_name =
+		#{diviceName,jdbcType=VARCHAR},
+		divice_mac =
+		#{diviceMac,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</update>
+	<select id="queryList" parameterType="com.leshun.plc.bean.DeviceMsgMap"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from device_msg_map
+		<include refid="pageCondition" />
+		<include refid="limit" />
+	</select>
+	<select id="queryRowCount" parameterType="com.leshun.plc.bean.DeviceMsgMap"
+		resultType="java.lang.Integer">
+		select count(id) from device_msg_map
+		<include refid="pageCondition" />
+	</select>
+	<sql id="pageCondition">
+		<where>
+			<choose>
+				<when test="id!=null and id!=''">
+					id = #{id,jdbcType=VARCHAR}
+				</when>
+				<when test="diviceId != null and diviceId !=''">
+					divice_id = #{diviceId,jdbcType=VARCHAR}
+					<if test="diviceMsgKey!=null and diviceMsgKey!=''">
+						and divice_msg_key = #{diviceMsgKey,jdbcType=VARCHAR}
+					</if>
+				</when>
+				<otherwise>
+					<if test="diviceMsgKey!=null and diviceMsgKey!=''">
+						and divice_msg_key = #{diviceMsgKey,jdbcType=VARCHAR}
+					</if>
+					<if test="diviceName != null and diviceName !=''">
+						and divice_name like "%${diviceName}%"
+					</if>
+					<if test="diviceMac != null and diviceMac !=''">
+						and divice_mac = #{diviceMac,jdbcType=VARCHAR}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<sql id="orderBy">
+		order by create_time desc
+	</sql>
+</mapper>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.RechargeOrderMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.RechargeOrder">
+		<id column="recharge_order_id" property="rechargeOrderId" jdbcType="VARCHAR" />
+		<result column="order_Id" property="orderId" jdbcType="VARCHAR" />
+		<result column="merchant_order_id" property="merchantOrderId"
+			jdbcType="VARCHAR" />
+		<result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+		<result column="ekhui_order_id" property="ekhuiOrderId"
+			jdbcType="VARCHAR" />
+		<result column="gameAccount" property="gameaccount" jdbcType="VARCHAR" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="create_order_time" property="createOrderTime"
+			jdbcType="VARCHAR" />
+		<result column="sup_order_success_time" property="supOrderSuccessTime"
+			jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<!-- 查询所有字段 -->
+	<sql id="Base_Column_List">
+		recharge_order_id, order_Id, merchant_order_id,
+		contract_id, ekhui_order_id,
+		gameAccount,
+		goods_name, goodsId, status,
+		create_order_time, sup_order_success_time, remark
+	</sql>
+
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by create_order_time desc
+	</sql>
+
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and create_order_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and create_order_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="orderId != null and orderId !=''">
+				and order_Id =#{orderId,jdbcType=VARCHAR}
+			</if>
+			<if test="rechargeOrderId != null and rechargeOrderId !=''">
+				and recharge_order_id =
+				#{rechargeOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantOrderId != null and merchantOrderId !=''">
+				and merchant_order_id =
+				#{merchantOrderId,jdbcType=INTEGER}
+			</if>
+			<if test="contractId != null and contractId !=''">
+				and contract_id = #{contractId,jdbcType=INTEGER}
+			</if>
+			<if test="ekhuiOrderId != null and ekhuiOrderId !=''">
+				and ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR}
+			</if>
+			<if test="gameaccount != null and gameaccount !=''">
+				and gameAccount =
+				#{gameaccount,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+			<if test="status != null and status !=''">
+				and status =#{status,jdbcType=VARCHAR}
+			</if>
+			<if test="goodsid != null and goodsid !=''">
+				and goodsId = #{goodsid,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+	<!-- 查询所有记录 -->
+	<select id="selectCount" parameterType="com.ekhui.pojo.RechargeOrder"
+		resultType="java.lang.Integer">
+		select count(recharge_order_id) from recharge_order
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.RechargeOrder"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_order
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+	<!-- 主键查询 -->
+	<select id="selectRecByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_order
+		where recharge_order_id =
+		#{rechargeOrderId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 根据下游订单号查询 -->
+	<select id="selectByMerOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_order
+		where merchant_order_id =
+		#{merchantOrderId,jdbcType=VARCHAR}
+		and status = '2'
+	</select>
+
+	<!-- 主键删除 -->
+	<delete id="deleteRecByOrderId" parameterType="java.lang.String">
+		delete from
+		recharge_order
+		where recharge_order_id =
+		#{rechargeOrderId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.RechargeOrder">
+		insert into recharge_order
+		(recharge_order_id, order_Id,
+		merchant_order_id,
+		contract_id,
+		ekhui_order_id, gameAccount,
+		goods_name, goodsId, status,
+		create_order_time, sup_order_success_time, remark
+		)
+		values
+		(#{rechargeOrderId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},
+		#{merchantOrderId,jdbcType=VARCHAR},
+		#{contractId,jdbcType=VARCHAR},
+		#{ekhuiOrderId,jdbcType=VARCHAR}, #{gameaccount,jdbcType=VARCHAR},
+		#{goodsName,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{createOrderTime,jdbcType=VARCHAR},
+		#{supOrderSuccessTime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.RechargeOrder">
+		insert into recharge_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rechargeOrderId != null">
+				recharge_order_id,
+			</if>
+			<if test="orderId != null">
+				order_Id,
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id,
+			</if>
+			<if test="contractId != null">
+				contract_id,
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id,
+			</if>
+			<if test="gameaccount != null">
+				gameAccount,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsid != null">
+				goodsId,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time,
+			</if>
+			<if test="supOrderSuccessTime != null">
+				sup_order_success_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rechargeOrderId != null">
+				#{rechargeOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				#{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				#{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				#{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				#{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				#{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				#{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="supOrderSuccessTime != null">
+				#{supOrderSuccessTime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!--选择性更新 -->
+	<update id="updateRecByOrderId" parameterType="com.ekhui.pojo.RechargeOrder">
+		update recharge_order
+		<set>
+			<if test="orderId != null">
+				order_Id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				gameAccount = #{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="supOrderSuccessTime != null">
+				sup_order_success_time =
+				#{supOrderSuccessTime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR}
+	</update>
+	<!--选择性更新,状态 -->
+	<update id="updateRecByOrderIdStatus" parameterType="com.ekhui.pojo.RechargeOrder">
+		update recharge_order
+		<set>
+			<if test="orderId != null">
+				order_Id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantOrderId != null">
+				merchant_order_id = #{merchantOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="contractId != null">
+				contract_id = #{contractId,jdbcType=VARCHAR},
+			</if>
+			<if test="ekhuiOrderId != null">
+				ekhui_order_id = #{ekhuiOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="gameaccount != null">
+				gameAccount = #{gameaccount,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="createOrderTime != null">
+				create_order_time = #{createOrderTime,jdbcType=VARCHAR},
+			</if>
+			<if test="supOrderSuccessTime != null">
+				sup_order_success_time =
+				#{supOrderSuccessTime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR}
+		and
+		status='2'
+	</update>
+</mapper>

@@ -1,0 +1,7 @@
+package com.leshun.plc.service;
+
+import com.leshun.plc.bean.DeviceShadow;
+
+public interface DeviceShadowService extends BaseService<DeviceShadow> {
+
+}

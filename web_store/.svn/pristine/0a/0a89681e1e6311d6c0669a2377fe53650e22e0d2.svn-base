@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>提前通知管理</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <#include "../template/include/assign.ftl">
+    <#include "../template/include/source.ftl">
+    <#include "../template/template_listPage.ftl">
+    <style type="text/css">   
+        .page {
+            float: right;
+            padding-top: 15px;
+            margin-right: 15px;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($.browser.msie && $.browser.version == "6.0") {
+                setTimeout(function () {
+                    $('#status').val('<#if advanceInfo??>${(advanceInfo.status)!}</#if>');
+                }, 1);
+            }
+            else
+            {
+                $('#status').val('<#if advanceInfo??>${(advanceInfo.status)!}</#if>');
+            }
+
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list}<br></#list>", modal:true, autoCloseTime:3000});
+        </#if>
+
+            $('#searchButton').click(function () {
+                var startTime = document.getElementById("startTime").value;
+                var endTime = document.getElementById("endTime").value;
+                $("#dateSpan").html("<span></span>");
+                if (endTime != null && endTime != '') {
+                    return  compareTime(startTime, endTime);
+                }
+            });
+
+            
+             $('.follow-cursor').poshytip({
+                    className: 'tip-darkgray',
+	                followCursor: true,
+	                slide: false
+                });
+        });
+
+        function compareTime(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function compareTime2(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan2").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+</script>
+</head>
+<body class="list">
+<div class="body">
+    <div class="listBar">
+        <h1><span class="icon">&nbsp;</span>订单列表&nbsp;<span class="pageInfo"></span></h1>
+    </div>	
+<@pageList page=(page!) id="listForm" action="${web_base}/phone/advance_notify!queryPage.htm" query="advanceInfo" isEmpty=true>
+    <div class="operateBar">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      订单编号：<input type="text" name="advanceInfo.orderId" id="orderid"
+                    value="<#if advanceInfo??>${(advanceInfo.orderId)!}</#if>"
+                    />
+           &nbsp;&nbsp;&nbsp;
+      下游订单号：<input type="text" name="advanceInfo.merchantOrderId" id="merchantorderid"
+                     value="<#if advanceInfo??>${(advanceInfo.merchantOrderId)!}</#if>"/>
+        &nbsp;&nbsp;&nbsp;
+       充值账号：<input type="text" name="advanceInfo.gameAccount" id="gameaccount"
+                      value="<#if advanceInfo??>${(advanceInfo.gameAccount)!}</#if>"/>
+         &nbsp;&nbsp;&nbsp;
+        状态：<select name="advanceInfo.status" id="status">
+        <option value="">-请选择-</option>
+        <option value="0">不需处理</option>
+        <option value="1">原订单已经成功</option>
+        <option value="2">待处理</option>
+    </select>
+    <br/>
+   &nbsp;&nbsp;&nbsp;&nbsp
+        &nbsp;订单生成时间：<input type="text" id="startTime" name="advanceInfo.startTime"
+                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')||\'${(maxDate)!}\'}'})"
+                       value="${(advanceInfo.startTime)!}" class="Wdate" readonly="readonly">&nbsp;--&nbsp;
+        <input type="text" id="endTime" name="advanceInfo.endTime"
+               onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'${(maxDate)!}'})"
+               value="${(advanceInfo.endTime)!}" class="Wdate" readonly="readonly">
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+        <input type="submit" id="searchButton" class="searchButton" value=""/>
+        <span id="dateSpan" style="color: red"></span>
+    </div>
+    <table class="listTable" border="1">
+        <tr>
+            <th>
+                <span class="sort">订单编号</span>
+            </th>
+            <th>
+                <span class="sort">商品信息</span>
+            </th>
+            <th>
+                <span class="sort">充值账号</span>
+            </th>
+            <th>
+                <span class="sort">订单金额</span>
+            </th>
+            
+            <th>
+                <span class="sort">商户信息</span>
+            </th>
+            
+            <th>
+                <span class="sort">订单状态</span>
+            </th>
+            
+            <th>
+                <span class="sort">订单说明</span>
+            </th>
+            
+            <th>
+                <span class="sort">订单生成时间</span>
+            </th>
+            <th width="90">
+                                            操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作
+            <th/>
+        </tr>
+
+        <#if page?? && page.list?? && (page.list?size gt 0)>
+            <#list page.list as obj>
+                <tr>
+                <#--订单编号-->
+                    <td>
+                       下游：<a class="follow-cursor" title="${(obj.merchantOrderId)!}" style="cursor: pointer;">
+                            <#if obj.merchantOrderId?? && obj.merchantOrderId?length gte 17>
+                            <#--//截取输出文字的长度-->
+                            ${obj.merchantOrderId?substring(0,17)}...
+                            <#else>
+                            ${(obj.merchantOrderId)!}
+                            </#if>
+                        </a>
+                        <br>
+                     本地：<a class="follow-cursor" title="${(obj.orderId)!}" style="cursor: pointer;">
+                            ${(obj.orderId)!}
+                        </a>
+                    </td>
+                    <#--商品信息-->
+                    
+                    <td>
+                    商品编号:${(obj.goodsId)!}
+                    	<br/>
+                    商品名称：<a class="follow-cursor" title="${(obj.goodsName)!}" style="cursor: pointer;">
+                            <#if obj.goodsName?? && obj.goodsName?length gte 8>
+                            <#--//截取输出文字的长度-->
+                            ${obj.goodsName?substring(0,8)}...
+                            <#else>
+                            ${(obj.goodsName)!}
+                            </#if>
+                        </a>
+                    </td>
+                    <#--充值账号-->
+                    <td>
+                        <a class="follow-cursor" title="${(obj.gameAccount)!}" style="cursor: pointer;">
+                            <#if obj.gameAccount?? && obj.gameAccount?length gt 11>
+                            <#--//截取输出文字的长度-->
+                            ${obj.gameAccount?substring(0,11)}...
+                            <#else>
+                            ${(obj.gameAccount)!}
+                            </#if>
+                        </a>  
+               	    </td>
+               	    <#--订单金额-->
+        <td>       	        
+                        面值：${(obj.goodsValue*1.0/1000)?string("0.000")!}<br/>
+        </td>
+          <#--商户信息-->          
+               		<td>
+                        下游编号：<a class="follow-cursor" title="${(obj.contractId)!}" style="cursor: pointer;">
+                           <#if obj.contractId?? && obj.contractId?length gte 10>
+                           <#--//截取输出文字的长度-->
+                           ${obj.contractId?substring(0,10)}...
+                           <#else>
+                           ${(obj.contractId)!}
+                           </#if>
+                       </a> 
+                       <br/>
+                    </td>
+               <#--订单状态-->     
+                    <td>
+                        <#if obj.status?? && obj.status == "0">
+                            无需处理
+                        <#elseif obj.status?? && obj.status == "1">
+                            原订单已成功
+                        <#elseif obj.status?? && obj.status =="2">
+                           待处理
+                 
+                        </#if>
+         <#--订单说明-->             
+                    </td>
+                    <td>
+                        <a class="follow-cursor" title="${(obj.remark)!}" style="cursor: pointer;">
+                            <#if obj.remark?? && obj.remark?length gt 5>
+                            <#--//截取输出文字的长度-->
+                            ${obj.remark?substring(0,5)}...
+                            <#else>
+                            ${(obj.remark)!}
+                            </#if>
+                        </a>
+                    </td>
+                    <#--订单时间-->
+                    <td>
+                        创建时间: ${(obj.timeCreateOrder)!}
+                    </td>
+                    <#--操作-->
+                    <td>
+                       <#--<a href="${web_base}/phone/advance_notify!queryByOrderId.htm?orderId=${(obj.orderid)!}" title="详情">[详情]</a>
+                       <br/>-->
+                       <a href="${web_base}/phone/advance_notify!toEdit.htm?orderId=${(obj.orderId)!}" title="编辑">[编辑]</a>
+                    </td>
+                 </tr>
+            </#list>
+        </#if>
+    </table>
+
+    <#if page?? && page.list?? && (page.list?size <= 0)>
+        <div class="noRecord">
+            没有找到任何记录!
+        </div>
+    </#if>
+</@pageList>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<#-- 导入模版定义文件-->
+<#include "template/template_main.ftl">
+<@main>
+<frameset id="parentFrameset" rows="60,*" cols="*" frameborder="no" border="0" framespacing="0">
+	<frame id="headerFrame" name="headerFrame" src="${web_base}/main!header.htm" frameborder="no" scrolling="no" noresize="noresize" />
+	<frameset id="mainFrameset" name="mainFrameset" cols="130,6,*" frameborder="no" border="0" framespacing="0">
+		<frame id="menuFrame" name="menuFrame" src="${web_base}/main!menu.htm" frameborder="no" scrolling="no" noresize="noresize" />
+		<frame id="middleFrame" name="middleFrame" src="${web_base}/main!middle.htm" frameborder="no" scrolling="no" noresize="noresize" />
+		<frame id="mainFrame" name="mainFrame" src="${web_base}/main!main.htm" frameborder="no" noresize="noresize" />
+	</frameset>
+</frameset>
+<noframes>
+	<body>
+		noframes
+	</body>
+</noframes>
+</@main>

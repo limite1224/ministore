@@ -1,0 +1,161 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="产品">
+<body>
+	<div class="main-content">
+		<@messageModal message="${message!}"/>
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					产品信息
+					<small>
+						产品${isAdd?string("添加","修改")!}
+					</small>
+				</h1>
+			</div>
+			<!--产品名称、产品标识、密钥、品牌名称、应用领域、商户、接入地址、通讯、接入平台、接入密钥、-->
+    <form class="form-horizontal" action="${web_base}/business/p_product_info!save.htm"
+    	 onsubmit= "return checkParams();"  method="post">
+       <input id="id" name="productInfo.id" type="hidden" value="${(productInfo!).id!}"/>
+       <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productName"> 产品名称 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productName"name="productInfo.productName" value="${(productInfo!).productName!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productKey">产品标识</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productKey"name="productInfo.productKey" value="${(productInfo!).productKey!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="productSecret"> 产品密钥 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="productSecret"name="productInfo.productSecret" value="${(productInfo!).productSecret!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+       <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="brandId"> 品牌名称 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5 chosen-select" id="brandId" name= "productInfo.brandId"data-placeholder="功能菜单">
+					<option value="000000" <#if productInfo?? && productInfo.brandId?? && productInfo.brandId=="000000">selected</#if>>&nbsp;</option>
+					<#if brandList??>
+						<#list brandList as obj>
+							<option value="${obj.brandId!}" <#if obj?? && obj.brandId?? && productInfo.brandId==obj.brandId>selected</#if>>&nbsp;</option>
+						</#list>
+					</#if>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+ 		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="appAreaId"> 应用领域 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5 chosen-select" id="appAreaId" name= "productInfo.appAreaId"data-placeholder="功能菜单">
+					<option value="000000" <#if productInfo?? && productInfo.appAreaId?? && productInfo.appAreaId=="000000">selected</#if>>&nbsp;</option>
+					<#if appAreaList??>
+						<#list appAreaList as obj>
+							<option value="${obj.brandId!}" <#if obj?? && productInfo?? && productInfo.appAreaId?? && obj.appAreaId?? && productInfo.appAreaId==obj.appAreaId>selected</#if>>&nbsp;</option>
+						</#list>
+					</#if>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="traderId"> 商户名称 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5 chosen-select" id="traderId" name= "productInfo.traderId"data-placeholder="功能菜单">
+					<option value="000000" <#if productInfo?? && productInfo.traderId?? && productInfo.traderId=="000000">selected</#if>>&nbsp;</option>
+					<#if traderList??>
+						<#list traderList as obj>
+							<option value="${obj.traderId!}" <#if obj?? && obj.traderId?? && productInfo.traderId==obj.traderId>selected</#if>>&nbsp;</option>
+						</#list>
+					</#if>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="accessAddress"> 接入地址</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="accessAddress"name="productInfo.accessAddress" value="${(productInfo!).accessAddress!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="comMode">通讯 </label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="comMode"name="productInfo.comMode" value="${(productInfo!).comMode!}" />
+			</div>
+		</div>
+		<div class="space-4"></div>
+		 <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="accessPlatform">接入平台 </label>
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5 chosen-select" id="accessPlatform" name= "productInfo.accessPlatform"data-placeholder="功能菜单">
+					<option value="1" <#if productInfo?? && productInfo.accessPlatform?? && productInfo.accessPlatform=="1">selected</#if>>阿里云</option>
+					<option value="2" <#if productInfo?? && productInfo.accessPlatform?? && productInfo.accessPlatform=="2">selected</#if>>中移物联</option>
+				</select>
+			</div>
+		</div>
+		<div class="space-4"></div> <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="accessSecret">接入密钥</label>
+			<div class="col-sm-9">
+				<input class="col-xs-10 col-sm-5" type="text" id="accessSecret"name="productInfo.accessSecret" value="${(productInfo!).accessSecret!}" />
+			</div>
+		</div>
+		
+		<div class="space-4"></div>
+        <div class="center">
+	        <button type="submit" class="btn btn-info btn-sm"><i class="icon-print  align-top bigger-125 icon-on-right"></i>
+	        	保存
+	        </button>
+	        <button type="button" class="btn btn-sm" onclick="window.history.back(); return false;"><i class="icon-pencil align-top bigger-125"></i>
+				返回
+			</button>
+        </div>
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+    function checkParams(){
+    //<!--产品名称、产品标识、密钥、品牌名称、应用领域、商户、接入地址、通讯、接入平台、接入密钥、-->
+       var productName= $('#productName').val();
+        if(productName==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("产品名称不能为空");
+          	return false;
+       }
+       var productKey= $('#productKey').val();
+        if(productKey==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("产品标识不能为空");
+          	return false;
+       }
+       var productSecret= $('#productSecret').val();
+        if(productSecret==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("产品密钥不能为空");
+          	return false;
+       }
+       var brandId= $('#brandId').val();
+        if(brandId==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("品牌信息不能为空");
+          	return false;
+       }
+       var traderId= $('#traderId').val();
+        if(traderId==""){
+        	$("#alert-danger").attr("style","display:''");
+       		$("#alert-danger >p").html("商户信息不能为空");
+          	return false;
+       }
+    }
+</script>
+</body>
+</@edit>

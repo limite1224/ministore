@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.ProductInfoMapper">
+	<resultMap id="BaseResultMap" type="com.leshun.plc.bean.ProductInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="product_key" property="productKey" jdbcType="VARCHAR" />
+		<result column="product_secret" property="productSecret"
+			jdbcType="VARCHAR" />
+		<result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+		<result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+		<result column="app_area_id" property="appAreaId" jdbcType="VARCHAR" />
+		<result column="app_area_name" property="appAreaName" jdbcType="VARCHAR" />
+		<result column="trader_id" property="traderId" jdbcType="VARCHAR" />
+		<result column="trader_name" property="traderName" jdbcType="VARCHAR" />
+		<result column="access_address" property="accessAddress"
+			jdbcType="VARCHAR" />
+		<result column="com_mode" property="comMode" jdbcType="VARCHAR" />
+		<result column="access_platform" property="accessPlatform"
+			jdbcType="VARCHAR" />
+		<result column="access_secret" property="accessSecret"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="out_product_id" property="outProductId"
+			jdbcType="VARCHAR" />
+		<result column="out_user_id" property="outUserId" jdbcType="VARCHAR" />
+		<result column="p_script_name" property="pScriptName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, product_name, product_key, product_secret, brand_id,
+		brand_name,
+		app_area_id,
+		app_area_name, trader_id, trader_name,
+		access_address, com_mode, access_platform,
+		access_secret, create_time,
+		create_by, modify_time, update_by, remark,
+		del_flag,
+		user_id,
+		out_product_id, out_user_id, p_script_name
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from product_info
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByProductKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from product_info
+		where product_key = #{ProductKey,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		product_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.leshun.plc.bean.ProductInfo">
+		insert into product_info (id,
+		product_name, product_key,
+		product_secret, brand_id, brand_name,
+		app_area_id, app_area_name, trader_id,
+		trader_name, access_address,
+		com_mode,
+		access_platform, access_secret, create_time,
+		create_by,
+		modify_time, update_by,
+		remark, del_flag, user_id,
+		out_product_id,
+		out_user_id, p_script_name
+		)
+		values (#{id,jdbcType=VARCHAR},
+		#{productName,jdbcType=VARCHAR},
+		#{productKey,jdbcType=VARCHAR},
+		#{productSecret,jdbcType=VARCHAR}, #{brandId,jdbcType=VARCHAR},
+		#{brandName,jdbcType=VARCHAR},
+		#{appAreaId,jdbcType=VARCHAR},
+		#{appAreaName,jdbcType=VARCHAR},
+		#{traderId,jdbcType=VARCHAR},
+		#{traderName,jdbcType=VARCHAR}, #{accessAddress,jdbcType=VARCHAR},
+		#{comMode,jdbcType=VARCHAR},
+		#{accessPlatform,jdbcType=VARCHAR},
+		#{accessSecret,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{createBy,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{delFlag,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{outProductId,jdbcType=VARCHAR}, #{outUserId,jdbcType=VARCHAR},
+		#{pScriptName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.leshun.plc.bean.ProductInfo">
+		insert into product_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="productKey != null">
+				product_key,
+			</if>
+			<if test="productSecret != null">
+				product_secret,
+			</if>
+			<if test="brandId != null">
+				brand_id,
+			</if>
+			<if test="brandName != null">
+				brand_name,
+			</if>
+			<if test="appAreaId != null">
+				app_area_id,
+			</if>
+			<if test="appAreaName != null">
+				app_area_name,
+			</if>
+			<if test="traderId != null">
+				trader_id,
+			</if>
+			<if test="traderName != null">
+				trader_name,
+			</if>
+			<if test="accessAddress != null">
+				access_address,
+			</if>
+			<if test="comMode != null">
+				com_mode,
+			</if>
+			<if test="accessPlatform != null">
+				access_platform,
+			</if>
+			<if test="accessSecret != null">
+				access_secret,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="outProductId != null">
+				out_product_id,
+			</if>
+			<if test="outUserId != null">
+				out_user_id,
+			</if>
+			<if test="pScriptName != null">
+				p_script_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productKey != null">
+				#{productKey,jdbcType=VARCHAR},
+			</if>
+			<if test="productSecret != null">
+				#{productSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="brandId != null">
+				#{brandId,jdbcType=VARCHAR},
+			</if>
+			<if test="brandName != null">
+				#{brandName,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaId != null">
+				#{appAreaId,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaName != null">
+				#{appAreaName,jdbcType=VARCHAR},
+			</if>
+			<if test="traderId != null">
+				#{traderId,jdbcType=VARCHAR},
+			</if>
+			<if test="traderName != null">
+				#{traderName,jdbcType=VARCHAR},
+			</if>
+			<if test="accessAddress != null">
+				#{accessAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="comMode != null">
+				#{comMode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessPlatform != null">
+				#{accessPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="accessSecret != null">
+				#{accessSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="outProductId != null">
+				#{outProductId,jdbcType=VARCHAR},
+			</if>
+			<if test="outUserId != null">
+				#{outUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="pScriptName != null">
+				#{pScriptName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.leshun.plc.bean.ProductInfo">
+		update product_info
+		<set>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productKey != null">
+				product_key = #{productKey,jdbcType=VARCHAR},
+			</if>
+			<if test="productSecret != null">
+				product_secret = #{productSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="brandId != null">
+				brand_id = #{brandId,jdbcType=VARCHAR},
+			</if>
+			<if test="brandName != null">
+				brand_name = #{brandName,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaId != null">
+				app_area_id = #{appAreaId,jdbcType=VARCHAR},
+			</if>
+			<if test="appAreaName != null">
+				app_area_name = #{appAreaName,jdbcType=VARCHAR},
+			</if>
+			<if test="traderId != null">
+				trader_id = #{traderId,jdbcType=VARCHAR},
+			</if>
+			<if test="traderName != null">
+				trader_name = #{traderName,jdbcType=VARCHAR},
+			</if>
+			<if test="accessAddress != null">
+				access_address = #{accessAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="comMode != null">
+				com_mode = #{comMode,jdbcType=VARCHAR},
+			</if>
+			<if test="accessPlatform != null">
+				access_platform = #{accessPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="accessSecret != null">
+				access_secret = #{accessSecret,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="outProductId != null">
+				out_product_id = #{outProductId,jdbcType=VARCHAR},
+			</if>
+			<if test="outUserId != null">
+				out_user_id = #{outUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="pScriptName != null">
+				p_script_name = #{pScriptName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.leshun.plc.bean.ProductInfo">
+		update
+		product_info
+		set product_name = #{productName,jdbcType=VARCHAR},
+		product_key = #{productKey,jdbcType=VARCHAR},
+		product_secret =
+		#{productSecret,jdbcType=VARCHAR},
+		brand_id =
+		#{brandId,jdbcType=VARCHAR},
+		brand_name =
+		#{brandName,jdbcType=VARCHAR},
+		app_area_id =
+		#{appAreaId,jdbcType=VARCHAR},
+		app_area_name =
+		#{appAreaName,jdbcType=VARCHAR},
+		trader_id =
+		#{traderId,jdbcType=VARCHAR},
+		trader_name =
+		#{traderName,jdbcType=VARCHAR},
+		access_address =
+		#{accessAddress,jdbcType=VARCHAR},
+		com_mode =
+		#{comMode,jdbcType=VARCHAR},
+		access_platform =
+		#{accessPlatform,jdbcType=VARCHAR},
+		access_secret =
+		#{accessSecret,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_by =
+		#{createBy,jdbcType=VARCHAR},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		del_flag = #{delFlag,jdbcType=VARCHAR},
+		user_id =
+		#{userId,jdbcType=VARCHAR},
+		out_product_id =
+		#{outProductId,jdbcType=VARCHAR},
+		out_user_id =
+		#{outUserId,jdbcType=VARCHAR},
+		p_script_name =
+		#{pScriptName,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="queryList" parameterType="com.leshun.plc.bean.ProductInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from product_info
+		<include refid="pageCondition" />
+		<include refid="orderBy" />
+		<include refid="limit" />
+	</select>
+	<select id="queryRowCount" resultType="java.lang.Integer"
+		parameterType="com.leshun.plc.bean.ProductInfo">
+		select count(id) from product_info
+		<include refid="pageCondition" />
+	</select>
+	<sql id="pageCondition">
+		<where>
+			<choose>
+				<when test="id!=null and id!=''">
+					id =#{id,jdbcType=VARCHAR}
+				</when>
+				<when test="productKey != null and productKey!=''">
+					product_key = #{productKey,jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					<if test="productName != null and productName!=''">
+						and product_name like "%${productName}%"
+					</if>
+					<if test="productSecret != null and productSecret!=''">
+						and product_secret = #{productSecret,jdbcType=VARCHAR}
+					</if>
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<sql id="orderBy">
+		order by modify_time desc
+	</sql>
+</mapper>

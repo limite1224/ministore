@@ -1,0 +1,128 @@
+package com.leshun.plc.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.leshun.plc.bean.BaseQuery;
+import com.leshun.plc.bean.Pagination;
+import com.leshun.plc.comp.BaseComp;
+import com.leshun.plc.pojo.sys.UserInfoVO;
+import com.leshun.plc.util.UserInfoVOThreadLocal;
+import com.opensymphony.xwork2.ActionSupport;
+
+public abstract class SuperAction<T extends BaseQuery, C extends BaseComp<T>>
+		extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8878655577619989047L;
+	protected static Logger log = Logger.getLogger(SuperAction.class);
+	public static final String LIST = "list";
+	public static final String ERROR_404 = "404";
+	public static final String AJAX = "ajax";
+	public static final String NOPERMISSION = "nopermission";
+	public static final String FORM = "form";
+	public static final String DETAIL = "detail";
+	protected String redirectionUrl;
+	protected boolean flag = true;
+	protected String message;
+	protected String id;
+	protected T entity;
+	protected Pagination<T> page;
+
+	@Autowired
+	protected C comp;
+
+	public abstract String list();
+
+	public abstract String form();
+
+	public abstract String save();
+
+	public abstract String delete();
+
+	public abstract String detail();
+
+	protected HttpServletResponse response;
+
+	protected HttpServletRequest request;
+
+	public SuperAction() {
+		super();
+		request = ServletActionContext.getRequest();
+		response = ServletActionContext.getResponse();
+	}
+
+	public UserInfoVO getCurrentUser() {
+		return UserInfoVOThreadLocal.get();
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getRedirectionUrl() {
+		return redirectionUrl;
+	}
+
+	public void setRedirectionUrl(String redirectionUrl) {
+		this.redirectionUrl = redirectionUrl;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public T getEntity() {
+		return entity;
+	}
+
+	public void setEntity(T entity) {
+		this.entity = entity;
+	}
+
+	public Pagination<T> getPage() {
+		return page;
+	}
+
+	public void setPage(Pagination<T> page) {
+		this.page = page;
+	}
+
+}

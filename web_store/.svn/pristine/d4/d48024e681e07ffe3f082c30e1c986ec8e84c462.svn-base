@@ -1,0 +1,410 @@
+<#macro header title="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>${title}</title>
+    <#include "../template/include/assign.ftl">
+    <#include "../template/include/source.ftl">
+    <#include "../template/template_listPage.ftl">
+	<link rel="icon" href="${web_static}/favicon.ico" type="image/x-icon" sizes="16x16"/>
+    <#nested>
+</head>
+</#macro>
+<#macro messageModal message="">
+	<div class="alert alert-${message}" id="message-leshun" <#if message!='danger' && message!='warning' && message!="info" && message!="success">style="display:none;"</#if>>
+		<button type="button" class="close" data-dismiss="alert">
+			<i class="icon-remove"></i>
+		</button>
+		<strong>${message}</strong>
+		<p></p>${message}
+		<br>
+	</div>
+
+</#macro>
+
+<#--
+分页插件:page,对应分页对象
+query:对应struts2 action中的查询bean
+id:对应分页id(允许写多个,id不能相同)
+pageSize:页面显示条数列表
+-->
+<#macro pageList page action="" query="" id="pageForm" isEmpty=false pageSize=[10,15,20,25]>
+    <#compress>
+    <form id="${id}" action="${action}" method="post" onsubmit=" <#if (page??) && (page != "")>return checkPageForm_${id}();</#if>">
+        <#nested>
+        <div id="pageHide" style="display:none;"></div>
+    </form>
+
+        <#if (page??) && (page != "")>
+            <#assign defaultShow=true>
+            <#if isEmpty &&(page.list?size<=0) >
+                <#assign defaultShow=false>
+            </#if>
+        <div class="align-right" <#if !defaultShow>style="display:none;"</#if>>
+            <form id="paginationForm"  method="post" onsubmit="return false;">
+            	<div class="dataTables_paginate paging_bootstrap">
+            		<ul class="pagination">
+            		<#if page.currentPage!=1>
+            			<li class="prev"><a onclick="calcPage_${id}('1');">首页</a></li>
+            		<#else>
+            			<li class="prev disabled"><a href="javascript:void(0)">首页</a></li>
+            		</#if>
+            		
+            		<#if page.previous>
+						<li class="prev"><a onclick="calcPage_${id}('${page.currentPage-1}');"><i class="icon-double-angle-left"></i>上页</a></li>
+					<#else>
+						<li class="prev disabled"><a href="javascript:void(0)"><i class="icon-double-angle-left"></i>上页</a></li>
+					</#if>
+					
+					<#if page.next>
+						<li class="next"><a onclick="calcPage_${id}('${page.currentPage+1}');">下页 <i class="icon-double-angle-right"></i></a></li>
+					<#else>
+						<li class="next disabled"><a href="javascript:void(0);">下页 <i class="icon-double-angle-right"></i></a></li>
+					</#if>
+					
+					<#if page.currentPage!=page.pageCount>
+						<li class="next"><a onclick="calcPage_${id}('${(page.pageCount)!}');">末页</a></li>
+					<#else>
+						<li class="next disabled"><a href="javascript:void(0);">末页</a></li>
+					</#if>
+						<li class="disabled controls"><a href="javascript:">
+							 <select id="pageSize_${id}" name="${query!}.pageSize"
+                        onchange="javascript:$('#currentPage_${id}').val(1);$('#pageSubmit_${id}').click();">
+                    		<#list pageSize as size>
+                        		<option value="${size!}">${size!}</option>
+                    		</#list>
+                			</select>条
+                			</a>
+						</li>
+						<li class="disabled"><a href="javascript:">
+							当前 ${(page.currentPage)!}/${(page.pageCount)!} 页，共 ${(page.rowCount)!}条</a>
+						</li>
+						<li class="disabled controls"><a href="javascript:">
+							<input type="text" onkeyup='this.value=this.value.replace(/\D/gi,"")' name="${query}.currentPage" value="${(page.currentPage)!}" id="currentPage_${id}"/>
+                			<input type="submit" id="pageSubmit_${id}" onclick="calcPage_${id}($('#currentPage_${id}').val(),'true');" value="GO"style="width: 20px;"/>
+                       </a>
+						</li>
+					</ul>
+					<div style="clear:both;"></div>
+				</div>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#pageSize_${id}").val("${(page.pageSize)!}");
+            });
+            function resetPageData_${id}() {
+                $('#currentPage_${id}').val('1');
+                $("#pageSize_${id}").get(0).selectedIndex = 0;
+            }
+
+            function calcPage_${id}(page, validate) {
+                if (validate != undefined && validate == 'true') {
+                    page = returnCheckPageForm_${id}(page);
+                }
+
+                var pageSize = $('#pageSize_${id}').val();
+                var currentPage = page;
+                var url = '${query}.currentPage=' + currentPage + '&${query}.pageSize=' + pageSize;
+                var action = $("#${id}").attr("action");
+            <#--
+            if(action == undefined ||action==''){
+               var html='<input type="hidden" name="${query}.currentPage" value="'
+               +currentPage+'"><input type="hidden" name="${query}.pageSize" value="'
+               +pageSize+'">';
+               $('#pageHide').html(html);
+            }else{
+                action = action+"?"+url;
+            $("#${id}").attr("action",action);}
+            -->
+                if (action != undefined && action == '') {
+                    action = window.location.href;
+                    action = action.split("?")[0];
+                }
+                action = action + "?" + url;
+                $("#${id}").attr("action", action);
+                $("#${id}").submit();
+            }
+            function checkPageForm_${id}() {
+                var currentPage = $('#currentPage_${id}').val();
+                currentPage = returnCheckPageForm_${id}(currentPage);
+                $('#currentPage_${id}').val(currentPage);
+                return true;
+            }
+            function returnCheckPageForm_${id}(page) {
+                var currentPage = page;
+                if (isNaN(parseFloat(currentPage))) {
+                    currentPage = '1';
+                }
+                currentPage = Math.round(currentPage);
+                if (currentPage < '1') {
+                    currentPage = '1';
+                }
+                if ('${page.pageCount}' > 0) {
+                    if (currentPage > '${(page.pageCount)!}') {
+                        currentPage = '${(page.pageCount)!}';
+                    }
+                }
+                return currentPage;
+            }
+        </script>
+        </#if>
+    </#compress>
+</#macro>
+
+<#--
+分页插件2:主要是只有一个表单,所以设置查询条件的时候需要重置一下记录数,调用一下resetPageData_${id}()方法
+page,对应分页对象
+query:对应struts2 action中的查询bean
+id:对应分页id(允许写多个,id不能相同)
+pageSize:页面显示条数列表
+-->
+<#macro pageList2 page action="" query="" id="pageForm" isEmpty=false pageSize=[10,15,20,25]>
+    <#compress>
+    <form id="${id}" action="${action}" method="post" <#--onsubmit="return checkPageForm_${id}();"-->>
+        <#nested>
+        <div id="pageHide" style="display:none;"></div>
+
+
+        <#if (page??) && (page != "")>
+            <#assign defaultShow=true>
+            <#if isEmpty &&(page.list?size<=0) >
+                <#assign defaultShow=false>
+            </#if>
+            <div class="page" <#if !defaultShow>style="display:none;"</#if>>
+                <form id="paginationForm" method="post" onsubmit="return false;">
+                    共 ${(page.rowCount)!}条记录，<label>每页显示:</label>
+                    <select id="pageSize_${id}" name="${query!}.pageSize" style="width: 50px"
+                            onchange="javascript:$('#currentPage_${id}').val(1);$('#pageSubmit_${id}').click();">
+                        <#list pageSize as size>
+                            <option value="${size!}">${size!}</option>
+                        </#list>
+                    </select>条，${(page.currentPage)!}/${(page.pageCount)!}
+                    <#if page.currentPage==1>
+                        首页
+                    <#else>
+                        <span class="spanLink" onclick="calcPage_${id}('1');">首页</span>
+                    </#if>
+
+                    <#if page.previous>
+                        <span class="spanLink" onclick="calcPage_${id}('${page.currentPage-1}');">上页</span>
+                    <#else>
+                        上页
+                    </#if>
+
+                    <#if page.next>
+                        <span class="spanLink" onclick="calcPage_${id}('${page.currentPage+1}');">下页</span>
+                    <#else>
+                        下页
+                    </#if>
+
+                    <#if page.currentPage==page.pageCount>
+                        末页
+                    <#else>
+                        <span class="spanLink" onclick="calcPage_${id}('${(page.pageCount)!}');">末页</span>
+                    </#if>
+                <#-- 真正返回服务端的值  -->
+                    <input type="hidden" id="currentPage_hide_${id}" name="${query}.currentPage"
+                           value="${(page.currentPage)!}">
+                    <input type="text" value="${(page.currentPage)!}" id="currentPage_${id}"
+                           style="width: 20px;"/>
+                    <button type="button" id="pageSubmit_${id}"
+                            onclick="calcPage_${id}($('#currentPage_${id}').val(),'true');">GO
+                    </button>
+            </div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#pageSize_${id}").val("${(page.pageSize)!}");
+                });
+                function resetPageData_${id}() {
+                    $('#currentPage_hide_${id}').val('1');
+                    $("#pageSize_${id}").get(0).selectedIndex = 0;
+                }
+                /**
+                 *
+                 * @param page 页数
+                 * @param validate 是否校验数据:true 校验
+                 * @private
+                 */
+                function calcPage_${id}(page, validate) {
+                    $('#currentPage_hide_${id}').val(page);
+                    if (validate != undefined && validate == 'true') {
+                        checkPageForm_${id}();
+                    }
+                    // $("#${id}").submit();
+                    document.getElementById('${id}').submit();
+                }
+                function checkPageForm_${id}() {
+                    var currentPage = $('#currentPage_hide_${id}').val();
+                    if (isNaN(parseFloat(currentPage))) {
+                        currentPage = 1;
+                    }
+                    currentPage = Math.round(currentPage);
+                    $('#currentPage_hide_${id}').val(currentPage);
+                    if (currentPage < '1') {
+                        $('#currentPage_hide_${id}').val("1");
+                    }
+                    if ('${page.pageCount}' > 0) {
+                        if (currentPage > '${(page.pageCount)!}') {
+                            $('#currentPage_hide_${id}').val("${(page.pageCount)!}");
+                        }
+                    }
+                    return true;
+                }
+            </script>
+        </#if>
+    </form>
+    </#compress>
+</#macro>
+
+<#-- Ajax 分页控件 传入的数据必须是 Pagination 对象
+1.rowList:属性名=中文名 如:id=序号,name=名称
+2.url:发送请求的url地址
+3.query:查询的名字
+4.id:form表单的id
+5.templateId:模板id号(模板编写请参看jTemplates官方手册)
+6.isNoDataShowPage:没有数据是否显示分页栏
+注意:当templateId不为空时,rowList将不起作用
+-->
+<#macro pageAjax url="" rowList="" query="" id="pageAjaxForm" isNoDataShowPage=false  templateId="defaultTableTemplate_pageAjaxForm">
+    <#compress >
+    <form id="${id}" action="" onsubmit="return false;">
+        <#nested >
+    <#-- 表单生成的值 -->
+        <div id="pageAjaxResult_${id}"></div>
+        <div id="pageView_${id}" class="page"></div>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadData_${id}();
+        });
+        function loadData_${id}() {
+            var sendData = $('#pageAjaxForm').serialize();
+            $.ajax({
+                type:"POST",
+                url:'${url}',
+                data:sendData,
+                success:function (msg) {
+                    var data = eval('(' + msg + ')');
+                    if (data != null && data != '' && data.list != undefined && data.list != null) {
+                        //  console.log(data.list);
+                        $("#pageAjaxResult_${id}").setTemplate($('#${templateId}').html());
+                        // 给模板加载数据
+                        $("#pageAjaxResult_${id}").processTemplate(data);
+
+                        $("#pageView_${id}").setTemplate($('#pageViewTemplate_${id}').html()).processTemplate(data);
+                        $("#${query!}_pageSize").val(data.pageSize);
+
+                        // console.log(data.list.length);
+                        var isNoDataShowPage =${isNoDataShowPage?string("true","false")};
+                        if (isNoDataShowPage && data.list.length == 0) {
+                            $('#pageView_${id}').hide();
+                        } else {
+                            $('#pageView_${id}').show();
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetPageData_${id}() {
+            $('#${query!}_currentPage').val('1');
+            $("#${query!}_pageSize").get(0).selectedIndex = 0;
+            loadData_${id}();
+        }
+        function calcPage_${id}(page) {
+
+            var pageSize = $('#pageSize').val();
+            var currentPage = page;
+            var url = '${query}.currentPage=' + currentPage + '&${query}.pageSize=' + pageSize;
+            $('#${query!}_currentPage').val(page);
+            loadData_${id}();
+        }
+        function checkPageForm_${id}() {
+            var currentPage = $('#currentPage_${id}').val();
+            var pageCount = $('#pageCount_${id}').val();
+            var returnVal = 1;
+            if (isNaN(parseFloat(currentPage))) {
+                currentPage = 1;
+            }
+            currentPage = Math.round(currentPage);
+            // $('#currentPage_${id}').val(currentPage);
+            returnVal = currentPage;
+            if (currentPage < '1') {
+                returnVal = 1;
+            }
+            if (pageCount > 0) {
+                if (currentPage > pageCount) {
+                    returnVal = pageCount;
+                }
+            }
+            // $('#currentPage_${id}').val(returnVal);
+            return returnVal;
+        }
+    </script>
+    <!-- 这里使用一个 script标签内容来存储显示模板，这也现在大多数js模板的做法 foreach的用法-->
+    <script type="text/template" id="defaultTableTemplate_${id}">
+        <table>
+            <#if rowList?? && rowList!="">
+                <tr>
+                    <#list rowList?split(",") as rows>
+                        <#assign head=rows?split("=")>
+                        <th>${head[1]!}</th>
+                    </#list>
+                </tr>
+                {#foreach $T.list as obj}
+                <tr>
+                    <#list rowList?split(",") as rows>
+                        <#assign head=rows?split("=")>
+                        <td>{$T.obj.${head[0]!}}</td>
+                    </#list>
+                </tr>
+                {#/for}
+            </#if>
+        </table>
+    </script>
+    <script type="text/template" id="pageViewTemplate_${id}">
+        共 {$T.rowCount}条记录，<label>每页显示:</label>
+        <select id="${query!}_pageSize" name="${query!}.pageSize" style="width: 50px"
+                onchange="javascript:$('#currentPage_${id}').val(1);$('#pageSubmit_${id}').click();">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+        </select>条，{$T.currentPage}/{$T.pageCount}&nbsp;
+        {#if $T.currentPage==1}
+        首页&nbsp;
+        {#else}
+        <span class="spanLink" onclick="calcPage_${id}('1');">首页</span>&nbsp;
+        {#/if}
+
+        {#if $T.previous}
+        <span class="spanLink" onclick="calcPage_${id}('{$T.currentPage-1}');">上页</span>&nbsp;
+        {#else}
+        上页&nbsp;
+        {#/if}
+
+        {#if $T.next}
+        <span class="spanLink" onclick="calcPage_${id}('{$T.currentPage+1}');">下页</span>&nbsp;
+        {#else}
+        下页&nbsp;
+        {#/if}
+
+        {#if $T.currentPage==$T.pageCount}
+        末页&nbsp;
+        {#else}
+        <span class="spanLink" onclick="calcPage_${id}('{$T.pageCount}');">末页</span>&nbsp;
+        {#/if}
+        <input type="text" name="" value="{$T.currentPage}" id="currentPage_${id}"
+               style="width: 20px;"/>
+        <input type="submit" id="pageSubmit_${id}" onclick="calcPage_${id}( checkPageForm_${id}());"
+               value="GO">
+        <input type="hidden" name="${query!}.currentPage" id="${query!}_currentPage" value="{$T.currentPage}">
+        <input id="pageCount_${id}" type="hidden" value="{$T.pageCount}">
+    </script>
+    </#compress>
+</#macro>

@@ -1,0 +1,27 @@
+<#include "template/template_main.ftl">
+<@main>
+<script type="text/javascript">
+    function clickMenu(code) {
+        $("." + code).toggle();
+    }
+</script>
+<body class="menu">
+<div class="menuContent">
+    <dl>
+        <#if permissionList??>
+            <#list permissionList as row>
+                <dt style="cursor: pointer;">
+                    <span onclick="clickMenu('dd_${(row.code)!}')">${(row.name)!}</span>
+                </dt>
+                <#if row.list??>
+                    <#list row.list as menu>
+                        <dd class="dd_${(row.code)!}" style="display: none;"><a href="${urlCompletion(menu.url)!}"
+                                                         target="mainFrame">${(menu.name)!}</a></dd>
+                    </#list> 
+                </#if>
+            </#list>
+        </#if>
+    </dl>
+</div>
+</body>
+</@main>

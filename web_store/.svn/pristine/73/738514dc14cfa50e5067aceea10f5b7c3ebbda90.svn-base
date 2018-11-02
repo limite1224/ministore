@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>支付结果</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width" />
+<meta name="description" content="支付结果">
+<link rel="stylesheet" href="payStaticFiles/m.common.css">
+<script type="text/javascript"
+	src="payStaticFiles/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="payStaticFiles/js/restrict_input.js"></script>
+<style>
+.mContentNew{
+	font-size:16px;
+	background-color:white;
+	}
+.mContentNew span{
+	font-size:20px;
+	text-align:right;
+	}
+hr{
+	color:#999;
+	}
+	
+</style>
+
+
+</head>
+<!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+手机网站适应性广告代码 -->
+<ins class="adsbygoogle" style="display: block"
+	data-ad-client="ca-pub-1449491313257558" data-ad-slot="1246518959"
+	data-ad-format="auto"></ins>
+<script>
+	
+</script>
+<body class="mWrap">
+<!-- 	<header class="topHd"> -->
+<!-- 		<span>支付结果</span> -->
+<!-- 	</header> -->
+		<div class="mContent">
+			<ul>
+			</ul>
+		</div>
+</body>
+<script type="text/javascript">
+	
+	
+
+
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");//构造一个含有目标参数的正则表达式对象        
+		var r = window.location.search.substr(1).match(reg);//匹配目标参数
+		if (r != null) {
+			return decodeURI(r[2]);
+		}
+		return null;//返回参数值
+
+	}
+
+	$(document).ready(function() {
+
+		
+		var state = getUrlParam("state");
+		var errorDetail = getUrlParam("errorDetail");
+		var txamt = getUrlParam("txamt");
+		var transTime = getUrlParam("transTime");
+		var orderNum = getUrlParam("orderNum");
+		var status = '';
+		if(state=='0'){
+			status = '支付成功';
+		}else if(state=='1'){
+			status = '支付失败';
+		}else{
+			status = '用户取消';
+		}
+		transTime = decodeURIComponent(transTime);
+		var fen_money = parseInt(txamt+'',10);
+		var yuan_money = parseFloat(fen_money+'')/100;
+		
+		var li = ["<li>",
+		     		"<div class='mContent mContentNew'> <span class='sPstyle'>交易金额：¥",yuan_money," </span><br>",
+		          						  "<hr>",
+										  "流水号：<span>",orderNum,"</span><br><br> ",
+										  "支付状态：<span>",status,"</span><br><br>",
+										  "结果描述：<span>",errorDetail,"</span><br><br>",
+										  "订单时间：<span>",transTime,"</span></div>",
+		     	"</li>"
+		     	].join("");
+				
+	$(".mContent > ul").append(li);
+		
+		
+	});
+
+	
+</script>
+</html>

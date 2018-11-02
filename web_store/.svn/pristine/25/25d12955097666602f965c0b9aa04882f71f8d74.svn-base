@@ -1,0 +1,14 @@
+package com.leshun.plc.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.leshun.plc.bean.DeviceInfo;
+import com.leshun.plc.dao.DeviceInfoDao;
+import com.leshun.plc.service.DeviceInfoService;
+
+@Service("deviceInfoService")
+public class DeviceInfoServiceImpl
+		extends BaseServiceImpl<DeviceInfo, DeviceInfoDao>
+		implements DeviceInfoService {
+
+}

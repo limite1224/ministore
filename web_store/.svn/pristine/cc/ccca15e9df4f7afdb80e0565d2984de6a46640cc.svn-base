@@ -1,0 +1,169 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="提前通知编辑">
+<body class="input">
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<form action="${web_base}/phone/advance_notify!update.htm"  method="post" isEmpty=true>
+<table class="inputTable tabContent">
+<tr>
+
+    <th>
+        订单编号:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.orderId" class="formText {required: true}"
+               value="${(advanceInfo.orderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.goodsId" class="formText {required: true}"
+               value="${(advanceInfo.goodsId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.goodsName" class="formText {required: true}"
+               value="${(advanceInfo.goodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        创建时间:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.timeCreateOrder" class="formText {required: true}"
+               value="${(advanceInfo.timeCreateOrder)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        更新时间:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.timeModifyOrder" class="formText {required: true}"
+               value="${(advanceInfo.timeModifyOrder)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       充值账号:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.gameAccount" class="formText {required: true}"
+               value="${(advanceInfo.gameAccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游订单号:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.merchantOrderId" class="formText {required: true}"
+               value="${(advanceInfo.merchantOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        下游商户号:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.contractId" class="formText {required: true}"
+               value="${(advanceInfo.contractId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        商品面值(元):
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.goodsValue" class="formText {required: true}"
+               value="${(advanceInfo.goodsValue*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        购买数量:
+    </th>
+    <td>
+        <input type="text" name="advanceInfo.buyNum" class="formText {required: true}"
+               value="${(advanceInfo.buyNum)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        订单状态:
+    </th>
+    <td>
+        <select name="advanceInfo.status" id="status">        
+        <option value="0" <#if advanceInfo.status?? && advanceInfo.status == "0">selected='selected'</#if>>不需处理</option>
+        <option value="1" <#if advanceInfo.status?? && advanceInfo.status == "1">selected='selected'</#if>>原订单已经成功</option>
+        <option value="2" <#if advanceInfo.status?? && advanceInfo.status == "2">selected='selected'</#if>>待处理</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单状态备注:
+    </th>
+    <td>
+        <textarea name="advanceInfo.remark" class="formTextarea"
+                  readonly="readonly">${(advanceInfo.remark)!}</textarea>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        操作员:
+    </th>
+    <td>
+        <input name="advanceInfo.operator" class="formTextarea" value="${(advanceInfo.operator)!}"
+                  readonly="readonly"/>
+    </td>
+</tr>
+
+
+
+
+</table>
+<div class="buttonArea">
+    <input type="submit" class="formButton" onclick="#" value="更新" hidefocus="true"/>
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+    
+</div>
+</form>
+</div>
+</body>
+</@edit>

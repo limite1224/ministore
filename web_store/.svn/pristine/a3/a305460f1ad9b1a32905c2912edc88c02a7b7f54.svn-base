@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.ProvinceWeiHuInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.ProvinceWeiHuInfo">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="province_code" property="provinceCode"
+			jdbcType="VARCHAR" />
+		<result column="province_name" property="provinceName"
+			jdbcType="VARCHAR" />
+		<result column="isp_info" property="ispInfo" jdbcType="VARCHAR" />
+		<result column="isp_id" property="ispId" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="bussiness_type" property="bussinessType"
+			jdbcType="VARCHAR" />
+		<result column="flow_range" property="flowRange" jdbcType="VARCHAR" />
+		<result column="oper" property="oper" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+	    id,province_code,province_name,isp_info,isp_id,status,bussiness_type,
+	    flow_range,oper,modify_time
+	</sql>
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.ProvinceWeiHuInfo">
+		insert into province_weihu_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="provinceCode != null">
+				province_code,
+			</if>
+			<if test="provinceName != null">
+				province_name,
+			</if>
+			<if test="ispInfo != null">
+				isp_info,
+			</if>
+			<if test="ispId != null">
+				isp_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="bussinessType != null">
+				bussiness_type,
+			</if>
+			<if test="flowRange != null">
+				flow_range,
+			</if>
+			<if test="oper != null">
+				oper,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				#{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="ispInfo != null">
+				#{ispInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="ispId != null">
+				#{ispId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="bussinessType != null">
+				#{bussinessType,jdbcType=VARCHAR},
+			</if>
+			<if test="flowRange != null">
+				#{flowRange,jdbcType=VARCHAR},
+			</if>
+			<if test="oper != null">
+				#{oper,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<sql id="queryParams">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="id != null and id !=''">
+				and id =#{id,jdbcType=VARCHAR}
+			</if>
+			<if test="provinceCode != null and provinceCode !=''">
+				and province_code =
+				#{provinceCode,jdbcType=VARCHAR}
+			</if>
+			<if test="provinceName != null and provinceName !=''">
+				and province_name like '%#{provinceName}%'
+			</if>
+			<if test=" ispId!= null and ispId !=''">
+				and isp_id =#{ispId,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status !=''">
+				and status =#{status,jdbcType=VARCHAR}
+			</if>
+			<if test="bussinessType!=null and bussinessType !=''">
+				and bussiness_type=#{bussinessType,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+	<select id="selectInfoList" parameterType="com.ekhui.pojo.ProvinceWeiHuInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from province_weihu_info
+		<include refid="queryParams" />
+		 order by convert( province_name using gbk ) collate gbk_chinese_ci asc
+	</select>
+	<update id="updateInfoSelectiveById" parameterType="com.ekhui.pojo.ProvinceWeiHuInfo">
+		update province_weihu_info
+		<set>
+			<if test="provinceCode != null and provinceCode !=''">
+				and province_code =
+				#{provinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceName != null and provinceName !=''">
+				province_name =#{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test=" ispId!= null and ispId !=''">
+				isp_id =#{ispId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null and status !=''">
+				status =#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="bussinessType!=null and bussinessType !=''">
+				bussiness_type=#{bussinessType,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime!=null and modifyTime !=''">
+                modify_time=#{modifyTime,jdbcType=VARCHAR},
+            </if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

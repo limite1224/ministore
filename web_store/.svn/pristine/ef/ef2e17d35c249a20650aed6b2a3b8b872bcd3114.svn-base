@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>天猫订单列表</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<#include "../template/include/assign.ftl">
+<#include "../template/include/source.ftl">
+<#include "../template/template_listPage.ftl">
+    <link href="${web_static}/admin/css/list.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .page {
+            float: right;
+            padding-top: 15px;
+            margin-right: 15px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list}<br></#list>", modal:true, autoCloseTime:3000});
+        </#if>
+      });
+      
+        function compareTime(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function compareTime2(startDate, endDate) {
+            var startDateTemp = startDate.split(" ");
+            var endDateTemp = endDate.split(" ");
+
+            var arrStartDate = startDateTemp[0].split("-");
+            var arrEndDate = endDateTemp[0].split("-");
+
+            var arrStartTime = startDateTemp[1].split(":");
+            var arrEndTime = endDateTemp[1].split(":");
+
+            var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+            var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+            if (allStartDate.getTime() >= allEndDate.getTime()) {
+                $("#dateSpan2").html("开始时间不能大于结束时间！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+        function editOrder(orderId) {
+            var ordId = $('#orderId').val();
+            var status2 = $('#status').val();
+            var merchantOrderId2 = $('#merchantOrderId').val();
+            var gameAccount2 = $('#gameAccount').val();
+            var url = "${web_base}/tianmao/tianmao_order!toEdit.htm?orderId=" + orderId;
+            if (ordId != null && ordId != '') {
+                url = url + "&ordId=" + ordId;
+            }
+            if (status2 != null && status2 != '') {
+                url = url + "&status=" + status2;
+            }
+            if (merchantOrderId2 != null && merchantOrderId2 != '') {
+                url = url + "&merchantOrderId=" + merchantOrderId2;
+            }
+            if (gameAccount2 != null && gameAccount2 != '') {
+                url = url + "&gameAccount2=" + gameAccount2;
+            }
+            document.forms[1].action = encodeURI(encodeURI(url));
+            document.forms[1].submit();
+        }
+        
+        
+         function checkBoxIsNull(){
+            var flag = false;
+            var items = document.getElementsByName("ids");  //获取name为check的一组元素(checkbox)
+            for(i=0; i < items.length; i++){  //循环这组数据
+                if(items[i].checked){      //判断是否选中
+                    flag = true;
+                    return flag;
+                }
+            }
+            return false;
+        }
+
+        
+        function batchDoFailed(){
+            var chk = checkBoxIsNull();
+            if(!chk){
+                $.jBox.alert('请至少选择一条订单信息', '警告');
+            }  else{          
+                var submit = function (v, h, f) {
+                    if (v == 'ok')  {
+                        var items=document.getElementsByName("ids");
+                        var ids=new Array(items.length);
+                        var j=0;
+                        for(var i=0; i < items.length; i++){  //循环这组数据
+                            if(items[i].checked)      //判断是否选中
+                            {  ids[j]=items[i].value;
+                              j++;
+                              }
+                                 }
+                        var url = "${web_base}/phone/order_mession!batchFailed.htm?ids="+ids;
+                        window.location.href=url;
+                    }  else if (v == 'cancel')  {
+
+                    }
+                    return true; //close
+                };
+                $.jBox.confirm("确定要批量操作吗？", "温罄提示", submit);
+            }
+        }
+        
+        function batchToPreRecharge(){
+            var chk = checkBoxIsNull();
+            if(!chk){
+                $.jBox.alert('请至少选择一条订单信息', '警告');
+            }  else{          
+                var submit = function (v, h, f) {
+                    if (v == 'ok')  {
+                        var items=document.getElementsByName("ids");
+                        var ids=new Array(items.length);
+                        var j=0;
+                        for(var i=0; i < items.length; i++){  //循环这组数据
+                            if(items[i].checked)      //判断是否选中
+                            {  ids[j]=items[i].value;
+                              j++;
+                              }
+                                 }
+                        var url = "${web_base}/phone/order_mession!batchToRecharge.htm?ids="+ids;
+                        window.location.href=url;
+                    }  else if (v == 'cancel')  {
+
+                    }
+                    return true; //close
+                };
+                $.jBox.confirm("确定要批量操作吗？", "温罄提示", submit);
+            }
+        }
+        
+
+
+        function checkall() {
+            $("input[type='checkbox']").attr("checked", "true");
+        }
+        function checkout() {
+            $("input[type='checkbox']").each(function () {
+                if ($(this).attr("checked")) {
+                    $(this).removeAttr("checked");
+                } else {
+                    $(this).attr("checked", 'true');
+                }
+            });
+        }
+    </script>
+
+</head>
+<body class="list">
+<div class="body">
+    <div class="listBar">
+        <h1><span class="icon">&nbsp;</span>订单任务表&nbsp;<span class="pageInfo"></span></h1>
+    </div>
+<@pageList page=(page!) id="listForm" action="${web_base}/phone/order_mession!queryPage.htm" query="mession" isEmpty=true>
+    <div class="operateBar">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      订单编号：<input type="text" name="mession.orderId" id="orderId"
+                    value="<#if mession??>${(mession.orderId)!}</#if>"
+                    onkeyup="this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+           &nbsp;&nbsp;&nbsp;
+      下游订单号：<input type="text" name="mession.merchantOrderId" id="merchantOrderId"
+                     value="<#if mession??>${(mession.merchantOrderId)!}</#if>"/>
+        &nbsp;
+
+   &nbsp;&nbsp;&nbsp;&nbsp;
+        订单状态：<select name="mession.status" id="status">
+        <option value="">-请选择-</option>
+        <option value="0" <#if mession.status?? && mession.status == "0">selected</#if> >挂起</option>
+        <option value="1" <#if mession.status?? && mession.status == "1">selected</#if>>充值中</option>
+        <option value="2" <#if mession.status?? && mession.status == "2">selected</#if>>待充值</option>
+        <option value="3" <#if mession.status?? && mession.status == "3">selected</#if>>收单</option>
+    </select>
+    
+        &nbsp;订单生成时间：<input type="text" id="startTime" name="mession.startTime"
+                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')||\'${(maxDate)!}\'}'})"
+                       value="${(mession.startTime)!}" class="Wdate" readonly="readonly">&nbsp;--&nbsp;
+        <input type="text" id="endTime" name="mession.endTime"
+               onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'${(maxDate)!}'})"
+               value="${(mession.endTime)!}" class="Wdate" readonly="readonly">
+        &nbsp;&nbsp;
+       
+        <input type="submit" id="searchButton" class="searchButton" value=""/>
+        <span id="dateSpan" style="color: red"></span>
+    </div>
+    <table class="listTable" border="1">
+        <tr>
+         <th style="text-align: left;">
+                   复选框
+            </th>
+            <th>
+                <span class="sort" name="">订单编号</span>
+            </th>
+            <th>
+                <div align="center">
+                    <span class="sort" name="">下游订单号</span>
+                </div>
+            </th>
+             <th>
+                <span class="sort" name="">省份运营商信息</span>
+            </th>
+            
+            <th>
+                <span class="sort" name="">订单状态</span>
+            </th>
+            
+            <th>
+                <span class="sort" name="">订单创建时间</span>
+            </th>
+            <th>
+                <span class="sort" name="">发起充值时间</span>
+            </th>
+            <th>
+                <span class="sort" name="">充值来源</span>
+            </th>
+             
+            
+            <th>
+                <span class="sort" name="">收单限制时间(分)</span>
+            </th>
+        </tr>
+
+        <#if page?? && page.list?? && (page.list?size gt 0)>
+            <#list page.list as obj>
+                <tr>
+                <td>
+                        <input id="ch" type="checkbox" name="ids" value="${(obj.orderId)!}" />
+                    </td>
+                    <td>
+                       	<a class="follow-cursor" title="${(obj.orderId)!}" style="cursor: pointer;">
+                            <#if obj.orderId?? && obj.orderId?length gte 17>
+                            ${obj.orderId?substring(0,17)}...
+                            <#else>
+                            ${(obj.orderId)!}
+                            </#if>
+                        </a>
+                    </td>
+                    
+                     <td>  
+                       	<a class="follow-cursor" title="${(obj.merchantOrderId)!}" style="cursor: pointer;">
+                            <#if obj.merchantOrderId?? && obj.merchantOrderId?length gte 17>
+                            ${obj.merchantOrderId?substring(0,17)}...
+                            <#else>
+                            ${(obj.merchantOrderId)!}
+                            </#if>
+                        </a>
+                    </td>
+                    
+                     <td>  
+                       	<a class="follow-cursor" title="${(obj.provinceIspInfo)!}" style="cursor: pointer;">
+                            <#if obj.provinceIspInfo?? && obj.provinceIspInfo?length gte 17>
+                            ${obj.provinceIspInfo?substring(0,17)}...
+                            <#else>
+                            ${(obj.provinceIspInfo)!}
+                            </#if>
+                        </a>
+                    </td>
+                    
+                    
+                    <td>   
+                        <#if obj.status?? && obj.status == "0">
+                            挂起
+                        <#elseif obj.status?? && obj.status == "1">
+                            充值中
+                        <#elseif obj.status?? && obj.status =="2">
+                            待充值
+                        <#elseif obj.status?? && obj.status =="3">
+                            收单
+                    </#if>
+                    </td>
+                    
+                    
+                    
+                    <td>  
+                            ${(obj.createOrderTime)!}
+                    </td>
+                    
+                    
+                    <td>  
+                            ${(obj.orderApiStartTime)!}
+                    </td>
+                    
+                     <td>  
+                                                               
+                        <#if obj.rechargeType?? && obj.rechargeType == "1">
+                            交易
+                        <#elseif obj.rechargeType?? && obj.rechargeType == "2">
+                           补充或者回调天猫后的二次补充
+                   </#if>
+                    </td>
+                    
+                    
+                  <td>  
+                       	收单时间限制：<a class="follow-cursor" title="${(obj.shoudanLimitInfo)!}" style="cursor: pointer;">
+                            <#if obj.shoudanLimitInfo?? && obj.shoudanLimitInfo?length gte 17>
+                            ${obj.shoudanLimitInfo?substring(0,17)}...
+                            <#else>
+                            ${(obj.shoudanLimitInfo)!}
+                            </#if>
+                        </a>
+                    </td> 
+                    
+                         
+                </tr>
+            </#list>
+        </#if>
+    </table>
+
+    <#if page?? && page.list?? && (page.list?size <= 0)>
+        <div class="noRecord">
+            没有找到任何记录!
+        </div>
+    </#if>
+</@pageList>
+ <div class="operateBar">
+      <input type="button" class="addButton" value="全选" onclick="checkall();"/>&nbsp;&nbsp;&nbsp;
+    <input type="button" class="addButton" value="反选" onclick="checkout();"/>
+    <input type="button" class="addButton" onclick="batchToPreRecharge();" value="收单批量待充值" />
+    <input type="button" class="addButton" onclick="batchDoFailed();" value="收单批量失败" />
+    <br/>
+    </div>
+</div>
+</body>
+</html>

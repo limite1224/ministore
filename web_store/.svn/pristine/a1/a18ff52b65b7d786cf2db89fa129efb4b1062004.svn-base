@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.xml.GoodsPriceInfoMapper">
+	<resultMap id="BaseResultMap" type="com.ekhui.pojo.GoodsPriceInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_no" property="userNo" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="recharge_value" property="rechargeValue"
+			jdbcType="INTEGER" />
+		<result column="goods_value" property="goodsValue" jdbcType="INTEGER" />
+		<result column="sale_price" property="salePrice" jdbcType="INTEGER" />
+		<result column="price_rate" property="priceRate" jdbcType="VARCHAR" />
+		<result column="business_type" property="businessType"
+			jdbcType="VARCHAR" />
+		<result column="insert_time" property="insertTime" jdbcType="VARCHAR" />
+		<result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_no, user_name, goods_id, goods_name,
+		recharge_value,
+		goods_value, sale_price,
+		price_rate, business_type,
+		insert_time, modify_time, operator
+	</sql>
+
+	<!-- 查询限制 -->
+	<sql id="limit">
+		limit #{offset},#{limit}
+	</sql>
+	<!-- 排序 -->
+	<sql id="orderby">
+		order by insert_time desc
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="pageCondition">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="startTime != null and startTime !=''">
+				<![CDATA[and insert_time >= #{startTime,jdbcType=VARCHAR}]]>
+			</if>
+			<if test="endTime != null and endTime !=''">
+				<![CDATA[and insert_time <= #{endTime,jdbcType=VARCHAR}]]>
+			</if>
+
+			<if test="userNo != null and userNo !=''">
+				and user_no =#{userNo,jdbcType=VARCHAR}
+			</if>
+
+			<if test="userName != null and userName !=''">
+				and user_name like "%${userName}%"
+			</if>
+
+			<if test="goodsId != null and goodsId !=''">
+				and goods_id = #{goodsId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="goodsName != null and goodsName !=''">
+				and goods_name like "%${goodsName}%"
+			</if>
+
+			<if test="rechargeValue != null and rechargeValue !=''">
+				and recharge_value = #{rechargeValue,jdbcType=INTEGER}
+			</if>
+
+			<if test="goodsValue != null and goodsValue !=''">
+				and goods_value = #{goodsValue,jdbcType=INTEGER}
+			</if>
+			<if test="salePrice != null and salePrice !=''">
+				and sale_price = #{salePrice,jdbcType=VARCHAR}
+			</if>
+			<if test="priceRate != null and priceRate !=''">
+				and price_rate = #{priceRate,jdbcType=VARCHAR}
+			</if>
+			<if test="businessType != null and businessType !=''">
+				and business_type =
+				#{businessType,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 查询所有记录 -->
+	<select id="queryCount" resultType="java.lang.Integer"
+		parameterType="com.ekhui.pojo.GoodsPriceInfo">
+		select count(id) from goods_price_info
+		<include refid="pageCondition" />
+	</select>
+
+	<!-- 查询集合 -->
+	<select id="selectList" parameterType="com.ekhui.pojo.GoodsPriceInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_price_info
+		<include refid="pageCondition" />
+		<include refid="orderby" />
+		<include refid="limit" />
+	</select>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from goods_price_info
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 主键删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		goods_price_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.ekhui.pojo.GoodsPriceInfo">
+		insert into goods_price_info
+		(id, user_no, user_name,
+		goods_id, goods_name, recharge_value,
+		goods_value, sale_price, price_rate,
+		business_type, insert_time,
+		modify_time,
+		operator)
+		values (#{id,jdbcType=VARCHAR},
+		#{userNo,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{goodsId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
+		#{rechargeValue,jdbcType=INTEGER},
+		#{goodsValue,jdbcType=INTEGER},
+		#{salePrice,jdbcType=INTEGER},
+		#{priceRate,jdbcType=VARCHAR},
+		#{businessType,jdbcType=VARCHAR}, #{insertTime,jdbcType=VARCHAR},
+		#{modifyTime,jdbcType=VARCHAR},
+		#{operator,jdbcType=VARCHAR})
+	</insert>
+	<!-- 选择性插入 -->
+	<insert id="insertSelective" parameterType="com.ekhui.pojo.GoodsPriceInfo">
+		insert into goods_price_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userNo != null">
+				user_no,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value,
+			</if>
+			<if test="goodsValue != null">
+				goods_value,
+			</if>
+			<if test="salePrice != null">
+				sale_price,
+			</if>
+			<if test="priceRate != null">
+				price_rate,
+			</if>
+			<if test="businessType != null">
+				business_type,
+			</if>
+			<if test="insertTime != null">
+				insert_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userNo != null">
+				#{userNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				#{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValue != null">
+				#{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="salePrice != null">
+				#{salePrice,jdbcType=INTEGER},
+			</if>
+			<if test="priceRate != null">
+				#{priceRate,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				#{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="insertTime != null">
+				#{insertTime,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 选择性更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.ekhui.pojo.GoodsPriceInfo">
+		update goods_price_info
+		<set>
+			<if test="userNo != null">
+				user_no = #{userNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				goods_id = #{goodsId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="rechargeValue != null">
+				recharge_value = #{rechargeValue,jdbcType=INTEGER},
+			</if>
+			<if test="goodsValue != null">
+				goods_value = #{goodsValue,jdbcType=INTEGER},
+			</if>
+			<if test="salePrice != null">
+				sale_price = #{salePrice,jdbcType=INTEGER},
+			</if>
+			<if test="priceRate != null">
+				price_rate = #{priceRate,jdbcType=VARCHAR},
+			</if>
+			<if test="businessType != null">
+				business_type = #{businessType,jdbcType=VARCHAR},
+			</if>
+			<if test="insertTime != null">
+				insert_time = #{insertTime,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

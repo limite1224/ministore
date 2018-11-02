@@ -1,0 +1,266 @@
+<#-- 导入模版定义文件-->
+<#include "../template/template_editPage.ftl">
+<@edit title="订单详情">
+<body class="input">
+<script type="text/javascript">
+    $().ready(function () {
+        <#if actionErrors?? && (actionErrors?size > 0)>
+            $.dialog({type:"warn", content:"<#list errorMessages as list>${list!}<br></#list>",
+                modal:true, autoCloseTime:3000});
+        </#if>
+    });
+</script>
+
+<div class="body">
+<div class="inputBar">
+    <h1><span class="icon">&nbsp;</span>订单详情</h1>
+</div>
+<ul class="tab">
+    <li>
+        <input type="button" value="基本信息" hidefocus="true"/>
+    </li>
+</ul>
+<table class="inputTable tabContent">
+<tr>
+    <th>
+        订单编号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.orderId" class="formText {required: true}"
+               value="${(tmOrderNotify.orderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        商品编号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodsId" class="formText {required: true}"
+               value="${(tmOrderNotify.goodsId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品名称:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodsName" class="formText {required: true}"
+               value="${(tmOrderNotify.goodsName)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+       业务类型:
+    </th>
+    <td>
+     <#if tmOrderNotify.businessType?? && tmOrderNotify.businessType == "01">
+            游戏业务
+      <#elseif tmOrderNotify.businessType?? && tmOrderNotify.businessType == "02">
+            话费业务
+        </#if>
+     </td>
+</tr>
+
+<tr>
+    <th>
+        API接口时间:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.orderApiStartTime" class="formText {required: true}"
+               value="${(tmOrderNotify.orderApiStartTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单生成时间:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.timeCreateOrder" class="formText {required: true}"
+               value="${(tmOrderNotify.timeCreateOrder)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        上游成功时间:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.supordersuccesstime" class="formText {required: true}"
+               value="${(tmOrderNotify.supordersuccesstime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单完结时间:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.orderFinishTime" class="formText {required: true}"
+               value="${(tmOrderNotify.orderFinishTime)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商户IP:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.merchantIp" class="formText {required: true}"
+               value="${(tmOrderNotify.merchantIp)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+       充值账号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.gameAccount" class="formText {required: true}"
+               value="${(tmOrderNotify.gameAccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        下游订单号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.merchantOrderId" class="formText {required: true}"
+               value="${(tmOrderNotify.merchantOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        充值订单号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.rechargeOrderId" class="formText {required: true}"
+               value="${(tmOrderNotify.rechargeOrderId)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+        下游商户号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.contractId" class="formText {required: true}"
+               value="${(tmOrderNotify.contractId)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        用户IP:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.clientIp" class="formText {required: true}"
+               value="${(tmOrderNotify.clientIp)!}" readonly="readonly"/>
+    </td>
+</tr>
+<#--<tr>
+    <th>
+        商品面值(元):
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodsValue" class="formText {required: true}"
+               value="${(tmOrderNotify.goodsValue*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品进价(元):
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodscostprice" class="formText {required: true}"
+               value="${(tmOrderNotify.goodscostprice*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        商品售价(元):
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodssaleprice" class="formText {required: true}"
+               value="${(tmOrderNotify.goodssaleprice*1.0/1000)?string("0.000")!}" readonly="readonly"/>
+    </td>
+</tr>-->
+<tr>
+    <th>
+        购买数量:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.buyNum" class="formText {required: true}"
+               value="${(tmOrderNotify.buyNum)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        总金额(元):
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.goodsValue" class="formText {required: true}"
+               value="${(tmOrderNotify.goodsValue)!}" readonly="readonly"/>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单状态:
+    </th>
+    <td>
+        <#if tmOrderNotify.status?? && tmOrderNotify.status == "0">
+            失败
+        <#elseif tmOrderNotify.status?? && tmOrderNotify.status == "1">
+            成功
+        <#elseif tmOrderNotify.status?? && tmOrderNotify.status == "2">
+            处理中
+        <#elseif tmOrderNotify.status?? && tmOrderNotify.status == "3">
+            存疑
+        </#if>
+    </td>
+</tr>
+<tr>
+    <th>
+        订单状态备注:
+    </th>
+    <td>
+        <textarea name="tmOrderNotify.remark" class="formTextarea"
+                  readonly="readonly">${(tmOrderNotify.remark)!}</textarea>
+    </td>
+</tr>
+
+<tr>
+    <th>
+      供应商注册账号:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.registeraccount" class="formText {required: true}"
+               value="${(tmOrderNotify.registeraccount)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        操作员:
+    </th>
+    <td>
+        <input type="text" name="tmOrderNotify.operator" class="formText {required: true}"
+               value="${(tmOrderNotify.operator)!}" readonly="readonly"/>
+    </td>
+</tr>
+
+<tr>
+    <th>
+        备注:
+    </th>
+    <td>
+        <textarea name="tmOrderNotify.remark" class="formTextarea" readonly="readonly">${(tmOrderNotify.remark)!}</textarea>
+    </td>
+</tr>
+</table>
+<div class="buttonArea">
+    <input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回"
+           hidefocus="true"/>
+</div>
+</div>
+</body>
+</@edit>
